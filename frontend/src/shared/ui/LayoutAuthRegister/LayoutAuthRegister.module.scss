@@ -1,0 +1,160 @@
+@import "@/shared/styles/mixin";
+
+.wrapper {
+  background-color: var(--grey-50);
+  min-height: 100vh;
+  width: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.bar {
+  position: absolute;
+  top: 50px;
+  left: 50px;
+
+  @include respond-to(laptop) {
+    top: 30px;
+    left: 30px;
+  }
+
+  @include respond-to(mobile) {
+    top: 30px;
+    left: 20px;
+  }
+}
+
+.back {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  .icon {
+    width: 42px;
+    height: 42px;
+  }
+
+  .text {
+    font-size: 1.5rem;
+    color: var(--text-secondary);
+  }
+
+  &:hover {
+    transform: translateX(3px);
+  }
+
+  @include respond-to(laptop) {
+    .icon {
+      width: 32px;
+      height: 32px;
+    }
+
+    .text {
+      font-size: 1.25rem;
+    }
+  }
+
+  @include respond-to(mobile) {
+    .icon {
+      width: 24px;
+      height: 24px;
+    }
+
+    .text {
+      font-size: 1rem;
+    }
+  }
+}
+
+.content {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+
+  .contentLeft {
+    min-width: 500px;
+
+    .contentTitle {
+      font-size: 2.5rem;
+      color: var(--text-primary);
+      text-align: center;
+      margin-bottom: 45px;
+
+  
+
+      @include respond-to(smile-mobile) {
+        margin-top: 60px;
+      }
+    }
+
+    .contentLine {
+      height: 1px;
+      width: 100%;
+      background-color: var(--text-tertiary);
+      opacity: 0.5;
+      margin-top: 17px;
+    }
+
+    .contentText {
+      text-align: center;
+      margin-top: 17px;
+      color: var(--text-secondary);
+
+      a {
+        color: var(--blue-500);
+        display: inline-block;
+        transition: all 0.3s ease;
+
+        &:hover {
+          transform: translateY(-1px);
+          color: var(--blue-600);
+        }
+      }
+    }
+  }
+
+  @include respond-to(laptop) {
+    .contentLeft {
+      min-width: 450px;
+
+      .contentTitle {
+        font-size: 2rem;
+        margin-bottom: 30px;
+      }
+    }
+  }
+
+  @include respond-to(mobile) {
+    .contentLeft {
+      min-width: 340px;
+    }
+  }
+
+  @include respond-to(smile-mobile) {
+    .contentLeft {
+      min-width: 280px;
+    }
+  }
+
+  .contentRight {
+    border-radius: 1.25rem;
+    max-width: 750px;
+    object-fit: cover;
+    transition: all 0.3s ease;
+
+    @include respond-to(laptop) {
+      max-width: 450px;
+    }
+
+    @include respond-to(tablet) {
+      display: none;
+    }
+  }
+}

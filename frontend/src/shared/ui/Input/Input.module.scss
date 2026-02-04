@@ -1,0 +1,62 @@
+.inputContainer {
+  position: relative;
+  width: 100%;
+  height: 56px;
+}
+
+.inputContainer.heightInputContainerLaptop {
+  height: 50px;
+}
+
+
+
+.eyeIcon {
+  position: absolute;
+  top: 50%;
+  right: 14px;
+  transform: translateY(-50%);
+  color: var(--text-tertiary);
+  cursor: pointer;
+}
+
+.input {
+  width: 100%;
+  height: 100%;
+  padding: 0 12px;
+  background: white;
+  border: 1px solid var(--grey-500);
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  color: var(--text-primary);
+  outline: none;
+  transition: border-color 0.2s ease;
+
+  &:focus {
+    border-color: var(--blue-500);
+  }
+}
+
+.label {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-secondary);
+  font-size: 1rem;
+  pointer-events: none;
+  transition: all 0.2s ease;
+  background: white;
+
+  border-radius: 0.5rem;
+  padding: 0 4px;
+}
+
+.label.heightLabelLaptop {
+	font-size: 0.875rem;
+}
+
+.label.floating {
+  top: 2px;
+  font-size: 0.875rem;
+  color: var(--blue-500);
+}

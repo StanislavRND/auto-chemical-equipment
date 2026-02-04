@@ -1,0 +1,13 @@
+@import "@/shared/styles/mixin";
+
+.form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 25px;
+
+  @include respond-to(laptop) {
+    gap: 15px;
+  }
+}
