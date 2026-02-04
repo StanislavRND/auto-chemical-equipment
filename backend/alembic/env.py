@@ -8,13 +8,13 @@ from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import async_engine_from_config
 
 from alembic import context
-import src.models
+import src.db.models
 
 sys.path.append(str(Path(__file__).parent.parent))
 
 
 from src.core.config import settings
-from src.db.database import Base
+from src.db.base import Base
 
 config = context.config
 

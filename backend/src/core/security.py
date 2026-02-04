@@ -1,6 +1,7 @@
+import jwt
+import bcrypt
 from datetime import datetime, timedelta, timezone
 from typing import Optional
-import jwt
 from passlib.context import CryptContext
 from src.core.config import settings
 
@@ -9,12 +10,21 @@ pwd_context = CryptContext(
 )
 
 
+def hash_code(code: str) -> str:
+    return bcrypt.hashpw(code.encode("utf-8"), bcrypt.gensalt()).decode("utf-8")
+
+
+def verify_code(plain_code: str, hashed_code: str) -> bool:
+    return bcrypt.checkpw(plain_code.encode("utf-8"), hashed_code.encode("utf-8"))
+
+
 def get_password_hash(password: str) -> str:
-    password_bytes = password.encode('utf-8')[:72]
+    password_bytes = password.encode("utf-8")[:72]
     return pwd_context.hash(password_bytes)
 
+
 def verify_password(plain_password: str, hashed_password: str) -> bool:
-    password_bytes = plain_password.encode('utf-8')[:72]
+    password_bytes = plain_password.encode("utf-8")[:72]
     return pwd_context.verify(password_bytes, hashed_password)
 
 
@@ -27,11 +37,7 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None) -
     else:
         expire = now_utc + timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
 
-    to_encode.update({
-        "exp": expire,
-        "iat": now_utc,
-        "type": "access"
-    })
+    to_encode.update({"exp": expire, "iat": now_utc, "type": "access"})
 
     encoded_jwt = jwt.encode(
         to_encode,
@@ -57,17 +63,13 @@ def decode_token(token: str) -> Optional[dict]:
 def create_refresh_token(data: dict) -> str:
     to_encode = data.copy()
     now_utc = datetime.now(timezone.utc)
-    
+
     expire = now_utc + timedelta(days=7)
 
-    to_encode.update({
-        "exp": expire, 
-        "iat": now_utc, 
-        "type": "refresh"
-    })
+    to_encode.update({"exp": expire, "iat": now_utc, "type": "refresh"})
 
     encoded_jwt = jwt.encode(
-        to_encode, 
+        to_encode,
         settings.SECRET_KEY,
     )
 

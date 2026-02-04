@@ -1,4 +1,4 @@
-from src.db.database import Base
+from src.db.base import Base
 from sqlalchemy.sql import func
 from sqlalchemy import String, DateTime
 from sqlalchemy.orm import Mapped, mapped_column
@@ -11,8 +11,7 @@ class UserModel(Base):
     email: Mapped[str] = mapped_column(String, unique=True, index=True, nullable=False)
     role: Mapped[str] = mapped_column(String, index=True, nullable=False)
     hashed_password: Mapped[str] = mapped_column(String, nullable=False)
-
-    inn: Mapped[str] = mapped_column(String, unique=True, index=True, nullable=True)
+    inn: Mapped[str] = mapped_column(String, index=True, nullable=True)
     kpp: Mapped[str] = mapped_column(String, nullable=True)
     legal_address: Mapped[str] = mapped_column(String, nullable=True)
     created_at: Mapped[DateTime] = mapped_column(
