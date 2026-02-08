@@ -2,11 +2,13 @@ import { LayoutAuthRegister } from "@shared/ui/LayoutAuthRegister/LayoutAuthRegi
 
 export const AuthPage = () => {
   return (
-    <LayoutAuthRegister
-      title="Вход"
-      text="Ещё нет аккаунта?"
-      subTitle="Зарегистрируйтесь"
-      type="auth"
-    />
+    <>
+      <LayoutAuthRegister
+        title="Вход"
+        text="Ещё нет аккаунта?"
+        subTitle="Зарегистрируйтесь"
+        type="auth"
+      />
+    </>
   );
 };

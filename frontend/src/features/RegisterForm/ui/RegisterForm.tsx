@@ -21,12 +21,32 @@ export const RegisterForm = ({ onSuccess }: RegisterFormProps) => {
   };
   return (
     <form onSubmit={handleSubmit} className={styles.form}>
-      <Input placeholder="ИНН" />
-      <Input placeholder="КПП" />
-      <Input placeholder="Юридический наименование" />
-      <Input placeholder="E-mail" />
-      <Input type="password" placeholder="Пароль" />
-      <Input type="password" placeholder="Подтвердить пароль" />
+      <Input placeholder="ИНН" id="register-inn" aria-label="ИНН" type="text" />
+      <Input placeholder="КПП" id="register-kpp" aria-label="КПП" type="text" />
+      <Input
+        placeholder="Юридическое наименование"
+        id="register-address"
+        aria-label="Юридическое наименование"
+        type="text"
+      />
+      <Input
+        placeholder="E-mail"
+        id="register-email"
+        aria-label="E-mail"
+        type="text"
+      />
+      <Input
+        type="password"
+        placeholder="Пароль"
+        id="register-password"
+        aria-label="Пароль"
+      />
+      <Input
+        type="password"
+        placeholder="Подтвердить пароль"
+        id="register-confirm-password"
+        aria-label="Подтвердить пароль"
+      />
       <Button type="submit" size={buttonSize}>
         Зарегистрироваться
       </Button>

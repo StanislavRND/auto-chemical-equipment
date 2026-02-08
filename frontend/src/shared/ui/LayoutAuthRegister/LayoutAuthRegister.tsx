@@ -1,7 +1,7 @@
 import { AuthForm } from "@features/AuthForm/ui/AuthForm";
 import { ConfirmCodeForm } from "@features/ConfirmCodeForm/ui/ConfirmCodeForm";
 import { RegisterForm } from "@features/RegisterForm/ui/RegisterForm";
-import authRegister from "@shared/assets/images/auth-register.png";
+import authRegister from "@shared/assets/images/auth-register.webp";
 import { CircleArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import styles from "./LayoutAuthRegister.module.scss";
@@ -40,42 +40,58 @@ export const LayoutAuthRegister = (props: LayoutAuthRegister) => {
   };
 
   return (
-    <div className={styles.wrapper}>
+    <main className={styles.wrapper}>
       <div className={styles.bar}>
-        <button onClick={handleBackClick} className={styles.backButton}>
+        <button
+          onClick={handleBackClick}
+          className={styles.backButton}
+          aria-label="Вернуться назад"
+        >
           <div className={styles.back}>
             <CircleArrowLeft
               strokeWidth={1}
               className={styles.icon}
               style={{ color: "var(--text-secondary)" }}
+              aria-hidden="true"
             />
-            <h5 className={styles.text}>Назад</h5>
+            <span className={styles.text}>Назад</span>
           </div>
         </button>
       </div>
       <div className={styles.content}>
         <div className={styles.contentLeft}>
           {props.mode !== "confirm" && (
-            <h3 className={styles.contentTitle}>{props.title}</h3>
+            <h1 className={styles.contentTitle}>{props.title}</h1>
           )}
 
           {renderForm()}
 
           {props.mode !== "confirm" && (
             <>
-              <div className={styles.contentLine}></div>
+              <div
+                className={styles.contentLine}
+                role="separator"
+                aria-orientation="horizontal"
+              ></div>
 
-              <h5 className={styles.contentText}>
+              <p className={styles.contentText}>
                 {props.text}{" "}
-                <a href={props.type === "auth" ? "/register" : "/login"}>
+                <a
+                  href={props.type === "auth" ? "/register" : "/login"}
+                  className={styles.contentLink}
+                >
                   {props.subTitle}
                 </a>
-              </h5>
+              </p>
             </>
           )}
         </div>
-        <img className={styles.contentRight} src={authRegister} alt="image" />
+        <img
+          className={styles.contentRight}
+          src={authRegister}
+          alt="Декоративное изображение для страницы авторизации"
+        />
       </div>
-    </div>
+    </main>
   );
 };

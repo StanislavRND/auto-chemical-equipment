@@ -8,10 +8,22 @@ export const AuthForm = () => {
 
   const buttonSize = isLaptop || isTablet || isMobile ? "md" : "lg";
   return (
-    <form className={styles.form}>
-      <Input placeholder="E-mail" />
-      <Input type="password" placeholder="Пароль" />
-      <Button size={buttonSize}>Войти</Button>
+    <form className={styles.form} aria-label="Форма авторизации">
+      <Input
+        placeholder="E-mail"
+        type="email" 
+        id="email-input"
+        aria-label="Email адрес"
+      />
+      <Input
+        type="password"
+        placeholder="Пароль"
+        id="password-input"
+        aria-label="Пароль"
+      />
+      <Button size={buttonSize} type="submit">
+        Войти
+      </Button>
     </form>
   );
 };
