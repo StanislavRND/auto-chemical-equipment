@@ -39,4 +39,16 @@ export default defineConfig({
       "@api": path.resolve(__dirname, "./src/shared/api"),
     },
   },
+
+  server: {
+    proxy: {
+      "/api": {
+        target: "http://localhost:8000",
+        changeOrigin: true, 
+        secure: false,
+      },
+    },
+    host: true,
+    port: 5173,
+  },
 });

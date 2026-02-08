@@ -78,3 +78,19 @@
 .btn {
   width: 70%;
 }
+
+.error {
+  width: 100%;
+  text-align: center;
+  color: var(--red-500);
+  margin-top: -20px;
+  margin-bottom: 20px;
+
+  @include respond-to(laptop) {
+    margin-top: -25px;
+  }
+
+  @include respond-to(mobile) {
+    font-size: 0.875rem;
+  }
+}

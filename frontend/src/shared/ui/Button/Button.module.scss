@@ -35,10 +35,6 @@
   &:hover:not(:disabled) {
     background-color: var(--blue-600);
   }
-
-  &:active:not(:disabled) {
-    background-color: var(--blue-700);
-  }
 }
 
 .outline {
@@ -52,5 +48,50 @@
 
   &:active:not(:disabled) {
     background-color: var(--blue-100);
+  }
+}
+
+.loaderContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.loader {
+  animation: spin 1s linear infinite;
+  width: 20px;
+  height: 20px;
+}
+
+.sm .loader {
+  width: 20px;
+  height: 20px;
+}
+
+.md .loader {
+  width: 24px;
+  height: 24px;
+}
+
+.lg .loader {
+  width: 32px;
+  height: 32px;
+}
+
+.primary .loader {
+  color: white;
+}
+
+.outline .loader {
+  color: var(--blue-500);
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
   }
 }

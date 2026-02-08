@@ -7,6 +7,7 @@ interface InputProps {
   placeholder: string;
   value?: string;
   onChange?: (value: string) => void;
+  onBlur?: () => void;
   type?: string;
   id?: string;
   "aria-label"?: string;
@@ -16,6 +17,7 @@ export const Input = ({
   placeholder,
   value = "",
   onChange,
+  onBlur,
   type = "text",
   id,
   "aria-label": ariaLabel,
@@ -34,6 +36,11 @@ export const Input = ({
     onChange?.(newValue);
   };
 
+  const handleBlur = () => {
+    setIsFocused(false);
+    onBlur?.();
+  };
+
   const togglePasswordVisibility = () => {
     setShowPasswordToggle(!showPasswordToggle);
   };
@@ -49,6 +56,7 @@ export const Input = ({
     if (isLaptop) return styles.heightLabelLaptop;
     return "";
   };
+
   return (
     <div
       className={`${styles.inputContainer} ${getHeightInputContainerClass()}`}
@@ -60,7 +68,7 @@ export const Input = ({
         value={inputValue}
         onChange={handleChange}
         onFocus={() => setIsFocused(true)}
-        onBlur={() => setIsFocused(false)}
+        onBlur={handleBlur}
         aria-label={ariaLabel || placeholder}
       />
 

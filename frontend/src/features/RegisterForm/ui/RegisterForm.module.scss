@@ -11,3 +11,29 @@
     gap: 15px;
   }
 }
+
+.error {
+  width: 100%;
+  text-align: left;
+  color: var(--red-500);
+  margin-top: -20px;
+
+  @include respond-to(laptop) {
+    margin-top: -5px;
+  }
+
+  @include respond-to(mobile) {
+    font-size: 0.875rem;
+  }
+}
+
+.errorGn {
+  width: 100%;
+  text-align: left;
+  color: var(--red-500);
+  margin-top: -10px;
+
+  @include respond-to(laptop) {
+    margin-top: 0px;
+  }
+}

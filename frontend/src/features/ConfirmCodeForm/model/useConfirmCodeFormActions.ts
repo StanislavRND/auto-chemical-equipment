@@ -1,8 +1,16 @@
+import { useAppSelector } from "@app/store/hooks";
+import { AxiosError } from "axios";
 import { useCallback, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useRegisterVerify } from "../api/useRegisterVerify";
 
 export const useConfirmCodeForm = () => {
+  const { mutate: verify, isError, error } = useRegisterVerify();
+  const registrationData = useAppSelector((state) => state.registration);
+
   const [code, setCode] = useState<string[]>(["", "", "", ""]);
   const inputsRef = useRef<(HTMLInputElement | null)[]>([]);
+  const navigate = useNavigate();
 
   const handleChange = (index: number, value: string) => {
     const numericValue = value.replace(/\D/g, "");
@@ -47,8 +55,40 @@ export const useConfirmCodeForm = () => {
         }
       }
     },
-    [code]
+    [code],
   );
 
-  return { code, inputsRef, handleChange, handleKeyDown };
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const verificationCode = code.join("");
+
+    if (verificationCode.length === 4) {
+      const verifyData = {
+        ...registrationData,
+        code: verificationCode,
+      };
+      verify(verifyData, {
+        onSuccess: () => {
+          navigate("/home");
+        },
+      });
+    }
+  };
+
+  const getApiErrorMessage = (): string | null => {
+    if (!isError) return null;
+    if (error instanceof AxiosError && error.response?.data?.detail) {
+      return error.response.data.detail;
+    }
+    return "Ошибка при проверки кода. Попробуйте ещё раз.";
+  };
+
+  return {
+    code,
+    inputsRef,
+    handleChange,
+    handleSubmit,
+    handleKeyDown,
+    apiErrorMessage: getApiErrorMessage(),
+  };
 };
