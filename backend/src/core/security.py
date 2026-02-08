@@ -1,76 +1,71 @@
-import jwt
-import bcrypt
 from datetime import datetime, timedelta, timezone
-from typing import Optional
+
+import bcrypt
+import jwt
+from fastapi import Response
 from passlib.context import CryptContext
 from src.core.config import settings
 
-pwd_context = CryptContext(
-    schemes=["bcrypt"],
-)
+pwd_context = CryptContext(schemes=["bcrypt"])
 
 
 def hash_code(code: str) -> str:
-    return bcrypt.hashpw(code.encode("utf-8"), bcrypt.gensalt()).decode("utf-8")
+    return bcrypt.hashpw(code.encode(), bcrypt.gensalt()).decode()
 
 
 def verify_code(plain_code: str, hashed_code: str) -> bool:
-    return bcrypt.checkpw(plain_code.encode("utf-8"), hashed_code.encode("utf-8"))
+    return bcrypt.checkpw(plain_code.encode(), hashed_code.encode())
 
 
 def get_password_hash(password: str) -> str:
-    password_bytes = password.encode("utf-8")[:72]
-    return pwd_context.hash(password_bytes)
+    return pwd_context.hash(password.encode()[:72])
 
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
-    password_bytes = plain_password.encode("utf-8")[:72]
-    return pwd_context.verify(password_bytes, hashed_password)
+    return pwd_context.verify(plain_password.encode()[:72], hashed_password)
 
 
-def create_access_token(data: dict, expires_delta: Optional[timedelta] = None) -> str:
-    to_encode = data.copy()
-    now_utc = datetime.now(timezone.utc)
+def create_access_token(data: dict) -> str:
+    now = datetime.now(timezone.utc)
 
-    if expires_delta:
-        expire = now_utc + expires_delta
-    else:
-        expire = now_utc + timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
-
-    to_encode.update({"exp": expire, "iat": now_utc, "type": "access"})
-
-    encoded_jwt = jwt.encode(
-        to_encode,
-        settings.SECRET_KEY,
-    )
-
-    return encoded_jwt
-
-
-def decode_token(token: str) -> Optional[dict]:
-    try:
-        payload = jwt.decode(
-            token,
-            settings.SECRET_KEY,
-        )
-        return payload
-    except jwt.ExpiredSignatureError:
-        return None
-    except jwt.InvalidTokenError:
-        return None
+    payload = {**data, "iat": now, "type": "access"}
+    return jwt.encode(payload, settings.SECRET_KEY)
 
 
 def create_refresh_token(data: dict) -> str:
-    to_encode = data.copy()
-    now_utc = datetime.now(timezone.utc)
+    now = datetime.now(timezone.utc)
 
-    expire = now_utc + timedelta(days=7)
+    payload = {**data, "exp": now + timedelta(days=7), "iat": now, "type": "refresh"}
+    return jwt.encode(payload, settings.SECRET_KEY)
 
-    to_encode.update({"exp": expire, "iat": now_utc, "type": "refresh"})
 
-    encoded_jwt = jwt.encode(
-        to_encode,
-        settings.SECRET_KEY,
+def verify_token(token: str) -> dict:
+    return jwt.decode(token, settings.SECRET_KEY, algorithms=["HS256"])
+
+
+def set_auth_cookie(
+    response: Response, access_token: str, refresh_token: str, max_age: int = 3600
+) -> None:
+    response.set_cookie(
+        key="access_token",
+        value=access_token,
+        max_age=max_age,
+        httponly=True,
+        secure=False,
+        samesite="lax",
     )
 
-    return encoded_jwt
+    if refresh_token:
+        response.set_cookie(
+            key="refresh_token",
+            value=refresh_token,
+            max_age=7 * 24 * 3600,
+            httponly=True,
+            secure=False,
+            samesite="lax",
+        )
+
+
+def clear_auth_cookies(response: Response) -> None:
+    response.delete_cookie("access_token")
+    response.delete_cookie("refresh_token")

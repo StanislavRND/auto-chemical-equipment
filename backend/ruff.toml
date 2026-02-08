@@ -1,0 +1,60 @@
+target-version = "py311"
+
+line-length = 120
+indent-width = 4 
+
+src = ["src"]
+
+
+[lint]
+preview = true
+select = [
+    "UP",  
+    "I",    
+    "E",   
+    "W",  
+    "F",  
+    "B",   
+    "C4",   
+    "S",    
+    "BLE", 
+    "T20", 
+    "T10",  
+    "PT",   
+    "RUF",  
+    "DTZ",  
+    "ERA", 
+    "FURB",
+]
+
+ignore = [
+    "C408", 
+    "RUF001",
+    "RUF002", 
+    "RUF003", 
+    "RUF029",
+    "S110",  
+    "B024",
+    "B027",
+    "B008",
+    "RUF006",
+    "UP017",
+    "T201",
+    "UP035", 
+    "UP007"
+]
+
+exclude = [
+    "alembic/*",
+]
+
+fixable = [
+    "I",
+]
+
+[format]
+quote-style = "single"
+indent-style = "space"
+
+[lint.flake8-bandit]
+check-typed-exception = true

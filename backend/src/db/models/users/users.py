@@ -1,7 +1,7 @@
-from src.db.base import Base
-from sqlalchemy.sql import func
-from sqlalchemy import String, DateTime
+from sqlalchemy import DateTime, String
 from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.sql import func
+from src.db.base import Base
 
 
 class UserModel(Base):

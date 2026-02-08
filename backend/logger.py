@@ -1,0 +1,181 @@
+import json
+import logging
+import logging.handlers
+import os
+import sys
+import traceback
+from datetime import datetime
+from typing import Any, Callable
+
+import pytz
+
+
+class LoggingRotate:
+
+    @staticmethod
+    def convert_to_moscow_time(value=None):
+        moscow_tz = pytz.timezone("Europe/Moscow")
+        if not value:
+            value = datetime.now(tz=moscow_tz)
+        if value is not None:
+            if value.tzinfo is None:
+                value = value.replace(tzinfo=pytz.utc)
+            value = value.astimezone(moscow_tz)
+            return value.replace(tzinfo=None)
+        return None
+
+    def __init__(
+        self,
+        log_file: str,
+        level=logging.CRITICAL,
+        max_bytes: int = 10 * 1024 * 1024,
+        backup_count: int = 5,
+    ):
+        self.logger = logging.getLogger(__name__)
+        self.logger.setLevel(level)
+
+        handler = logging.handlers.RotatingFileHandler(
+            log_file,
+            maxBytes=max_bytes,
+            backupCount=backup_count,
+        )
+        handler.setLevel(level)
+
+        formatter = logging.Formatter(
+            "%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+        )
+        handler.setFormatter(formatter)
+
+        self.logger.addHandler(handler)
+
+    def prepear_text(self, text=None):
+        result = ""
+        if text is not None:
+            if isinstance(text, dict):
+                result += (
+                    json.dumps(
+                        self.convert_dict_to_str(text),
+                        ensure_ascii=False,
+                        indent=4,
+                    )
+                    + "\n"
+                )
+            else:
+                result += str(text)
+        return result
+
+    def message_print(self, text=None):
+        if text is not None:
+            print(f"\033[37m\033[1m{self.prepear_text(text)}\033[0m")
+
+    def debug(self, msg: str, console_log: bool = True):
+        self._log_message(
+            msg,
+            self.logger.debug,
+            console_log,
+            self.message_print,
+        )
+
+    def info(self, msg: str, console_log: bool = True):
+        self._log_message(msg, self.logger.info, console_log, self.green_print)
+
+    def warning(self, msg: str, console_log: bool = True):
+        self._log_message(
+            msg,
+            self.logger.warning,
+            console_log,
+            self.warning_print,
+        )
+
+    def error(self, msg: str, console_log: bool = True):
+        self._log_message(msg, self.logger.error, console_log, self.red_print)
+
+    def critical(self, msg: str, console_log: bool = True):
+        self._log_message(
+            msg,
+            self.logger.critical,
+            console_log,
+            self.blackonred_print,
+        )
+
+    def _log_message(
+        self,
+        msg: str,
+        log_func: Callable[[str], Any],
+        console_log: bool,
+        print_func: Callable[[str], Any],
+    ):
+        """Общая функция для логирования сообщений."""
+        date = str(self.convert_to_moscow_time())
+        msg = date + " " + msg
+        if isinstance(msg, str):
+            txt = self.prepare_text(msg)
+            if console_log:
+                print_func(txt)
+            log_func(txt)
+
+    def red_print(self, text=None):
+        if text is not None:
+            print(f"\033[31m\033[1m{self.prepare_text(text)}\033[0m")
+
+    def green_print(self, text=None):
+        if text is not None:
+            print(f"\033[32m\033[1m{self.prepare_text(text)}\033[0m")
+
+    def warning_print(self, text=None):
+        if text is not None:
+            print(f"\033[35m\033[1m{self.prepare_text(text)}\033[0m")
+
+    def blackonred_print(self, text=None):
+        if text is not None:
+            print(f"\033[31m\033[1m\033[7m{self.prepare_text(text)}\033[0m")
+
+    def prepare_text(self, text=None) -> str:
+        if text is None:
+            return ""
+
+        if isinstance(text, dict):
+            return (
+                json.dumps(
+                    self.convert_dict_to_str(text),
+                    ensure_ascii=False,
+                    indent=4,
+                )
+                + "\n"
+            )
+
+        return str(text)
+
+    def convert_dict_to_str(self, data) -> dict:
+        if isinstance(data, dict):
+            return {
+                key: (
+                    self.convert_dict_to_str(value)
+                    if isinstance(value, dict)
+                    else str(value)
+                )
+                for key, value in data.items()
+            }
+
+        return data
+
+    def print_exception(self) -> None:
+        _, exc_value, exc_tb = sys.exc_info()
+        tb_frames = traceback.extract_tb(exc_tb)
+        project_root = os.path.abspath(os.path.dirname(__file__))
+        your_frame = None
+        for frame in reversed(tb_frames):
+            frame_path = os.path.abspath(frame.filename)
+            if frame_path.startswith(project_root):
+                your_frame = frame
+                break
+        if your_frame is None:
+            your_frame = tb_frames[-1]
+
+        filename = your_frame.filename
+        line_number = your_frame.lineno
+
+        self.critical(f"{filename}:{line_number} - {exc_value}")
+
+
+logger = LoggingRotate("src/app.log", level=logging.CRITICAL)

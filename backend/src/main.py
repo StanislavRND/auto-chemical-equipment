@@ -1,27 +1,28 @@
 from contextlib import asynccontextmanager
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from src.db.database import engine
 from src.routers.routers import api_router
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    print("🚀 Приложение запущено")
     yield
-    await engine.dispose()
-    print("✅ Соединение с БД закрыто")
 
 
 app = FastAPI(
-    title="Opt Avto Him API",
-    description="API для системы Opt Avto Him",
+    title="ОптАвтоХим API",
+    description="API для системы ОптАвтоХим",
     lifespan=lifespan,
 )
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+        "http://localhost:8000",
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
