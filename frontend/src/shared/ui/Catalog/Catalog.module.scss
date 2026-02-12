@@ -1,0 +1,90 @@
+@import "@/shared/styles/mixin";
+
+.catalog {
+  display: inline-flex;
+  padding: 60px;
+  background-color: var(--white);
+  border-radius: 0.75rem;
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.06),
+    0 2px 4px rgba(0, 0, 0, 0.06),
+    0 4px 8px rgba(0, 0, 0, 0.06),
+    0 8px 16px rgba(0, 0, 0, 0.06),
+    0 16px 32px rgba(0, 0, 0, 0.06);
+  @include respond-to(desktop) {
+    padding: 30px;
+  }
+  @include respond-to(mobile) {
+    padding: 25px;
+  }
+}
+
+.dop {
+  padding-left: 40px;
+  border-left: 1px solid var(--text-tertiary);
+  @include respond-to(mobile) {
+    padding-left: 25px;
+  }
+}
+
+.title {
+  margin-bottom: 30px;
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  @include respond-to(desktop) {
+    font-size: 1.25rem;
+  }
+  @include respond-to(smile-mobile) {
+    font-size: 1rem;
+  }
+}
+
+.subtitle {
+  cursor: pointer;
+  padding-right: 40px;
+  color: var(--text-secondary);
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  @include respond-to(desktop) {
+    font-size: 0.875rem;
+  }
+  @include respond-to(mobile) {
+    padding-right: 25px;
+  }
+  @include respond-to(smile-mobile) {
+    font-size: 0.75rem;
+  }
+
+  &:not(:last-child) {
+    margin-bottom: 20px;
+  }
+
+  a {
+    color: var(--text-secondary);
+    transition: all 0.3s ease;
+    text-decoration: none;
+  }
+
+  &:hover a {
+    color: var(--blue-500);
+  }
+  
+  &:hover {
+    color: var(--blue-500);
+  }
+
+  &.active {
+    color: var(--blue-500);
+
+    a {
+      color: var(--blue-500);
+    }
+
+    svg {
+      color: var(--blue-500);
+    }
+  }
+}

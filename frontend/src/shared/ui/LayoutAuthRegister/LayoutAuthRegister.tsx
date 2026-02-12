@@ -23,7 +23,7 @@ export const LayoutAuthRegister = (props: LayoutAuthRegister) => {
     if (props.mode === "confirm" && props.onBackToRegister) {
       props.onBackToRegister();
     } else {
-      navigate("/");
+      navigate(-1);
     }
   };
 

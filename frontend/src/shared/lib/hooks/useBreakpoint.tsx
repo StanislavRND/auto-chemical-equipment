@@ -9,7 +9,7 @@ export const useBreakpoint = () => {
   useEffect(() => {
     const checkBreakpoint = () => {
       const width = window.innerWidth;
-      setIsMobile(width <= 480);
+      setIsMobile(width <= 500);
       setIsTablet(width <= 992);
       setIsLaptop(width <= 1536);
       setIsDesktop(width <= 1920);
