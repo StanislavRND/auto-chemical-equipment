@@ -1,0 +1,184 @@
+@import "@/shared/styles/mixin";
+
+.processOrder {
+  padding: 0px 0px 50px 0;
+  @include respond-to(tablet) {
+    padding: 0px 0px 1.5rem 0;
+  }
+}
+
+.container {
+  @include container;
+}
+
+.title {
+  font-size: 2rem;
+  color: var(--text-primary);
+  margin-bottom: 25px;
+  text-align: center;
+  @include respond-to(tablet) {
+    font-size: 1.5rem;
+  }
+  @include respond-to(mobile) {
+    font-size: 1.25rem;
+  }
+}
+
+.items {
+  display: flex;
+  flex-direction: column;
+}
+
+.item {
+  border: 1px solid var(--text-secondary);
+  padding: 25px 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  @include respond-to(tablet) {
+    padding: 20px 30px;
+  }
+  @include respond-to(mobile) {
+    padding: 15px 20px;
+  }
+  @include respond-to(smile-mobile) {
+    padding: 15px 15px;
+  }
+
+  &:first-child {
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+  }
+
+  &:last-child {
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+  }
+
+  &:not(:last-child) {
+    border-bottom: none;
+  }
+
+  &.active {
+    background-color: var(--blue-50);
+
+    .itemHeader {
+      button {
+        color: var(--blue-500);
+      }
+    }
+
+    .itemDescription {
+      max-height: 320px;
+      opacity: 1;
+      margin-top: 10px;
+    }
+  }
+}
+
+.itemHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  @include respond-to(mobile) {
+    gap: 15px;
+  }
+}
+
+.itemTitle {
+  font-size: 1.25rem;
+  font-weight: 500;
+  @include respond-to(tablet) {
+    font-size: 1rem;
+  }
+  @include respond-to(mobile) {
+    font-size: 0.875rem;
+  }
+  @include respond-to(smile-mobile) {
+    font-size: 0.8rem;
+  }
+
+  span {
+    margin-right: 10px;
+  }
+}
+
+.itemDescription {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition: all 0.3s ease;
+  color: var(--text-secondary);
+  font-size: 1rem;
+  padding-left: 25px;
+  @include respond-to(tablet) {
+    font-size: 0.875rem;
+    padding-left: 23px;
+  }
+  @include respond-to(mobile) {
+    font-size: 0.75rem;
+  }
+  @include respond-to(smile-mobile) {
+    padding-left: 20px;
+  }
+
+  .active & {
+    grid-template-rows: 1fr;
+    opacity: 1;
+    margin-top: 10px;
+    @include respond-to(mobile) {
+      margin-top: 2px !important;
+    }
+  }
+
+  & > div {
+    overflow: hidden;
+  }
+
+  .item:first-child & {
+    padding-left: 22px;
+    @include respond-to(tablet) {
+      padding-left: 20px;
+    }
+    @include respond-to(smile-mobile) {
+      padding-left: 18px;
+    }
+  }
+  .item:nth-child(2) & {
+    padding-left: 26px;
+    @include respond-to(tablet) {
+      padding-left: 23px;
+    }
+    @include respond-to(smile-mobile) {
+      padding-left: 21px;
+    }
+  }
+
+  .item:nth-child(4) & {
+    padding-left: 28px;
+    @include respond-to(tablet) {
+      padding-left: 25px;
+    }
+    @include respond-to(smile-mobile) {
+      padding-left: 22px;
+    }
+  }
+}
+
+button {
+  color: var(--text-secondary);
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: var(--blue-500);
+  }
+
+  svg {
+    width: 24px;
+    height: 24px;
+    transition: transform 0.3s ease;
+    @include respond-to(mobile) {
+      width: 20px;
+      height: 20px;
+    }
+  }
+}

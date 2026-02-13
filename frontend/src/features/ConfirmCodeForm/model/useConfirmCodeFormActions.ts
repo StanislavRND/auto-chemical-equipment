@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useRegisterVerify } from "../api/useRegisterVerify";
 
 export const useConfirmCodeForm = () => {
-  const { mutate: verify, isError, error } = useRegisterVerify();
+  const { mutate: verify, isError, error, isPending } = useRegisterVerify();
   const registrationData = useAppSelector((state) => state.registration);
 
   const [code, setCode] = useState<string[]>(["", "", "", ""]);
@@ -86,6 +86,7 @@ export const useConfirmCodeForm = () => {
   return {
     code,
     inputsRef,
+    isPending,
     handleChange,
     handleSubmit,
     handleKeyDown,

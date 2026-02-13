@@ -1,15 +1,13 @@
 import { Loader2 } from "lucide-react";
+import { type ButtonHTMLAttributes } from "react";
 import styles from "./Button.module.scss";
 
-interface ButtonProps {
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
   variant?: "primary" | "outline";
   size?: "sm" | "md" | "lg";
-  className?: string;
-  type?: "button" | "submit" | "reset";
   loading?: boolean;
   loaderColor?: string;
-  disabled?: boolean;
 }
 
 export const Button = ({
@@ -20,8 +18,8 @@ export const Button = ({
   className = "",
   loading = false,
   loaderColor,
-  disabled = false,
-  ...props
+  disabled,
+  ...props 
 }: ButtonProps) => {
   return (
     <button
@@ -32,7 +30,7 @@ export const Button = ({
         ${styles[size]}
         ${className}
       `}
-      disabled={disabled}
+      disabled={disabled || loading}
       {...props}
     >
       {loading ? (

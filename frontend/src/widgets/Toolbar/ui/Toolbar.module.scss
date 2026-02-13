@@ -1,0 +1,79 @@
+@import "@/shared/styles/mixin";
+
+.toolbar {
+  margin-top: 25px;
+}
+
+.container {
+  @include container;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 50px;
+  position: relative;
+  @include respond-to(laptop) {
+    gap: 30px;
+  }
+  @include respond-to(tablet) {
+    max-width: 94vw;
+  }
+}
+
+.btn {
+  min-width: 190px;
+  width: 190px;
+  display: flex;
+  gap: 10px;
+
+  .menuIcon {
+    width: 20px;
+  }
+
+  @include respond-to(tablet) {
+    display: none;
+  }
+}
+
+.inputWrapper {
+  width: 100%;
+  position: relative;
+
+  .input {
+    padding-right: 50px;
+  }
+
+  .searchIcon {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-secondary);
+    width: 18px;
+  }
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  @include respond-to(tablet) {
+    display: none;
+  }
+
+  .actionsIcon {
+    min-width: 28px;
+    min-height: 28px;
+    color: var(--text-secondary);
+    transition: all 0.3s ease;
+
+    &:hover {
+      color: var(--blue-500);
+    }
+  }
+}
+
+.toolbarCatalog {
+  position: absolute;
+  top: 65px;
+  left: 15px;
+}

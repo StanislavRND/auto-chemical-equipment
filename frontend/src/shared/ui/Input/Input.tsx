@@ -10,6 +10,7 @@ interface InputProps {
   onBlur?: () => void;
   type?: string;
   id?: string;
+  className?: string;
   "aria-label"?: string;
 }
 
@@ -20,6 +21,7 @@ export const Input = ({
   onBlur,
   type = "text",
   id,
+  className = "",
   "aria-label": ariaLabel,
 }: InputProps) => {
   const [isFocused, setIsFocused] = useState(false);
@@ -64,7 +66,7 @@ export const Input = ({
       <input
         id={inputId}
         type={inputType}
-        className={styles.input}
+        className={`${styles.input} ${className}`}
         value={inputValue}
         onChange={handleChange}
         onFocus={() => setIsFocused(true)}

@@ -27,3 +27,17 @@ $breakpoint-desktop: 1920px;
     }
   }
 }
+
+@mixin container {
+  height: 100%;
+  max-width: 80vw;
+  margin: 0 auto;
+  padding: 0 15px;
+
+  @include respond-to(desktop) {
+    max-width: 94vw;
+  }
+  @include respond-to(mobile) {
+    max-width: 97vw;
+  }
+}

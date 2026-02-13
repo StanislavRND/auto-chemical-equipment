@@ -1,63 +1,51 @@
+import { CATALOG_ITEMS, SUBCATALOG_ITEMS } from "@shared/lib/data/catalog";
+import { useCatalog } from "@shared/lib/hooks/useCatalog";
 import { ChevronRight } from "lucide-react";
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "./Catalog.module.scss";
 
-export const Catalog = () => {
-  const [isOpen, setIsOpen] = useState(false);
+interface CatalogProps {
+  isOpen: boolean;
+  onClose: () => void;
+  className: string;
+}
 
-  const CATALOG_ITEMS = [
-    { name: "Автохимия" },
-    { name: "Масло и тех.жидкости" },
-    { name: "Антифризы" },
-    { name: "Стеклоочистители" },
-    { name: "Аксессуары" },
-    { name: "Инструменты" },
-    { name: "Диски и шины" },
-    { name: "Запчасти" },
-    { name: "Аккумуляторные батареи" },
-    { name: "Оборудование" },
-  ];
-
-  const SUBCATALOG_ITEMS = [
-    { name: "Очистители", path: "/catalog/avtohimiya/ochistiteli" },
-    {
-      name: "Средства для мойки",
-      path: "/catalog/avtohimiya/sredstva-dlya-moyki",
-    },
-    { name: "Шампуни", path: "/catalog/avtohimiya/shampuni" },
-  ];
-
-  const toggleCatalog = () => {
-    setIsOpen(!isOpen);
-  };
+export const Catalog = ({ isOpen, onClose, className }: CatalogProps) => {
+  const { catalogRef, activeSubCatalog, handleItemClick } = useCatalog({
+    isOpen,
+    onClose,
+  });
+  if (!isOpen) return null;
 
   return (
-    <div className={styles.catalog}>
+    <section className={`${styles.catalog} ${className}`} ref={catalogRef}>
+      <div className={styles.overlay} onClick={onClose} />
       <div className={styles.general}>
         <div className={styles.title}>Каталог</div>
         {CATALOG_ITEMS.map((item, index) => (
           <div
             key={index}
-            className={`${styles.subtitle} ${isOpen && item.name === "Автохимия" ? styles.active : ""}`}
-            onClick={item.name === "Автохимия" ? toggleCatalog : undefined}
+            className={`${styles.subtitle} ${activeSubCatalog === item.name ? styles.active : ""}`}
+            onClick={() => handleItemClick(item.name)}
           >
             <span>{item.name}</span>
-            {isOpen && item.name === "Автохимия" && <ChevronRight size={16} />}
+            {activeSubCatalog === "Автохимия" && item.name === "Автохимия" && (
+              <ChevronRight size={16} />
+            )}
           </div>
         ))}
       </div>
 
-      {isOpen && (
+      {activeSubCatalog === "Автохимия" && (
         <div className={styles.dop}>
           <div className={styles.title}>Автохимия</div>
           {SUBCATALOG_ITEMS.map((item, index) => (
-            <div key={index} className={styles.subtitle}>
+            <div key={index} className={styles.subtitle} onClick={onClose}>
               <Link to={item.path}>{item.name}</Link>
             </div>
           ))}
         </div>
       )}
-    </div>
+    </section>
   );
 };

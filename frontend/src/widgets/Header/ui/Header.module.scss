@@ -9,16 +9,10 @@
 }
 
 .container {
-  height: 100%;
-  max-width: 80vw;
-  margin: 0 auto;
-  padding: 0 15px;
+  @include container;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  @include respond-to(tablet) {
-    max-width: 94vw;
-  }
 }
 
 .img img {
@@ -42,14 +36,15 @@
 
   .item {
     a {
-      font-size: 1.25rem;
+      font-size: 1rem;
       font-weight: 500;
       position: relative;
       color: var(--text-primary);
-    }
+      transition: all 0.2s ease;
 
-    &:hover {
-      transform: translateY(-2px);
+      &:hover {
+        color: var(--blue-500);
+      }
     }
 
     &.active a {
@@ -73,16 +68,17 @@
   flex-direction: column;
 
   .phone {
-    font-size: 1.25rem;
+    font-size: 1.2rem;
     font-weight: 600;
-    @include respond-to(tablet) {
+
+    @include respond-to(desktop) {
       font-size: 0.875rem;
     }
   }
 
   .email {
     font-size: 1rem;
-    @include respond-to(tablet) {
+    @include respond-to(desktop) {
       font-size: 0.75rem;
     }
   }

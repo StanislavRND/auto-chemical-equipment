@@ -1,7 +1,7 @@
 @import "@/shared/styles/mixin";
 
 .catalog {
-  display: inline-flex;
+  display: flex;
   padding: 60px;
   background-color: var(--white);
   border-radius: 0.75rem;
@@ -19,6 +19,8 @@
   }
 }
 
+
+
 .dop {
   padding-left: 40px;
   border-left: 1px solid var(--text-tertiary);
@@ -28,7 +30,7 @@
 }
 
 .title {
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   font-size: 1.5rem;
   font-weight: 500;
   color: var(--text-primary);
@@ -59,7 +61,7 @@
   }
 
   &:not(:last-child) {
-    margin-bottom: 20px;
+    margin-bottom: 12px;
   }
 
   a {
@@ -71,7 +73,7 @@
   &:hover a {
     color: var(--blue-500);
   }
-  
+
   &:hover {
     color: var(--blue-500);
   }

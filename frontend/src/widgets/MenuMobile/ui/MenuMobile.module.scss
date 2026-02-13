@@ -1,12 +1,18 @@
 @import "@/shared/styles/mixin";
 
 .menu {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  z-index: 1000;
   height: 80px;
-  max-width: 90vw;
   margin: 0 auto;
-  @include respond-to(mobile) {
-    max-width: 92vw;
-  }
+  padding: 0 20px;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.05);
 }
 
 .items {
@@ -47,9 +53,9 @@
     width: 20px;
     height: 20px;
     stroke: var(--text-secondary);
-    @include respond-to(mobile) {
-      width: 18px;
-      height: 18px;
+    @include respond-to(smile-mobile) {
+      width: 16px;
+      height: 16px;
     }
   }
 
@@ -57,8 +63,8 @@
     font-size: 0.75rem;
     font-weight: 500;
     color: var(--text-secondary);
-    @include respond-to(mobile) {
-      font-size: 0.7rem;
+    @include respond-to(smile-mobile) {
+      font-size: 0.65rem;
     }
   }
 }

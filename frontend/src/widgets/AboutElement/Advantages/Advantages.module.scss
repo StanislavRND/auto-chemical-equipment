@@ -1,0 +1,108 @@
+@import "@shared/styles/_mixin.scss";
+
+.advantages {
+  width: 100%;
+  padding: 3rem 0;
+  @include respond-to(tablet) {
+    padding: 1.5rem 0;
+  }
+}
+
+.container {
+  @include container;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  @include respond-to(tablet) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card {
+  padding: 1rem 1.5rem;
+  border-radius: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 1rem;
+
+  .iconWrapper {
+    width: 64px;
+    height: 64px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 8px;
+
+    svg {
+      width: 32px;
+      height: 32px;
+      stroke-width: 1.5;
+    }
+  }
+
+  h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    @include respond-to(tablet) {
+      font-size: 1rem;
+    }
+  }
+
+  p {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    @include respond-to(tablet) {
+      font-size: 0.75rem;
+    }
+  }
+
+  &.orange {
+    border: 2px solid var(--orange-100);
+    grid-row: span 2;
+    background: var(--orange-50);
+    .iconWrapper {
+      background: var(--orange-500);
+    }
+    svg {
+      color: var(--orange-500);
+    }
+    h3 {
+      color: var(--orange-500);
+    }
+  }
+
+  &.green {
+    border: 2px solid var(--green-100);
+    background: var(--green-50);
+    .iconWrapper {
+      background: var(--green-500);
+    }
+    svg {
+      color: var(--green-500);
+    }
+    h3 {
+      color: var(--green-500);
+    }
+  }
+
+  &.blue {
+    border: 2px solid var(--blue-100);
+    background: var(--blue-50);
+    .iconWrapper {
+      background: var(--blue-500);
+    }
+    svg {
+      color: var(--blue-500);
+    }
+    h3 {
+      color: var(--blue-500);
+    }
+  }
+}

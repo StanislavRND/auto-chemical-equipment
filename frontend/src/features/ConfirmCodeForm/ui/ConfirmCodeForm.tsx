@@ -10,6 +10,7 @@ export const ConfirmCodeForm = () => {
   const {
     code,
     inputsRef,
+    isPending,
     apiErrorMessage,
     handleChange,
     handleKeyDown,
@@ -51,7 +52,8 @@ export const ConfirmCodeForm = () => {
 
       <div className={styles.wrapperBtn}>
         {" "}
-        <Button type="submit" className={styles.btn} size={buttonSize}>
+        <Button  disabled={isPending}
+        loading={isPending} type="submit" className={styles.btn} size={buttonSize}>
           Отправить
         </Button>
       </div>

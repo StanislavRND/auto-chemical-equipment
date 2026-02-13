@@ -1,0 +1,184 @@
+@import "@shared/styles/_mixin.scss";
+
+.reviews {
+  background: var(--blue-50);
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  padding: 90px 0;
+  margin-bottom: 3rem;
+  @include respond-to(tablet) {
+    padding: 40px 0;
+    margin-bottom: 1.5rem;
+  }
+}
+
+.container {
+  @include container;
+  max-width: 70vw;
+  @include respond-to(desktop) {
+    max-width: 85vw;
+  }
+}
+
+.header {
+  margin-bottom: 30px;
+  text-align: center;
+
+  h2 {
+    color: var(--text-secondary);
+    font-size: 2rem;
+    font-weight: 500;
+
+    @include respond-to(tablet) {
+      font-size: 1.5rem;
+    }
+    @include respond-to(mobile) {
+      font-size: 1.25rem;
+    }
+  }
+}
+
+.contentWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  min-height: 300px;
+  @include respond-to(tablet) {
+    min-height: auto;
+  }
+}
+
+.navButton {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--blue-500);
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+
+  &.navPrev {
+    left: 0;
+  }
+
+  &.navNext {
+    right: 0;
+  }
+
+  &:hover {
+    background: var(--blue-600);
+  }
+  @include respond-to(tablet) {
+    display: none;
+  }
+}
+
+.reviewCard {
+  max-width: 600px;
+  width: 100%;
+  text-align: center;
+  @include respond-to(tablet) {
+    max-width: 100%;
+    overflow-x: auto;
+    display: flex;
+    gap: 20px;
+    padding-bottom: 20px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+
+    scrollbar-width: none;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+}
+
+.reviewSlide {
+  @include respond-to(tablet) {
+    flex: 0 0 100%;
+    scroll-snap-align: start;
+    padding-right: 20px;
+  }
+}
+
+.company {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 12px;
+
+  h3 {
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    @include respond-to(tablet) {
+      font-size: 1rem;
+    }
+  }
+
+  span {
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 1rem;
+  }
+}
+
+.rating {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 30px;
+  justify-content: center;
+}
+
+.text {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  text-align: center;
+  @include respond-to(tablet) {
+    font-size: 0.875rem;
+  }
+}
+
+.progress {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+  @include respond-to(tablet) {
+    margin-top: 20px;
+  }
+}
+
+.progressBar {
+  width: 300px;
+  height: 4px;
+  background: var(--grey-50);
+  border-radius: 2px;
+  position: relative;
+  overflow: hidden;
+  @include respond-to(tablet) {
+    width: 200px;
+  }
+
+  .progressFill {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    background: var(--blue-600);
+    border-radius: 2px;
+    transition: width 0.3s ease;
+  }
+}
