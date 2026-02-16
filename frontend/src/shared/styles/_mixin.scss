@@ -38,6 +38,6 @@ $breakpoint-desktop: 1920px;
     max-width: 94vw;
   }
   @include respond-to(mobile) {
-    max-width: 97vw;
+    max-width: 100vw;
   }
 }

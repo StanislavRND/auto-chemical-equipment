@@ -11,6 +11,7 @@
     opacity: 0.5;
     cursor: not-allowed;
   }
+
 }
 
 .sm {
@@ -34,13 +35,14 @@
 
   &:hover:not(:disabled) {
     background-color: var(--blue-600);
+    color: white !important;
   }
 }
 
 .outline {
   background-color: transparent;
   color: var(--blue-500);
-  border: 2px solid var(--blue-500);
+  border: 1px solid var(--blue-500);
 
   &:hover:not(:disabled) {
     background-color: var(--blue-50);

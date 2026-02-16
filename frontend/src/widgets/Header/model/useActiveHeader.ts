@@ -14,7 +14,7 @@ export const useActiveHeader = () => {
       } else if (currentPath.includes("/about")) {
         setActivePath("/about");
       } else {
-        setActivePath("");
+        setActivePath("/home");
       }
     }, 0);
 

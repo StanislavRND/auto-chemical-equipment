@@ -1,7 +1,12 @@
 import { MainLayout } from "@app/layouts/BaseLayout/BaseLayout";
 import { AboutPage } from "@pages/About/ui/About";
 import { AuthPage } from "@pages/Auth/ui/AuthPage";
+import { CartPage } from "@pages/Cart/ui/CartPage";
+import { AccessDeniedPage } from "@pages/Fallback/AccessDeniedPage/AccessDeniedPage";
+import { NotFoundPage } from "@pages/Fallback/NotFoundPage/NotFoundPage";
 import { HomePage } from "@pages/Home/HomePage";
+import { ProfileMePage } from "@pages/ProfileMe/ui/ProfileMePage";
+import { ProfileOrdersPage } from "@pages/ProfileOrders/ui/ProfileOrdersPage";
 import { RegisterPage } from "@pages/Register/ui/RegisterPage";
 import {
   createBrowserRouter,
@@ -9,11 +14,12 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import { PATHS } from "./paths";
+import { ProtectedRoute } from "./ProtectedRoute";
 
 const router = createBrowserRouter([
   {
     path: PATHS.ROOT,
-    element: <Navigate to={PATHS.LOGIN} replace />,
+    element: <Navigate to={PATHS.HOME} replace />,
   },
 
   {
@@ -25,6 +31,14 @@ const router = createBrowserRouter([
     element: <RegisterPage />,
   },
   {
+    path: PATHS.ACCESS_DENIED,
+    element: <AccessDeniedPage />,
+  },
+  {
+    path: PATHS.NOT_FOUND,
+    element: <NotFoundPage />,
+  },
+  {
     element: <MainLayout />,
     children: [
       {
@@ -34,6 +48,23 @@ const router = createBrowserRouter([
       {
         path: PATHS.ABOUT,
         element: <AboutPage />,
+      },
+      {
+        path: PATHS.CART,
+        element: <CartPage />,
+      },
+      {
+        element: <ProtectedRoute />,
+        children: [
+          {
+            path: PATHS.PROFILEME,
+            element: <ProfileMePage />,
+          },
+          {
+            path: PATHS.PROFILEORDERS,
+            element: <ProfileOrdersPage />,
+          },
+        ],
       },
     ],
   },

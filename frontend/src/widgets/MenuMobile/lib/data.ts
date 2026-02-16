@@ -17,7 +17,7 @@ export interface MenuItem {
 export const menuItems: MenuItem[] = [
   { id: "home", icon: Home, label: "Главная", path: "/home" },
   { id: "about", icon: Info, label: "О нас", path: "/about" },
-  { id: "catalog", icon: Menu, label: "Каталог", path: "/catalog" },
+  { id: "catalog", icon: Menu, label: "Каталог", path: "" },
   { id: "cart", icon: ShoppingCart, label: "Корзина", path: "/cart" },
-  { id: "profile", icon: UserRound, label: "Профиль", path: "/profile" },
+  { id: "profile", icon: UserRound, label: "Профиль", path: "/profile/me" },
 ];

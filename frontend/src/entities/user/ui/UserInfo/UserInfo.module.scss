@@ -1,0 +1,105 @@
+@import "@/shared/styles/mixin";
+
+.wrapper {
+  padding: 40px 0;
+  @include respond-to(tablet) {
+    padding: 20px 0;
+  }
+}
+.container {
+  @include container;
+}
+
+.userInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 40px;
+  gap: 80px;
+  @include respond-to(laptop) {
+    gap: 50px;
+  }
+  @include respond-to(tablet) {
+    flex-direction: column;
+    margin-top: 25px;
+    gap: 30px;
+  }
+}
+
+.leftBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  .avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    border: 1px solid var(--blue-100);
+    background-color: var(--blue-50);
+    @include respond-to(laptop) {
+      width: 180px;
+      height: 180px;
+    }
+  }
+
+  .icon {
+    @include respond-to(laptop) {
+      width: 64px;
+      height: 64px;
+    }
+  }
+
+  .name {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--blue-500);
+    text-align: center;
+    @include respond-to(laptop) {
+      font-size: 1.25rem;
+    }
+  }
+}
+
+.rightBlock {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  .inputs {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    @include respond-to(tablet) {
+      grid-template-columns: repeat(1, 1fr);
+    }
+  }
+
+  .input {
+    &:disabled {
+      background-color: var(--white);
+      cursor: default;
+    }
+  }
+
+  .btnWrapper {
+    display: flex;
+    justify-content: end;
+    margin-top: 20px;
+    @include respond-to(tablet) {
+      justify-content: center;
+      margin-top: 30px;
+    }
+  }
+
+  .btn {
+    max-width: 200px;
+    @include respond-to(laptop) {
+      max-width: 140px;
+      height: 40px;
+    }
+  }
+}

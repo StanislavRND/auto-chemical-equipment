@@ -1,3 +1,5 @@
+import type { Category } from "@shared/api/catalog/catalog";
+import { useAuth } from "@shared/lib/hooks/useAuth";
 import { useBreakpoint } from "@shared/lib/hooks/useBreakpoint";
 import { Button } from "@shared/ui/Button/Button";
 import { Catalog } from "@shared/ui/Catalog/Catalog";
@@ -6,9 +8,23 @@ import { Menu, Search, ShoppingCart, UserRound } from "lucide-react";
 import { useToolbar } from "../model/useToolbar";
 import styles from "./Toolbar.module.scss";
 
-export const Toolbar = () => {
+interface ToolbarProps {
+  categories: Category[];
+  loading: boolean;
+  error: Error | null;
+}
+
+export const Toolbar = (props: ToolbarProps) => {
   const { isLaptop, isMobile, isTablet } = useBreakpoint();
-  const { isCatalogOpen, setIsCatalogOpen, toggleCatalog } = useToolbar();
+  const {
+    isCatalogOpen,
+    setIsCatalogOpen,
+    toggleCatalog,
+    handleToLogin,
+    handleToCart,
+    handleToProfile,
+  } = useToolbar();
+  const { isAuthenticated } = useAuth();
 
   const buttonSize = isLaptop || isMobile || isTablet ? "md" : "lg";
 
@@ -28,15 +44,34 @@ export const Toolbar = () => {
           <Input placeholder="Поиск" className={styles.input} />
           <Search className={styles.searchIcon} />
         </div>
-        <div className={styles.actions}>
-          <button type="button" aria-label="Корзина">
-            <ShoppingCart className={styles.actionsIcon} />
-          </button>
-          <button type="button" aria-label="Профиль">
-            <UserRound className={styles.actionsIcon} />
-          </button>
-        </div>
+        {isAuthenticated ? (
+          <div className={styles.actions}>
+            <button onClick={handleToCart} type="button" aria-label="Корзина">
+              <ShoppingCart className={styles.actionsIcon} />
+            </button>
+            <button
+              onClick={handleToProfile}
+              type="button"
+              aria-label="Профиль"
+            >
+              <UserRound className={styles.actionsIcon} />
+            </button>
+          </div>
+        ) : (
+          <Button
+            size={buttonSize}
+            className={styles.btnLogin}
+            variant="outline"
+            onClick={handleToLogin}
+          >
+            Войти
+          </Button>
+        )}
+
         <Catalog
+          categories={props.categories || []}
+          loading={props.loading}
+          error={props.error}
           className={styles.toolbarCatalog}
           isOpen={isCatalogOpen}
           onClose={() => setIsCatalogOpen(false)}

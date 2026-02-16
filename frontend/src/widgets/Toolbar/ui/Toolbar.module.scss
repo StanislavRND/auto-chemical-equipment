@@ -2,6 +2,9 @@
 
 .toolbar {
   margin-top: 25px;
+  @include respond-to(mobile) {
+    margin-top: 15px;
+  }
 }
 
 .container {
@@ -13,9 +16,6 @@
   position: relative;
   @include respond-to(laptop) {
     gap: 30px;
-  }
-  @include respond-to(tablet) {
-    max-width: 94vw;
   }
 }
 
@@ -31,6 +31,17 @@
 
   @include respond-to(tablet) {
     display: none;
+  }
+}
+
+.btnLogin {
+  min-width: 190px;
+  width: 190px;
+  @include respond-to(tablet) {
+    min-width: 140px;
+  }
+  @include respond-to(mobile) {
+    min-width: 110px;
   }
 }
 
@@ -63,12 +74,8 @@
   .actionsIcon {
     min-width: 28px;
     min-height: 28px;
-    color: var(--text-secondary);
     transition: all 0.3s ease;
-
-    &:hover {
-      color: var(--blue-500);
-    }
+    color: var(--text-secondary);
   }
 }
 

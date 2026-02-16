@@ -1,32 +1,49 @@
-import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
-import type { MenuItem } from "../lib/data";
+import { useAuth } from "@shared/lib/hooks/useAuth";
+import { useMemo, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { menuItems, type MenuItem } from "../lib/data";
 
-export const useActiveMenu = (
-  items: MenuItem[],
-  defaultPath: string = "/home",
-) => {
+export const useActiveMenu = (items: MenuItem[]) => {
+  const [isCatalogOpen, setIsCatalogOpen] = useState(false);
   const location = useLocation();
-  const [activePath, setActivePath] = useState<string>(defaultPath);
+  const { isAuthenticated } = useAuth();
+  const navigate = useNavigate();
 
-  useEffect(() => {
+  const activePath = useMemo(() => {
     const currentPath = location.pathname;
 
-    const timeoutId = setTimeout(() => {
-      for (const item of items) {
-        if (
-          currentPath.includes(item.path) ||
-          (item.path === "/home" && (currentPath === "/" || currentPath === ""))
-        ) {
-          setActivePath(item.path);
-          return;
-        }
-      }
-      setActivePath(defaultPath);
-    }, 0);
+    const activeItem = items.find(
+      (item) => item.id !== "catalog" && currentPath.includes(item.path),
+    );
 
-    return () => clearTimeout(timeoutId);
-  }, [location, items, defaultPath]);
+    if (activeItem) {
+      return activeItem.path;
+    } else {
+      const homeItem = items.find((item) => item.id === "home");
+      return homeItem?.path || "";
+    }
+  }, [location.pathname, items]);
 
-  return { activePath };
+  const filteredMenuItems = menuItems.filter((item) => {
+    if (item.path === "/profile" && !isAuthenticated) {
+      return false;
+    }
+    return true;
+  });
+
+  const handleNavigate = (path: string, itemId: string) => {
+    if (itemId === "catalog") {
+      setIsCatalogOpen((prev) => !prev);
+      return;
+    }
+    navigate(path);
+  };
+
+  return {
+    activePath,
+    isCatalogOpen,
+    setIsCatalogOpen,
+    filteredMenuItems,
+    handleNavigate,
+  };
 };

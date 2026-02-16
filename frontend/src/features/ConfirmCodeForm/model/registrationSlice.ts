@@ -3,6 +3,7 @@ import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 export interface RegistrationData {
   inn: string;
   kpp: string;
+  legal_name: string;
   legal_address: string;
   email: string;
   password: string;
@@ -12,6 +13,7 @@ export interface RegistrationData {
 const initialState: RegistrationData = {
   inn: "",
   kpp: "",
+  legal_name: "",
   legal_address: "",
   email: "",
   password: "",
@@ -35,6 +37,5 @@ const registrationSlice = createSlice({
   },
 });
 
-export const { updateField, setFormData, } =
-  registrationSlice.actions;
+export const { updateField, setFormData } = registrationSlice.actions;
 export default registrationSlice.reducer;

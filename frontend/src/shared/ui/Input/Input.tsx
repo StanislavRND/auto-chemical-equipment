@@ -1,6 +1,6 @@
 import { useBreakpoint } from "@shared/lib/hooks/useBreakpoint";
 import { Eye, EyeOff } from "lucide-react";
-import { useId, useState } from "react";
+import { useEffect, useId, useState } from "react";
 import styles from "./Input.module.scss";
 
 interface InputProps {
@@ -11,7 +11,9 @@ interface InputProps {
   type?: string;
   id?: string;
   className?: string;
+  disabled?: boolean;
   "aria-label"?: string;
+  floatingColor?: string;
 }
 
 export const Input = ({
@@ -21,7 +23,9 @@ export const Input = ({
   onBlur,
   type = "text",
   id,
+  disabled,
   className = "",
+  floatingColor,
   "aria-label": ariaLabel,
 }: InputProps) => {
   const [isFocused, setIsFocused] = useState(false);
@@ -31,6 +35,10 @@ export const Input = ({
 
   const generatedId = useId();
   const inputId = id || `input-${generatedId}`;
+
+  useEffect(() => {
+    setInputValue(value);
+  }, [value]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
@@ -72,6 +80,7 @@ export const Input = ({
         onFocus={() => setIsFocused(true)}
         onBlur={handleBlur}
         aria-label={ariaLabel || placeholder}
+        disabled={disabled}
       />
 
       {type === "password" &&
@@ -102,6 +111,9 @@ export const Input = ({
         className={`${styles.label} ${getHeightLabelClass()} ${
           shouldFloat ? styles.floating : ""
         }`}
+        style={
+          shouldFloat && floatingColor ? { color: floatingColor } : undefined
+        }
       >
         {placeholder}
       </label>

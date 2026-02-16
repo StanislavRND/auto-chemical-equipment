@@ -1,0 +1,33 @@
+@import "@/shared/styles/mixin";
+
+.actions {
+  display: flex;
+  gap: 30px;
+  @include respond-to(tablet) {
+    justify-content: center;
+  }
+}
+
+.btn {
+  max-width: 180px;
+  height: 44px;
+  transition: 0.3s ease;
+  background-color: var(--white);
+  border: 1px solid var(--text-tertiary);
+  color: var(--text-secondary);
+  @include respond-to(mobile) {
+    max-width: 100%;
+  }
+
+  &.active {
+    background-color: var(--blue-50);
+    border: 1px solid var(--blue-500);
+    color: var(--blue-500);
+  }
+
+  &:hover {
+    background-color: var(--blue-50);
+    border: 1px solid var(--blue-500);
+    color: var(--blue-500);
+  }
+}

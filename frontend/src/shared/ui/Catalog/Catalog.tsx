@@ -1,47 +1,97 @@
-import { CATALOG_ITEMS, SUBCATALOG_ITEMS } from "@shared/lib/data/catalog";
+import type { Category } from "@shared/api/catalog/catalog";
 import { useCatalog } from "@shared/lib/hooks/useCatalog";
 import { ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import { ErrorMessage } from "../ErrorMessage/ErrorMessage";
+import { Loader } from "../Loader/Loader";
 import styles from "./Catalog.module.scss";
 
 interface CatalogProps {
   isOpen: boolean;
   onClose: () => void;
-  className: string;
+  className?: string;
+  categories: Category[];
+  loading: boolean;
+  error: Error | null;
 }
 
-export const Catalog = ({ isOpen, onClose, className }: CatalogProps) => {
-  const { catalogRef, activeSubCatalog, handleItemClick } = useCatalog({
+export const Catalog = ({
+  isOpen,
+  onClose,
+  className,
+  categories,
+  loading,
+  error,
+}: CatalogProps) => {
+  const {
+    catalogRef,
+    activeSubCatalog,
+    activeCategory,
+    hasSubcategories,
+    categoriesWithSubcats,
+    handleItemClick,
+  } = useCatalog({
     isOpen,
     onClose,
+    categories,
   });
+
   if (!isOpen) return null;
+
+  if (loading)
+    return (
+      <section className={`${styles.catalog} ${className}`} ref={catalogRef}>
+        <Loader size={32} text="Загрузка каталога..." />
+      </section>
+    );
+
+  if (error)
+    return (
+      <section className={`${styles.catalog} ${className}`} ref={catalogRef}>
+        <ErrorMessage message="Ошибка получения каталога" />
+      </section>
+    );
 
   return (
     <section className={`${styles.catalog} ${className}`} ref={catalogRef}>
-      <div className={styles.overlay} onClick={onClose} />
+      <div
+        className={styles.overlay}
+        onClick={(e) => {
+          e.stopPropagation();
+          onClose();
+        }}
+      />
+
       <div className={styles.general}>
         <div className={styles.title}>Каталог</div>
-        {CATALOG_ITEMS.map((item, index) => (
+        {categoriesWithSubcats.map((category) => (
           <div
-            key={index}
-            className={`${styles.subtitle} ${activeSubCatalog === item.name ? styles.active : ""}`}
-            onClick={() => handleItemClick(item.name)}
+            key={category.id}
+            className={`${styles.subtitle} ${activeSubCatalog === category.name ? styles.active : ""}`}
+            onClick={() =>
+              handleItemClick(category.name, category.hasSubcats, category.id)
+            }
           >
-            <span>{item.name}</span>
-            {activeSubCatalog === "Автохимия" && item.name === "Автохимия" && (
+            <span>{category.name}</span>
+            {activeSubCatalog === category.name && category.hasSubcats && (
               <ChevronRight size={16} />
             )}
           </div>
         ))}
       </div>
 
-      {activeSubCatalog === "Автохимия" && (
+      {activeCategory && hasSubcategories && activeCategory.subcategories && (
         <div className={styles.dop}>
-          <div className={styles.title}>Автохимия</div>
-          {SUBCATALOG_ITEMS.map((item, index) => (
-            <div key={index} className={styles.subtitle} onClick={onClose}>
-              <Link to={item.path}>{item.name}</Link>
+          <div className={styles.title}>{activeCategory.name}</div>
+          {activeCategory.subcategories.map((subcategory) => (
+            <div
+              key={subcategory.id}
+              className={styles.subtitle}
+              onClick={onClose}
+            >
+              <Link to={`/catalog/${activeCategory.id}/${subcategory.id}`}>
+                {subcategory.name}
+              </Link>
             </div>
           ))}
         </div>

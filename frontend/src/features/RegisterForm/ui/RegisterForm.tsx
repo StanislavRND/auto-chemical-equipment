@@ -19,15 +19,19 @@ export const RegisterForm = ({ onSuccess }: RegisterFormProps) => {
     innError,
     kppError,
     legalAddressError,
+    legalNameError,
     emailError,
     passwordError,
     confirmPasswordError,
+    apiCompanyErrorMessage,
     isPending,
     isSuccess,
+    isCompanyLoading,
     apiErrorMessage,
     handleBlur,
     handleChange,
     handleSubmit,
+    handleInnBlur,
   } = useRegisterForm();
 
   useEffect(() => {
@@ -49,7 +53,8 @@ export const RegisterForm = ({ onSuccess }: RegisterFormProps) => {
         type="text"
         value={formData.inn}
         onChange={(value) => handleChange("inn", value)}
-        onBlur={() => handleBlur("inn")}
+        onBlur={handleInnBlur}
+        disabled={isCompanyLoading}
       />
       {touched.inn && innError && (
         <div className={styles.error}>{innError}</div>
@@ -63,6 +68,7 @@ export const RegisterForm = ({ onSuccess }: RegisterFormProps) => {
         value={formData.kpp}
         onChange={(value) => handleChange("kpp", value)}
         onBlur={() => handleBlur("kpp")}
+        disabled={isCompanyLoading}
       />
       {touched.kpp && kppError && (
         <div className={styles.error}>{kppError}</div>
@@ -73,9 +79,24 @@ export const RegisterForm = ({ onSuccess }: RegisterFormProps) => {
         id="register-address"
         aria-label="Юридическое наименование"
         type="text"
+        value={formData.legal_name}
+        onChange={(value) => handleChange("legal_name", value)}
+        onBlur={() => handleBlur("legal_name")}
+        disabled={isCompanyLoading}
+      />
+      {touched.legal_name && legalNameError && (
+        <div className={styles.error}>{legalNameError}</div>
+      )}
+
+      <Input
+        placeholder="Юридический адрес"
+        id="register-address"
+        aria-label="Юридическое адрес"
+        type="text"
         value={formData.legal_address}
         onChange={(value) => handleChange("legal_address", value)}
         onBlur={() => handleBlur("legal_address")}
+        disabled={isCompanyLoading}
       />
       {touched.legal_address && legalAddressError && (
         <div className={styles.error}>{legalAddressError}</div>
@@ -133,8 +154,14 @@ export const RegisterForm = ({ onSuccess }: RegisterFormProps) => {
           <div className={styles.errorGn}>{apiErrorMessage}</div>
         )}
 
+      {apiCompanyErrorMessage && (
+        <div className={styles.errorGn}>{apiCompanyErrorMessage}</div>
+      )}
+
       <Button
-        disabled={isPending}
+        disabled={
+          isPending || isCompanyLoading || Boolean(apiCompanyErrorMessage)
+        }
         loading={isPending}
         type="submit"
         size={buttonSize}

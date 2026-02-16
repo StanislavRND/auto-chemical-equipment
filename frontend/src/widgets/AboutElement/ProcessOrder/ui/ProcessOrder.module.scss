@@ -62,7 +62,7 @@
     background-color: var(--blue-50);
 
     .itemHeader {
-      button {
+      .btn {
         color: var(--blue-500);
       }
     }
@@ -164,7 +164,7 @@
   }
 }
 
-button {
+.btn {
   color: var(--text-secondary);
   transition: color 0.3s ease;
 

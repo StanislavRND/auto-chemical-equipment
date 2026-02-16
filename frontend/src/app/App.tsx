@@ -1,3 +1,4 @@
+import "@/shared/api/instance/instance";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AppRouter } from "./providers/router";
 

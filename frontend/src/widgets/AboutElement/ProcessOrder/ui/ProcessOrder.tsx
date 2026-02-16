@@ -23,6 +23,7 @@ export const ProcessOrder = () => {
                   {step.title}
                 </div>
                 <button
+                className={styles.btn}
                   aria-label={activeId === step.id ? "close menu" : "open menu"}
                   type="button"
                   onClick={(e) => {

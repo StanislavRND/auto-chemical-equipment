@@ -4,6 +4,7 @@ import { useMutation } from "@tanstack/react-query";
 export type RegisterRequestData = {
   inn: string;
   kpp: string;
+  legal_name: string;
   legal_address: string;
   email: string;
   password: string;
