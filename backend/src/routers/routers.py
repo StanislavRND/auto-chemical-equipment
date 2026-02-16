@@ -1,6 +1,7 @@
 from fastapi import APIRouter
 from src.routers.auth.router import auth_router
 from src.routers.categories.router import category_router
+from src.routers.fns.router import fns_router
 from src.routers.subcategories.router import sub_category_router
 
 api_router = APIRouter(prefix="/api", tags=["API"])
@@ -8,3 +9,4 @@ api_router = APIRouter(prefix="/api", tags=["API"])
 api_router.include_router(auth_router)
 api_router.include_router(category_router)
 api_router.include_router(sub_category_router)
+api_router.include_router(fns_router)

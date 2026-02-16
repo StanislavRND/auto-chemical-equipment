@@ -28,7 +28,7 @@ class CategoriesRepository:
             stmt = (
                 select(CategoryModel)
                 .options(selectinload(CategoryModel.subcategories))
-                .order_by(CategoryModel.id)
+                .order_by(CategoryModel.name)
             )
             result = await self.session.execute(stmt)
             categories = result.scalars().all()

@@ -62,3 +62,8 @@ DETAIL:  Ключ (category_id)=(42) отсутствует в таблице "categories".
 [SQL: INSERT INTO subcategories (name, category_id) VALUES ($1::VARCHAR, $2::INTEGER) RETURNING subcategories.id, subcategories.created_at]
 [parameters: ('strin', 42)]
 (Background on this error at: https://sqlalche.me/e/20/gkpj)
+2026-02-15 19:38:50,228 - logger - CRITICAL - 2026-02-15 19:38:50.228914 Conflict while saving category: (sqlalchemy.dialects.postgresql.asyncpg.IntegrityError) <class 'asyncpg.exceptions.UniqueViolationError'>: повторяющееся значение ключа нарушает ограничение уникальности "ix_categories_name"
+DETAIL:  Ключ "(name)=(Технические жидкости)" уже существует.
+[SQL: INSERT INTO categories (name) VALUES ($1::VARCHAR) RETURNING categories.id, categories.created_at]
+[parameters: ('Технические жидкости',)]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)

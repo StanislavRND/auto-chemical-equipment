@@ -7,7 +7,11 @@ from src.repositories.categories.categories_repository import (
     CategoryAlreadyExistsError,
     CategoryNotFoundError,
 )
-from src.routers.schemas.categories import CategoryCreateSchema, CategorySchema
+from src.routers.schemas.categories import (
+    CategoryCreateSchema,
+    CategoryResponseSchema,
+    CategoryWithSubcategoriesSchema,
+)
 
 category_router = APIRouter(tags=["Категории"])
 
@@ -18,7 +22,7 @@ async def get_auth_repo(db: AsyncSession = Depends(get_db)) -> CategoriesReposit
 
 @category_router.get(
     "/categories",
-    response_model=list[CategorySchema],
+    response_model=list[CategoryWithSubcategoriesSchema],
     status_code=200,
     summary="Получение категорий с их подкатегориями",
 )
@@ -31,7 +35,7 @@ async def get_all_categories(repo: CategoriesRepository = Depends(get_auth_repo)
 
 @category_router.post(
     "/categories",
-    response_model=CategorySchema,
+    response_model=CategoryResponseSchema,
     status_code=200,
     summary="Создание категории",
 )
@@ -53,7 +57,7 @@ async def create_category(
 
 @category_router.patch(
     "/categories/{id}",
-    response_model=CategorySchema,
+    response_model=CategoryResponseSchema,
     status_code=200,
     summary="Обновление категории",
 )
