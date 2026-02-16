@@ -7,6 +7,7 @@ class UserSchema(BaseModel):
     id: int
     inn: str
     kpp: str
+    legal_name: str
     legal_address: str
     email: EmailStr
     role: str
@@ -17,6 +18,7 @@ class UserSchema(BaseModel):
 class UserCreateSchema(BaseModel):
     inn: str = Field(..., pattern=r"^\d{10}$|^\d{12}$")
     kpp: str = Field(..., pattern=r"^\d{9}$")
+    legal_name: str = Field(..., max_length=200)
     legal_address: str = Field(..., max_length=500)
     email: EmailStr
     password: str = Field(..., min_length=6)
@@ -28,6 +30,7 @@ class VerifyCodeRequest(BaseModel):
     code: str = Field(..., min_length=4, max_length=4)
     inn: str = Field(..., pattern=r"^\d{10}$|^\d{12}$")
     kpp: str = Field(..., pattern=r"^\d{9}$")
+    legal_name: str = Field(..., max_length=200)
     legal_address: str = Field(..., max_length=500)
     password: str = Field(..., min_length=6)
     password_confirm: str = Field(..., min_length=6)

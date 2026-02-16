@@ -39,6 +39,7 @@ class AuthRepository:
         user = UserModel(
             inn=user_data.inn,
             kpp=user_data.kpp,
+            legal_name=user_data.legal_name,
             legal_address=user_data.legal_address,
             email=user_data.email,
             hashed_password=get_password_hash(user_data.password),
@@ -56,14 +57,18 @@ class AuthRepository:
     async def request_registration(
         self, user_data: UserCreateSchema
     ) -> RegisterResponse:
-
         code = await self.verification_service.store_code(
             email=user_data.email,
             expires_minutes=settings.VERIFICATION_CODE_EXPIRE_MINUTES,
         )
-        _ = asyncio.create_task(
-            self.verification_service.send_verification_email(user_data.email, code)
-        )
+
+        async def send_email_task():
+            async with AsyncSession(self.session.bind) as new_session:
+                service = VerificationService(session=new_session)
+                await service.send_verification_email(user_data.email, code)
+
+        asyncio.create_task(send_email_task())
+
         return RegisterResponse(
             message="Код подтверждения отправлен на email",
             email=user_data.email,
