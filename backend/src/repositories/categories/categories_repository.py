@@ -41,9 +41,33 @@ class CategoriesRepository:
             logger.critical(f"Failed to retrieve categories: {e}")
             raise RepositoryError(f"Failed to retrieve categories: {e}") from e
 
+    async def get_popularity_categories(self) -> list[CategoryModel] | None:
+        try:
+            stmt = (
+                select(CategoryModel)
+                .where(CategoryModel.rating.isnot(None))
+                .order_by(CategoryModel.rating.desc())
+                .limit(6)
+                .options(selectinload(CategoryModel.subcategories))
+            )
+            result = await self.session.execute(stmt)
+            categories = result.scalars().all()
+
+            category_list = list(categories) if categories else []
+
+            logger.info(f"Found {len(category_list)} popular categories")
+            return category_list or None
+        except SQLAlchemyError as e:
+            logger.critical(f"Failed to retrieve popular categories: {e}")
+            raise RepositoryError(f"Failed to retrieve popular categories: {e}") from e
+
     async def create_category(self, category_data) -> CategoryModel:
         try:
-            category = CategoryModel(name=category_data.name)
+            category = CategoryModel(
+                name=category_data.name,
+                image_url=category_data.image_url,
+                rating=category_data.rating,
+            )
             self.session.add(category)
             await self.session.commit()
             await self.session.refresh(category)
@@ -68,6 +92,8 @@ class CategoriesRepository:
 
             if category_data.name is not None:
                 category.name = category_data.name
+                category.rating = category_data.rating
+                category.image_url = category_data.image_url
 
             await self.session.commit()
             await self.session.refresh(category)

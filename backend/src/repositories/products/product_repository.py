@@ -2,8 +2,8 @@ from dataclasses import dataclass
 from typing import final
 
 from logger import logger
-from sqlalchemy import desc, select
-from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy import delete, desc, select, update
+from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession
 from src.db.models.products.products import ProductModel
 from src.repositories.exception import RepositoryError
@@ -67,8 +67,57 @@ class ProductRepository:
             await self.session.refresh(product)
 
             return product
-
+        except IntegrityError:
+            raise
         except SQLAlchemyError as e:
             await self.session.rollback()
             logger.critical(f"Failed to create product: {e}")
             raise RepositoryError(f"Failed to create product: {e}") from e
+
+    async def delete_product(self, product_id: int) -> None:
+        try:
+            stmt = (
+                delete(ProductModel)
+                .where(ProductModel.id == product_id)
+                .returning(ProductModel.id)
+            )
+
+            result = await self.session.execute(stmt)
+            deleted_id = result.scalar_one_or_none()
+
+            if deleted_id is None:
+                raise ValueError("Товар не найден")
+
+            await self.session.commit()
+
+        except SQLAlchemyError as e:
+            await self.session.rollback()
+            logger.critical(f"Failed to delete product: {e}")
+            raise RepositoryError(f"Failed to delete product: {e}") from e
+
+    async def update_product(
+        self,
+        product_id: int,
+        **values,
+    ) -> ProductModel:
+        try:
+            stmt = (
+                update(ProductModel)
+                .where(ProductModel.id == product_id)
+                .values(**values)
+                .returning(ProductModel)
+            )
+
+            product = (await self.session.execute(stmt)).scalar_one_or_none()
+            if product is None:
+                raise ValueError("Товар не найден")
+
+            await self.session.commit()
+            return product
+
+        except IntegrityError:
+            raise
+        except SQLAlchemyError as e:
+            await self.session.rollback()
+            logger.critical(f"Failed to update product: {e}")
+            raise RepositoryError(f"Failed to update product: {e}") from e

@@ -38,6 +38,10 @@ class S3Service:
         ext = filename.split(".")[-1].lower() if "." in filename else "bin"
         return f"{prefix}/{uuid.uuid4().hex}.{ext}"
 
+    def make_key_categories(self, *, prefix: str = "categories", filename: str) -> str:
+        ext = filename.split(".")[-1].lower() if "." in filename else "bin"
+        return f"{prefix}/{uuid.uuid4().hex}.{ext}"
+
     def presign_put(self, *, key: str, expires: int = 300) -> str:
         return self.client.generate_presigned_url(
             ClientMethod="put_object",

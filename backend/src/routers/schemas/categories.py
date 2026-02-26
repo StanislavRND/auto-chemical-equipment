@@ -6,6 +6,8 @@ from src.routers.schemas.subcategories import SubCategorySchema
 
 class CategoryBaseSchema(BaseModel):
     name: str
+    image_url: str | None = None
+    rating: int | None = None
 
     class Config:
         from_attributes = True

@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
+from src.core.deps import get_s3_service
 from src.db.database import get_db
 from src.repositories.categories.categories_repository import (
     CategoriesRepository,
@@ -8,10 +9,13 @@ from src.repositories.categories.categories_repository import (
     CategoryNotFoundError,
 )
 from src.routers.schemas.categories import (
+    CategoryBaseSchema,
     CategoryCreateSchema,
     CategoryResponseSchema,
     CategoryWithSubcategoriesSchema,
 )
+from src.routers.schemas.s3 import PresignInSchema, PresignOutSchema
+from src.services.storage.s3 import S3Service
 
 category_router = APIRouter(tags=["Категории"])
 
@@ -31,6 +35,32 @@ async def get_all_categories(repo: CategoriesRepository = Depends(get_auth_repo)
         return await repo.get_categories_with_subcategories()
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e)) from e
+
+
+@category_router.get(
+    "/categories/popularity",
+    response_model=list[CategoryBaseSchema],
+    status_code=200,
+    summary="Получение популярных категорий",
+)
+async def get_popularity_categories(
+    repo: CategoriesRepository = Depends(get_auth_repo),
+):
+    try:
+        return await repo.get_popularity_categories()
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e)) from e
+
+
+@category_router.post("/categories/upload", response_model=PresignOutSchema)
+def presign_product_image(
+    data: PresignInSchema,
+    s3: S3Service = Depends(get_s3_service),
+):
+    key = s3.make_key_categories(prefix="categories", filename=data.filename)
+    upload_url = s3.presign_put(key=key, expires=300)
+    image_url = s3.public_url(key=key)
+    return PresignOutSchema(upload_url=upload_url, image_url=image_url)
 
 
 @category_router.post(

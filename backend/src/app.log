@@ -67,3 +67,81 @@ DETAIL:  Ключ "(name)=(Технические жидкости)" уже существует.
 [SQL: INSERT INTO categories (name) VALUES ($1::VARCHAR) RETURNING categories.id, categories.created_at]
 [parameters: ('Технические жидкости',)]
 (Background on this error at: https://sqlalche.me/e/20/gkpj)
+2026-02-17 17:43:41,660 - logger - CRITICAL - 2026-02-17 17:43:41.660188 Failed to retrieve categories: (sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class 'asyncpg.exceptions.UndefinedColumnError'>: столбец categories.image_url не существует
+[SQL: SELECT categories.id, categories.name, categories.image_url, categories.created_at 
+FROM categories ORDER BY categories.name]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2026-02-17 17:43:46,748 - logger - CRITICAL - 2026-02-17 17:43:46.735149 Failed to retrieve categories: (sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class 'asyncpg.exceptions.UndefinedColumnError'>: столбец categories.image_url не существует
+[SQL: SELECT categories.id, categories.name, categories.image_url, categories.created_at 
+FROM categories ORDER BY categories.name]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2026-02-17 17:43:51,455 - logger - CRITICAL - 2026-02-17 17:43:51.454013 Failed to retrieve categories: (sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class 'asyncpg.exceptions.UndefinedColumnError'>: столбец categories.image_url не существует
+[SQL: SELECT categories.id, categories.name, categories.image_url, categories.created_at 
+FROM categories ORDER BY categories.name]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2026-02-17 17:44:05,959 - logger - CRITICAL - 2026-02-17 17:44:05.958341 Failed to retrieve categories: (sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class 'asyncpg.exceptions.UndefinedColumnError'>: столбец categories.image_url не существует
+[SQL: SELECT categories.id, categories.name, categories.image_url, categories.created_at 
+FROM categories ORDER BY categories.name]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2026-02-17 17:44:06,998 - logger - CRITICAL - 2026-02-17 17:44:06.998859 Failed to retrieve categories: (sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class 'asyncpg.exceptions.UndefinedColumnError'>: столбец categories.image_url не существует
+[SQL: SELECT categories.id, categories.name, categories.image_url, categories.created_at 
+FROM categories ORDER BY categories.name]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2026-02-17 17:44:09,021 - logger - CRITICAL - 2026-02-17 17:44:09.021187 Failed to retrieve categories: (sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class 'asyncpg.exceptions.UndefinedColumnError'>: столбец categories.image_url не существует
+[SQL: SELECT categories.id, categories.name, categories.image_url, categories.created_at 
+FROM categories ORDER BY categories.name]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2026-02-17 17:44:13,073 - logger - CRITICAL - 2026-02-17 17:44:13.072150 Failed to retrieve categories: (sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class 'asyncpg.exceptions.UndefinedColumnError'>: столбец categories.image_url не существует
+[SQL: SELECT categories.id, categories.name, categories.image_url, categories.created_at 
+FROM categories ORDER BY categories.name]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2026-02-17 17:45:13,244 - logger - CRITICAL - 2026-02-17 17:45:13.244850 Failed to retrieve categories: (sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class 'asyncpg.exceptions.UndefinedColumnError'>: столбец categories.image_url не существует
+[SQL: SELECT categories.id, categories.name, categories.image_url, categories.created_at 
+FROM categories ORDER BY categories.name]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2026-02-17 17:45:14,334 - logger - CRITICAL - 2026-02-17 17:45:14.334349 Failed to retrieve categories: (sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class 'asyncpg.exceptions.UndefinedColumnError'>: столбец categories.image_url не существует
+[SQL: SELECT categories.id, categories.name, categories.image_url, categories.created_at 
+FROM categories ORDER BY categories.name]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2026-02-17 17:45:16,479 - logger - CRITICAL - 2026-02-17 17:45:16.478193 Failed to retrieve categories: (sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class 'asyncpg.exceptions.UndefinedColumnError'>: столбец categories.image_url не существует
+[SQL: SELECT categories.id, categories.name, categories.image_url, categories.created_at 
+FROM categories ORDER BY categories.name]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2026-02-17 17:45:20,526 - logger - CRITICAL - 2026-02-17 17:45:20.525629 Failed to retrieve categories: (sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class 'asyncpg.exceptions.UndefinedColumnError'>: столбец categories.image_url не существует
+[SQL: SELECT categories.id, categories.name, categories.image_url, categories.created_at 
+FROM categories ORDER BY categories.name]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2026-02-17 17:45:20,808 - logger - CRITICAL - 2026-02-17 17:45:20.807272 Failed to retrieve categories: (sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class 'asyncpg.exceptions.UndefinedColumnError'>: столбец categories.image_url не существует
+[SQL: SELECT categories.id, categories.name, categories.image_url, categories.created_at 
+FROM categories ORDER BY categories.name]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2026-02-17 17:45:21,864 - logger - CRITICAL - 2026-02-17 17:45:21.863250 Failed to retrieve categories: (sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class 'asyncpg.exceptions.UndefinedColumnError'>: столбец categories.image_url не существует
+[SQL: SELECT categories.id, categories.name, categories.image_url, categories.created_at 
+FROM categories ORDER BY categories.name]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2026-02-17 17:45:23,902 - logger - CRITICAL - 2026-02-17 17:45:23.901469 Failed to retrieve categories: (sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class 'asyncpg.exceptions.UndefinedColumnError'>: столбец categories.image_url не существует
+[SQL: SELECT categories.id, categories.name, categories.image_url, categories.created_at 
+FROM categories ORDER BY categories.name]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2026-02-17 17:47:07,372 - logger - CRITICAL - 2026-02-17 17:47:07.372193 Failed to retrieve categories: (sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class 'asyncpg.exceptions.UndefinedColumnError'>: столбец categories.image_url не существует
+[SQL: SELECT categories.id, categories.name, categories.image_url, categories.created_at 
+FROM categories ORDER BY categories.name]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2026-02-17 17:48:22,276 - logger - CRITICAL - 2026-02-17 17:48:22.275018 Failed to retrieve categories: (sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class 'asyncpg.exceptions.UndefinedColumnError'>: столбец categories.image_url не существует
+[SQL: SELECT categories.id, categories.name, categories.image_url, categories.created_at 
+FROM categories ORDER BY categories.name]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2026-02-17 17:48:42,571 - logger - CRITICAL - 2026-02-17 17:48:42.571120 Failed to retrieve categories: (sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class 'asyncpg.exceptions.UndefinedColumnError'>: столбец categories.image_url не существует
+[SQL: SELECT categories.id, categories.name, categories.image_url, categories.created_at 
+FROM categories ORDER BY categories.name]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2026-02-17 18:09:01,061 - logger - CRITICAL - 2026-02-17 18:09:01.060586 Conflict while saving category: (sqlalchemy.dialects.postgresql.asyncpg.IntegrityError) <class 'asyncpg.exceptions.UniqueViolationError'>: повторяющееся значение ключа нарушает ограничение уникальности "ix_categories_name"
+DETAIL:  Ключ "(name)=(Автохимия)" уже существует.
+[SQL: UPDATE categories SET name=$1::VARCHAR WHERE categories.id = $2::INTEGER]
+[parameters: ('Автохимия', 46)]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2026-02-26 17:18:05,245 - logger - CRITICAL - 2026-02-26 17:18:05.245062 Failed to create product: (sqlalchemy.dialects.postgresql.asyncpg.IntegrityError) <class 'asyncpg.exceptions.UniqueViolationError'>: повторяющееся значение ключа нарушает ограничение уникальности "ix_products_name"
+DETAIL:  Ключ "(name)=(Тестовая1)" уже существует.
+[SQL: INSERT INTO products (category_id, subcategory_id, article, name, image_url, description, compound, method_of_application, existence, price) VALUES ($1::INTEGER, $2::INTEGER, $3::VARCHAR, $4::VARCHAR, $5::VARCHAR, $6::VARCHAR, $7::VARCHAR, $8::VARCHAR, $9::BOOLEAN, $10::FLOAT) RETURNING products.id, products.created_at]
+[parameters: (49, 56, '000003', 'Тестовая1', 'https://ccc87c66ef78-optovikavtokhim.s3.ru1.storage.beget.cloud/products/70b035b7bc6c43c89b95bf21ba4c92c3.webp', 'Тестовая Тестовая Тестовая Тестовая Тестовая Тестовая', 'Тестовая Тестовая Тестовая Тестовая Тестовая Тестовая Тестовая', 'Тестовая Тестовая Тестовая Тестовая Тестовая Тестовая Тестовая', True, 1900.0)]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)

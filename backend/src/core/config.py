@@ -38,7 +38,6 @@ class Settings:
     S3_ADDRESSING_STYLE: str = field(
         default_factory=lambda: os.getenv("S3_ADDRESSING_STYLE", "path")
     )
-    S3_PREFIX: str = field(default_factory=lambda: os.getenv("S3_PREFIX", "products"))
 
     def __post_init__(self):
         if not self.DATABASE_URL:
