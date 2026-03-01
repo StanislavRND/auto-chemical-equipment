@@ -2,19 +2,6 @@ import imgLogo from "@shared/assets/images/logo-text.png";
 import { Link } from "react-router-dom";
 import styles from "./Footer.module.scss";
 
-const CATALOG_ITEMS = [
-  { name: "Автохимия", path: "/catalog/avtohimiya" },
-  { name: "Масло и тех.жидкости", path: "/catalog/masla" },
-  { name: "Антифризы", path: "/catalog/antifrizy" },
-  { name: "Стеклоочистители", path: "/catalog/stekloochistiteli" },
-  { name: "Аксессуары", path: "/catalog/aksessuary" },
-  { name: "Инструменты", path: "/catalog/instrumenty" },
-  { name: "Диски и шины", path: "/catalog/diski-i-shiny" },
-  { name: "Запчасти", path: "/catalog/zapchasti" },
-  { name: "Аккумуляторные батареи", path: "/catalog/akkumulyatory" },
-  { name: "Оборудование", path: "/catalog/oborudovanie" },
-];
-
 const INFO_ITEMS = [
   { name: "Главная", path: "/home" },
   { name: "О компании", path: "/about" },
@@ -30,16 +17,8 @@ export const Footer = () => {
           </Link>
         </div>
         <nav className={styles.nav}>
-          <div className={styles.catalog}>
-            <div className={styles.title}>Каталог</div>
-            {CATALOG_ITEMS.map((item, index) => (
-              <div key={index} className={styles.subtitle}>
-                <Link to={item.path}>{item.name}</Link>
-              </div>
-            ))}
-          </div>
           <div className={styles.info}>
-            <div className={styles.title}>Главная</div>
+            <div className={styles.title}>Информация</div>
             {INFO_ITEMS.map((item, index) => (
               <div key={index} className={styles.subtitle}>
                 <Link to={item.path}>{item.name}</Link>
@@ -55,7 +34,7 @@ export const Footer = () => {
         </div>
       </div>
       <div className={styles.police}>
-        2026 © ОптовикАвтоХим 
+        2026 © ОптовикАвтоХим
         <span>|</span>
         <Link to={"/privacy-policy"}> Политика конфиденциальности </Link>
       </div>

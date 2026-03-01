@@ -10,6 +10,15 @@
   @include respond-to(laptop) {
     gap: 15px;
   }
+
+  a {
+    color: var(--blue-500);
+    transition: all 0.3s ease;
+
+    &:hover {
+      color: var(--blue-600);
+    }
+  }
 }
 
 .error {
@@ -24,6 +33,7 @@
 
   @include respond-to(mobile) {
     font-size: 0.875rem;
+    margin-top: -10px;
   }
 }
 

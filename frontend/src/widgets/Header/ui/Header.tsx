@@ -10,7 +10,12 @@ export const Header = () => {
       <div className={styles.container}>
         <div className={styles.img}>
           <Link to={"/home"}>
-            <img src={imgLogo} alt="Логотип компании" />
+            <img
+              width={160}
+              height={160}
+              src={imgLogo}
+              alt="Логотип компании"
+            />
           </Link>
         </div>
 

@@ -4,7 +4,7 @@ import { AuthPage } from "@pages/Auth/ui/AuthPage";
 import { CartPage } from "@pages/Cart/ui/CartPage";
 import { AccessDeniedPage } from "@pages/Fallback/AccessDeniedPage/AccessDeniedPage";
 import { NotFoundPage } from "@pages/Fallback/NotFoundPage/NotFoundPage";
-import { HomePage } from "@pages/Home/HomePage";
+import { HomePage } from "@pages/Home/ui/HomePage";
 import { ProfileMePage } from "@pages/ProfileMe/ui/ProfileMePage";
 import { ProfileOrdersPage } from "@pages/ProfileOrders/ui/ProfileOrdersPage";
 import { RegisterPage } from "@pages/Register/ui/RegisterPage";

@@ -14,6 +14,7 @@
   @include respond-to(mobile) {
     padding: 25px;
   }
+  z-index: 1000;
 }
 
 .dop {

@@ -29,7 +29,7 @@ export const Input = ({
   "aria-label": ariaLabel,
 }: InputProps) => {
   const [isFocused, setIsFocused] = useState(false);
-  const [inputValue, setInputValue] = useState(value);
+  const [inputValue, setInputValue] = useState(String(value ?? ""));
   const [showPasswordToggle, setShowPasswordToggle] = useState(false);
   const { isLaptop } = useBreakpoint();
 

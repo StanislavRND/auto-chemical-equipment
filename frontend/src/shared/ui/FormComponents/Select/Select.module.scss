@@ -1,0 +1,99 @@
+.container {
+  position: relative;
+  width: 100%;
+  height: 56px;
+}
+
+.select {
+  width: 100%;
+  height: 100%;
+  padding: 0 12px;
+  background: white;
+  border: 1px solid var(--grey-500);
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  position: relative;
+}
+
+.select.open {
+  border-color: var(--blue-500);
+}
+
+.select.error {
+  border-color: var(--red-500);
+}
+
+.select.disabled {
+  background: var(--grey-100);
+  cursor: not-allowed;
+}
+
+.value {
+  color: var(--text-primary);
+  font-size: 1rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.arrow {
+  color: var(--text-tertiary);
+  transition: transform 0.2s;
+}
+
+.rotated {
+  transform: rotate(180deg);
+}
+
+.label {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-secondary);
+  font-size: 1rem;
+  pointer-events: none;
+  transition: all 0.2s ease;
+  background: white;
+  padding: 0 4px;
+  border-radius: 0.5rem;
+}
+
+.floating {
+  top: 2px;
+  font-size: 0.875rem;
+  color: var(--blue-500);
+}
+
+.options {
+  position: absolute;
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1px solid var(--grey-200);
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  max-height: 280px;
+  overflow-y: auto;
+  z-index: 1000;
+}
+
+.down {
+  top: calc(100% + 4px);
+}
+
+.up {
+  bottom: calc(100% + 4px);
+}
+
+.option {
+  padding: 12px;
+  cursor: pointer;
+}
+
+.option:hover {
+  background: var(--grey-50);
+}

@@ -1,0 +1,63 @@
+.textareaContainer {
+  position: relative;
+  width: 100%;
+  min-height: 120px;
+}
+
+.textarea {
+  display: block;
+  width: 100%;
+  min-height: 120px;
+  padding: 16px 12px 12px;
+  background: white;
+  border: 1px solid var(--grey-500);
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--text-primary);
+  resize: vertical;
+  outline: none;
+  transition: border-color 0.2s ease;
+
+  &:disabled {
+    background-color: var(--grey-100);
+    cursor: not-allowed;
+  }
+
+  &:focus {
+    border-color: var(--blue-500);
+  }
+}
+
+.label {
+  position: absolute;
+  left: 12px;
+  top: 16px;
+  color: var(--text-secondary);
+  font-size: 1rem;
+  pointer-events: none;
+  transition: all 0.2s ease;
+  background: white;
+  border-radius: 0.5rem;
+  padding: 0 4px;
+}
+
+.floating {
+  top: -9px;
+  font-size: 0.875rem;
+  color: var(--blue-500);
+}
+
+.textarea::-webkit-scrollbar {
+  width: 6px;
+}
+.textarea::-webkit-scrollbar-track {
+  background: transparent;
+}
+.textarea::-webkit-scrollbar-thumb {
+  background: var(--grey-200);
+  border-radius: 3px;
+}
+.textarea::-webkit-scrollbar-thumb:hover {
+  background: var(--grey-200);
+}

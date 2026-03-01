@@ -1,0 +1,22 @@
+@import "@/shared/styles/mixin";
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.error {
+  width: 100%;
+  text-align: left;
+  color: var(--red-500);
+  margin-top: -10px;
+  font-size: 0.875rem;
+}
+
+.errorGn {
+  width: 100%;
+  text-align: left;
+  color: var(--red-500);
+  margin-top: -5px;
+}

@@ -1,0 +1,30 @@
+@import "@/shared/styles/mixin";
+
+.wrapperBtn {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+  @include respond-to(tablet) {
+    margin-top: 25px;
+  }
+}
+
+.btn {
+  display: flex;
+  gap: 6px;
+  width: 300px;
+
+  .plus {
+    width: 20px;
+    height: 20px;
+  }
+  @include respond-to(tablet) {
+    width: 200px;
+    font-size: 0.875rem;
+
+    .plus {
+      width: 16px;
+      height: 16px;
+    }
+  }
+}

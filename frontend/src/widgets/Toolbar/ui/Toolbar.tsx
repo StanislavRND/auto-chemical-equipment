@@ -1,9 +1,9 @@
+import { useAuth } from "@entities/User/model/useAuth";
 import type { Category } from "@shared/api/catalog/catalog";
-import { useAuth } from "@shared/lib/hooks/useAuth";
 import { useBreakpoint } from "@shared/lib/hooks/useBreakpoint";
 import { Button } from "@shared/ui/Button/Button";
 import { Catalog } from "@shared/ui/Catalog/Catalog";
-import { Input } from "@shared/ui/Input/Input";
+import { Input } from "@shared/ui/FormComponents/Input/Input";
 import { Menu, Search, ShoppingCart, UserRound } from "lucide-react";
 import { useToolbar } from "../model/useToolbar";
 import styles from "./Toolbar.module.scss";

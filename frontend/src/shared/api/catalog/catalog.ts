@@ -4,6 +4,8 @@ import { useQuery } from "@tanstack/react-query";
 export type Category = {
   id: number;
   name: string;
+  image_url: string;
+  rating: number;
   subcategories?: Subcategory[];
 };
 
@@ -20,7 +22,7 @@ export const useGetCatalog = () => {
       const res = await axiosInstance.get("/categories");
       return res.data;
     },
-    staleTime: 5 * 60 * 1000,
+    staleTime: 10 * 60 * 1000,
     gcTime: 10 * 60 * 1000,
     refetchOnWindowFocus: false,
   });

@@ -7,32 +7,35 @@ export const AccessDeniedPage = () => {
   const navigate = useNavigate();
 
   return (
-    <div className={styles.container}>
-      <ShieldClose className={styles.icon} size={64} />
+    <section className={styles.wrapper}>
+      {" "}
+      <div className={styles.container}>
+        <ShieldClose className={styles.icon} size={64} />
 
-      <h1 className={styles.title}>Доступ запрещен</h1>
+        <h1 className={styles.title}>Доступ запрещен</h1>
 
-      <div className={styles.message}>
-        <p>Для просмотра этой страницы необходимо авторизоваться</p>
+        <div className={styles.message}>
+          <p>Для просмотра этой страницы необходимо авторизоваться</p>
+        </div>
+
+        <div className={styles.buttons}>
+          <Button
+            onClick={() => navigate("/login")}
+            variant="primary"
+            className={styles.btn}
+          >
+            Войти
+          </Button>
+
+          <Button
+            className={styles.btn}
+            onClick={() => navigate("/home")}
+            variant="outline"
+          >
+            На главную
+          </Button>
+        </div>
       </div>
-
-      <div className={styles.buttons}>
-        <Button
-          onClick={() => navigate("/login")}
-          variant="primary"
-          className={styles.btn}
-        >
-          Войти
-        </Button>
-
-        <Button
-          className={styles.btn}
-          onClick={() => navigate("/register")}
-          variant="outline"
-        >
-          Зарегистрироваться
-        </Button>
-      </div>
-    </div>
+    </section>
   );
 };

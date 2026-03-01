@@ -5,17 +5,19 @@ interface LoaderProps {
   text?: string;
   size?: number;
   color?: string;
+  textHidden?: boolean;
 }
 
 export const Loader = ({
   text = "Загрузка...",
   size = 24,
   color = "var(--blue-500)",
+  textHidden = false,
 }: LoaderProps) => {
   return (
     <div className={styles.loaderContainer}>
       <LoaderCircle size={size} color={color} className={styles.loaderIcon} />
-      {text && <span className={styles.loaderText}>{text}</span>}
+      {!textHidden && text && <span className={styles.loaderText}>{text}</span>}
     </div>
   );
 };

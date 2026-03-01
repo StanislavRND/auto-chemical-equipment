@@ -1,5 +1,10 @@
 @import "@shared/styles/_mixin.scss";
 
+.wrapper {
+  height: 100vh;
+  background-color: var(--blue-50);
+}
+
 .container {
   display: flex;
   flex-direction: column;
@@ -8,7 +13,7 @@
   text-align: center;
   padding: 100px 20px;
   animation: fadeIn 0.5s ease;
-  background-color: var(--blue-50);
+  white-space: nowrap;
 
   @include respond-to(tablet) {
     padding: 20px 20px;
@@ -27,6 +32,7 @@
   font-weight: 700;
   color: var(--blue-500);
   margin-bottom: 24px;
+  white-space: wrap;
 
   @include respond-to(tablet) {
     font-size: 1.7rem;
@@ -38,9 +44,11 @@
   color: var(--text-secondary);
   margin-bottom: 32px;
   max-width: 630px;
+  white-space: wrap;
 
   @include respond-to(tablet) {
     font-size: 1rem;
+    max-width: 400px;
   }
 }
 

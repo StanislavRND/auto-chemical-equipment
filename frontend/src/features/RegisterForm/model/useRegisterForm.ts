@@ -22,6 +22,7 @@ export const useRegisterForm = () => {
     error: errorCompany,
     isError: isErrorCompany,
   } = useGetCompanyByInn(formData.inn);
+  const [checked, setChecked] = useState(false);
 
   const [touched, setTouched] = useState({
     inn: false,
@@ -76,6 +77,10 @@ export const useRegisterForm = () => {
     !passwordError &&
     !legalNameError &&
     !confirmPasswordError;
+
+  const handleCheck = () => {
+    setChecked(!checked);
+  };
 
   const handleInnBlur = useCallback(async () => {
     setTouched((prev) => ({ ...prev, inn: true }));
@@ -187,6 +192,7 @@ export const useRegisterForm = () => {
     passwordError,
     confirmPasswordError,
     isCompanyLoading,
+    checked,
 
     isSuccess,
     isPending,
@@ -196,5 +202,6 @@ export const useRegisterForm = () => {
     handleChange,
     handleSubmit,
     handleInnBlur,
+    handleCheck,
   };
 };

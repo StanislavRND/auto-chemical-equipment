@@ -1,12 +1,17 @@
-import { useAuth } from "@shared/lib/hooks/useAuth";
 import { Navigate, Outlet } from "react-router-dom";
 import { PATHS } from "./paths";
+import { useAuth } from "@entities/User/model/useAuth";
 
 export const ProtectedRoute = () => {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, loading } = useAuth();
+
+  if (loading) {
+    return <div style={{ display: 'none' }}>Loading...</div>; 
+  }
+
 
   if (!isAuthenticated) {
-    return <Navigate to={PATHS.ACCESS_DENIED} />;
+    return <Navigate to={PATHS.ACCESS_DENIED} replace />;
   }
 
   return <Outlet />;

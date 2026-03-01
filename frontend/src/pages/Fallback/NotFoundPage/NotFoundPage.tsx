@@ -7,32 +7,34 @@ export const NotFoundPage = () => {
   const navigate = useNavigate();
 
   return (
-    <div className={styles.container}>
-      <FileQuestion className={styles.icon} size={64} />
+    <section className={styles.wrapper}>
+      <div className={styles.container}>
+        <FileQuestion className={styles.icon} size={64} />
 
-      <h1 className={styles.title}>Страница не найдена</h1>
+        <h1 className={styles.title}>Страница не найдена</h1>
 
-      <div className={styles.message}>
-        <p>Запрашиваемая страница не существует или была перемещена</p>
+        <div className={styles.message}>
+          <p>Запрашиваемая страница не существует или была перемещена</p>
+        </div>
+
+        <div className={styles.buttons}>
+          <Button
+            onClick={() => navigate("/")}
+            variant="primary"
+            className={styles.btn}
+          >
+            На главную
+          </Button>
+
+          <Button
+            className={styles.btn}
+            onClick={() => navigate(-1)}
+            variant="outline"
+          >
+            Назад
+          </Button>
+        </div>
       </div>
-
-      <div className={styles.buttons}>
-        <Button
-          onClick={() => navigate("/")}
-          variant="primary"
-          className={styles.btn}
-        >
-          На главную
-        </Button>
-
-        <Button
-          className={styles.btn}
-          onClick={() => navigate(-1)}
-          variant="outline"
-        >
-          Назад
-        </Button>
-      </div>
-    </div>
+    </section>
   );
 };

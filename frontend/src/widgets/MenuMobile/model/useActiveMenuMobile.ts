@@ -1,7 +1,8 @@
-import { useAuth } from "@shared/lib/hooks/useAuth";
+
 import { useMemo, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { menuItems, type MenuItem } from "../lib/data";
+import { useAuth } from "@entities/User/model/useAuth";
 
 export const useActiveMenu = (items: MenuItem[]) => {
   const [isCatalogOpen, setIsCatalogOpen] = useState(false);

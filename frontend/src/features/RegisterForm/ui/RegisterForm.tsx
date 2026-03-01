@@ -1,7 +1,9 @@
 import { useBreakpoint } from "@shared/lib/hooks/useBreakpoint";
 import { Button } from "@shared/ui/Button/Button";
-import { Input } from "@shared/ui/Input/Input";
+import { Checkbox } from "@shared/ui/Checkbox/Checkbox";
+import { Input } from "@shared/ui/FormComponents/Input/Input";
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 import { useRegisterForm } from "../model/useRegisterForm";
 import styles from "./RegisterForm.module.scss";
 
@@ -16,6 +18,7 @@ export const RegisterForm = ({ onSuccess }: RegisterFormProps) => {
   const {
     formData,
     touched,
+    checked,
     innError,
     kppError,
     legalAddressError,
@@ -32,6 +35,7 @@ export const RegisterForm = ({ onSuccess }: RegisterFormProps) => {
     handleChange,
     handleSubmit,
     handleInnBlur,
+    handleCheck,
   } = useRegisterForm();
 
   useEffect(() => {
@@ -144,6 +148,12 @@ export const RegisterForm = ({ onSuccess }: RegisterFormProps) => {
         <div className={styles.error}>{confirmPasswordError}</div>
       )}
 
+      <Checkbox checked={checked} onChange={handleCheck}>
+        Я подтверждаю, что ознакомлен(а) и принимаю
+        <Link to={"/home"}> Пользовательское соглашение</Link> и{" "}
+        <Link to={"/home"}> Политику конфиденциальности</Link>
+      </Checkbox>
+
       {apiErrorMessage &&
         !emailError &&
         !passwordError &&
@@ -160,7 +170,10 @@ export const RegisterForm = ({ onSuccess }: RegisterFormProps) => {
 
       <Button
         disabled={
-          isPending || isCompanyLoading || Boolean(apiCompanyErrorMessage)
+          !checked ||
+          isPending ||
+          isCompanyLoading ||
+          Boolean(apiCompanyErrorMessage)
         }
         loading={isPending}
         type="submit"

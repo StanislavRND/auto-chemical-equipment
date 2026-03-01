@@ -1,8 +1,8 @@
-import { useGetCurrentUser, useLogout } from "@entities/user/api/user";
-import { FIELD_CONFIGS } from "@entities/user/lib/data";
+import { useGetCurrentUser, useLogout } from "@entities/User/api/user";
+import { FIELD_CONFIGS } from "@entities/User/lib/data";
 import { Button } from "@shared/ui/Button/Button";
 import { ErrorMessage } from "@shared/ui/ErrorMessage/ErrorMessage";
-import { Input } from "@shared/ui/Input/Input";
+import { Input } from "@shared/ui/FormComponents/Input/Input";
 import { Loader } from "@shared/ui/Loader/Loader";
 import { UserActions } from "@shared/ui/UserActions/UserActions";
 import { BriefcaseBusiness } from "lucide-react";

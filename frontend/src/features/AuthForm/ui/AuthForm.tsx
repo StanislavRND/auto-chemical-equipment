@@ -1,6 +1,6 @@
 import { useBreakpoint } from "@shared/lib/hooks/useBreakpoint";
 import { Button } from "@shared/ui/Button/Button";
-import { Input } from "@shared/ui/Input/Input";
+import { Input } from "@shared/ui/FormComponents/Input/Input";
 import { useAuthForm } from "../model/useAuthForm";
 import styles from "./AuthForm.module.scss";
 

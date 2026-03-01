@@ -1,0 +1,126 @@
+@import "@/shared/styles/mixin";
+
+.item {
+  padding: 25px;
+  border-radius: 1rem;
+  border: 1px solid var(--grey-200);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
+
+  box-shadow: var(--card-shadow);
+  @include respond-to(tablet) {
+    padding: 15px;
+  }
+
+  &:hover {
+    transform: translateY(-4px);
+    border-color: var(--blue-100);
+  }
+
+  .imgWrapper {
+    height: 300px;
+    width: 100%;
+    margin-bottom: 15px;
+    @include respond-to(tablet) {
+      height: 250px;
+    }
+    @include respond-to(mobile) {
+      height: 150px;
+    }
+  }
+
+  .img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.25s ease;
+  }
+
+  .itemInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 10px;
+  }
+
+  .price {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    @include respond-to(tablet) {
+      font-size: 1.25rem;
+    }
+    @include respond-to(mobile) {
+      font-size: 1rem;
+    }
+  }
+
+  .name {
+    font-size: 1rem;
+    color: var(--text-primary);
+    @include respond-to(mobile) {
+      font-size: 0.875rem;
+    }
+  }
+
+  .subtitle {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+
+    span {
+      font-size: 0.875rem;
+      color: var(--text-primary);
+      font-weight: 500;
+      padding: 4px;
+    }
+  }
+
+  .btn {
+    display: flex;
+    gap: 6px;
+    white-space: nowrap;
+    margin-top: auto;
+
+    .plus {
+      width: 20px;
+      height: 20px;
+    }
+    @include respond-to(mobile) {
+      font-size: 0.875rem;
+
+      .plus {
+        width: 16px;
+        height: 16px;
+      }
+    }
+  }
+
+  .actions {
+    display: flex;
+    gap: 15px;
+    height: 36px;
+
+    button {
+      height: 100%;
+
+      &:hover {
+        transform: translateY(-2px);
+      }
+    }
+
+    .btnDelete {
+      background-color: var(--red-500);
+
+      &:hover {
+        background-color: var(--red-600);
+      }
+    }
+  }
+}

@@ -70,3 +70,7 @@ h6 {
   line-height: inherit;
   color: inherit;
 }
+
+body.modal-open {
+  overflow: hidden;
+}

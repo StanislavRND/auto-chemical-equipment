@@ -1,0 +1,40 @@
+@import "@/shared/styles/mixin";
+
+.product {
+  padding: 30px 0;
+}
+
+.container {
+  @include container;
+}
+
+.items {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 25px;
+  align-items: start;
+  @include respond-to(laptop) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  @include respond-to(tablet) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @include respond-to(mobile) {
+    gap: 10px;
+  }
+  @include respond-to(smile-mobile) {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+}
+
+.error {
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+}

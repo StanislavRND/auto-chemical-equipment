@@ -6,7 +6,6 @@ export interface User {
   id: number;
   email: string;
   role: string;
-  hashed_password: string;
   inn: string;
   kpp: string;
   legal_address: string;
@@ -20,7 +19,7 @@ export const useGetCurrentUser = () => {
       const res = await axiosInstance.get("/users/me");
       return res.data;
     },
-    staleTime: 1 * 60 * 1000,
+    staleTime: 5 * 60 * 1000,
     refetchOnWindowFocus: false,
     retry: false,
   });
@@ -34,9 +33,9 @@ export const useLogout = () => {
     setIsLoading(true);
 
     try {
-      await axiosInstance.post("/auth/logout");
+      await axiosInstance.post("/logout");
       queryClient.removeQueries({ queryKey: ["user"] });
-      window.location.href = "/login";
+      window.location.href = "/home";
     } catch (err) {
       console.error("Logout error:", err);
     } finally {
