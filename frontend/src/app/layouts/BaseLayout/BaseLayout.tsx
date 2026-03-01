@@ -6,6 +6,7 @@ import { Header } from "@widgets/Header/ui/Header";
 import { MenuMobile } from "@widgets/MenuMobile/ui/MenuMobile";
 import { Outlet } from "react-router-dom";
 import styles from "./BaseLayout.module.scss";
+import { ScrollToTop } from "@shared/lib/hooks/ScrollToTop";
 
 export const MainLayout = () => {
   const { isMobile, isTablet } = useBreakpoint();
@@ -15,6 +16,7 @@ export const MainLayout = () => {
 
   return (
     <div className={styles.layout}>
+      <ScrollToTop/>
       <Header />
       {shouldRenderMenuMobile && <MenuMobile />}
       <Toolbar

@@ -33,10 +33,13 @@ export const PopularityCategory = () => {
         <h3 className={styles.title}>Популярные категории</h3>
         <div className={styles.items}>
           {popularityCategory?.map((el) => (
-            <div className={styles.item}>
-              <div className={styles.name}>{el.name}</div>
-              <div className={styles.imgWrapper}>
-                <img src={el.image_url} alt="Фото категории" />
+            <div key={el.name} className={styles.item}>
+              <div className={styles.inner}>
+                {" "}
+                <div className={styles.name}>{el.name}</div>
+                <div className={styles.imgWrapper}>
+                  <img src={el.image_url} alt="Фото категории" />
+                </div>
               </div>
             </div>
           ))}

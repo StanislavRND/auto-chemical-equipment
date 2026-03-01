@@ -24,7 +24,7 @@ export const Toolbar = (props: ToolbarProps) => {
     handleToCart,
     handleToProfile,
   } = useToolbar();
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, role } = useAuth();
 
   const buttonSize = isLaptop || isMobile || isTablet ? "md" : "lg";
 
@@ -46,9 +46,12 @@ export const Toolbar = (props: ToolbarProps) => {
         </div>
         {isAuthenticated ? (
           <div className={styles.actions}>
-            <button onClick={handleToCart} type="button" aria-label="Корзина">
-              <ShoppingCart className={styles.actionsIcon} />
-            </button>
+            {role !== "admin" && (
+              <button onClick={handleToCart} type="button" aria-label="Корзина">
+                <ShoppingCart className={styles.actionsIcon} />
+              </button>
+            )}
+
             <button
               onClick={handleToProfile}
               type="button"

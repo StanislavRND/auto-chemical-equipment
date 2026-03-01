@@ -1,0 +1,180 @@
+@import "@/shared/styles/mixin";
+
+.wrapper {
+  padding: 40px 0;
+  @include respond-to(tablet) {
+    padding: 20px 0;
+  }
+}
+
+.container {
+  @include container;
+}
+
+.product {
+  display: grid;
+  gap: 60px;
+  margin-top: 35px;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-areas: "item1 item2 item3";
+  align-items: start;
+
+  @include respond-to(laptop) {
+    gap: 30px;
+  }
+
+  @include respond-to(tablet) {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "item1 "
+      "item3"
+      "item2 ";
+  }
+  margin-top: 20px;
+}
+
+.imgWrapper {
+  height: 700px;
+  grid-area: item1;
+  @include respond-to(laptop) {
+    height: 500px;
+  }
+  @media (max-width: 1200px) {
+    height: 400px;
+  }
+  @include respond-to(tablet) {
+    height: 550px;
+  }
+  @include respond-to(mobile) {
+    height: 400px;
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  grid-area: item2;
+  gap: 1rem;
+  color: var(--text-primary);
+
+  @include respond-to(mobile) {
+    gap: 0.75rem;
+  }
+
+  .infoTitle {
+    margin-bottom: 5px;
+    font-size: 1.5rem;
+    font-weight: 600;
+    @include respond-to(mobile) {
+      font-size: 1.25rem;
+    }
+  }
+
+  .infoBlock {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .infoBlockTitle {
+    font-size: 1.25rem;
+    font-weight: 500;
+    @include respond-to(mobile) {
+      font-size: 1rem;
+    }
+  }
+
+  .infoBlockSubtitle {
+    color: var(--text-secondary);
+    @include respond-to(mobile) {
+      font-size: 0.875rem;
+    }
+
+    span {
+      margin-left: 12px;
+      color: var(--text-primary);
+      font-weight: 500;
+    }
+  }
+}
+
+.actions {
+  display: grid;
+  grid-area: item3;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 15px;
+  padding: 15px 25px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
+  align-items: center;
+  @include respond-to(mobile) {
+    padding: 10px 20px;
+  }
+
+  grid-template-areas:
+    "item1 item2"
+    "item3 item3";
+
+  .price {
+    grid-area: item1;
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    white-space: nowrap;
+    @include respond-to(mobile) {
+      font-size: 1.5rem;
+    }
+  }
+  .enabled {
+    grid-area: item2;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    white-space: nowrap;
+
+    span {
+      padding: 2px 14px;
+      border-radius: 8px;
+      font-size: 0.875rem;
+      @include respond-to(mobile) {
+        font-size: 0.75rem;
+      }
+    }
+  }
+
+  .inStock span {
+    background-color: var(--green-50);
+    color: var(--green-500);
+    border: 1px solid var(--green-100);
+  }
+
+  .outOfStock span {
+    background-color: var(--red-50);
+    color: var(--red-500);
+    border: 1px solid var(--red-100);
+  }
+
+  .btn {
+    grid-area: item3;
+    gap: 8px;
+  }
+}
+
+.loading {
+  display: grid;
+  justify-content: center;
+  margin-top: 50px;
+}
+
+.error {
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+}

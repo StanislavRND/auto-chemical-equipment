@@ -115,6 +115,22 @@
   &:active {
     transform: translateY(1px);
   }
+
+  &:disabled,
+  &.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+    cursor: not-allowed;
+
+    transform: none;
+
+    &:hover,
+    &:active {
+      background-color: var(--white);
+      color: var(--green-500);
+      transform: none;
+    }
+  }
 }
 
 @keyframes fadeIn {

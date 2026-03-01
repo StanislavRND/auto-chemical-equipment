@@ -9,19 +9,21 @@
   flex-direction: column;
   position: relative;
   overflow: hidden;
+  box-shadow: var(--card-shadow);
+
   transition:
     transform 0.25s ease,
     box-shadow 0.25s ease,
     border-color 0.25s ease;
 
-  box-shadow: var(--card-shadow);
-  @include respond-to(tablet) {
-    padding: 15px;
-  }
-
   &:hover {
     transform: translateY(-4px);
     border-color: var(--blue-100);
+  }
+
+  box-shadow: var(--card-shadow);
+  @include respond-to(tablet) {
+    padding: 15px;
   }
 
   .imgWrapper {
@@ -122,5 +124,22 @@
         background-color: var(--red-600);
       }
     }
+  }
+}
+
+.inner {
+  opacity: 0;
+  transform: translateX(-18px);
+  animation: cardIn 520ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes cardIn {
+  from {
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
   }
 }

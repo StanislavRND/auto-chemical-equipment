@@ -1,0 +1,52 @@
+@import "@/shared/styles/mixin";
+
+.list {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  font-size: 1.25rem;
+  @include respond-to(tablet) {
+    font-size: 0.875rem;
+  }
+  @include respond-to(mobile) {
+    gap: 2px;
+    font-size: 0.75rem;
+  }
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  @include respond-to(mobile) {
+    gap: 2px;
+  }
+}
+
+.icon {
+  color: var(--blue-500);
+}
+
+.link {
+  color: var(--blue-500);
+  transition: all 0.2s ease;
+
+  &:hover {
+    border-bottom: 1px solid var(--blue-500);
+  }
+}
+
+.homeLink {
+  color: var(--text-secondary);
+
+  &:hover {
+    color: var(--blue-500); 
+    border-bottom: 1px solid var(--blue-500);
+  }
+}
+
+.current {
+  color: var(--blue-500);
+  border-bottom: 1px solid var(--blue-500);
+}

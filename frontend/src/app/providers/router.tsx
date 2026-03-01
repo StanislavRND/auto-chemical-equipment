@@ -2,6 +2,7 @@ import { MainLayout } from "@app/layouts/BaseLayout/BaseLayout";
 import { AboutPage } from "@pages/About/ui/About";
 import { AuthPage } from "@pages/Auth/ui/AuthPage";
 import { CartPage } from "@pages/Cart/ui/CartPage";
+import { CurrentProductPage } from "@pages/CurrentProduct/ui/CurrentProductPage";
 import { AccessDeniedPage } from "@pages/Fallback/AccessDeniedPage/AccessDeniedPage";
 import { NotFoundPage } from "@pages/Fallback/NotFoundPage/NotFoundPage";
 import { HomePage } from "@pages/Home/ui/HomePage";
@@ -52,6 +53,14 @@ const router = createBrowserRouter([
       {
         path: PATHS.CART,
         element: <CartPage />,
+      },
+      {
+        path: PATHS.PRODUCT_WITH_SUB,
+        element: <CurrentProductPage />,
+      },
+      {
+        path: PATHS.PRODUCT_NO_SUB,
+        element: <CurrentProductPage />,
       },
       {
         element: <ProtectedRoute />,

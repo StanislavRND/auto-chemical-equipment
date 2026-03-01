@@ -1,3 +1,4 @@
+import { useAuth } from "@entities/User/model/useAuth";
 import imgLogo from "@shared/assets/images/logo-text.png";
 import { Link } from "react-router-dom";
 import { useActiveHeader } from "../model/useActiveHeader";
@@ -5,6 +6,7 @@ import styles from "./Header.module.scss";
 
 export const Header = () => {
   const { activePath } = useActiveHeader();
+  const { role } = useAuth();
   return (
     <header className={styles.header}>
       <div className={styles.container}>
@@ -26,11 +28,19 @@ export const Header = () => {
             >
               <Link to="/home">Главная</Link>
             </li>
-            <li
-              className={`${styles.item} ${activePath === "/about" ? styles.active : ""}`}
-            >
-              <Link to="/about">О компании</Link>
-            </li>
+            {role !== "admin" ? (
+              <li
+                className={`${styles.item} ${activePath === "/about" ? styles.active : ""}`}
+              >
+                <Link to="/about">О компании</Link>
+              </li>
+            ) : (
+              <li
+                className={`${styles.item} ${activePath === "/catalog/admin" ? styles.active : ""}`}
+              >
+                <Link to="/catalog/admin">Редактор каталога</Link>
+              </li>
+            )}
           </ul>
         </nav>
         <div className={styles.contacts}>

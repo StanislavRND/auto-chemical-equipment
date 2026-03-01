@@ -49,36 +49,42 @@
     grid-area: a1;
     background-color: var(--blue-50);
     border: 1px solid var(--blue-100);
+    animation-delay: 0ms;
   }
 
   .item:nth-child(2) {
     grid-area: a2;
     background-color: var(--green-50);
     border: 1px solid var(--green-100);
+    animation-delay: 70ms;
   }
 
   .item:nth-child(3) {
     grid-area: a3;
     background-color: var(--red-50);
     border: 1px solid var(--red-100);
+    animation-delay: 140ms;
   }
 
   .item:nth-child(4) {
     grid-area: a4;
     background-color: var(--orange-50);
     border: 1px solid var(--orange-100);
+    animation-delay: 210ms;
   }
 
   .item:nth-child(5) {
     grid-area: a5;
     background-color: var(--green-50);
     border: 1px solid var(--green-100);
+    animation-delay: 280ms;
   }
 
   .item:nth-child(6) {
     grid-area: a6;
     background-color: var(--blue-50);
     border: 1px solid var(--blue-100);
+    animation-delay: 350ms;
   }
 }
 
@@ -86,8 +92,22 @@
   position: relative;
   overflow: hidden;
   border-radius: 1rem;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+  }
+}
+
+.inner {
+  height: 100%;
   display: flex;
   flex-direction: column;
+
+  opacity: 0;
+  transform: translateY(12px);
+  animation: fadeUp 400ms ease forwards;
 }
 
 .name {
@@ -168,4 +188,19 @@
   display: flex;
   justify-content: center;
   margin-top: 50px;
+}
+
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .items .item {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
 }
