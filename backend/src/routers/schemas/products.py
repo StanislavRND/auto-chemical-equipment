@@ -1,6 +1,8 @@
 from datetime import datetime
 
 from pydantic import BaseModel, ConfigDict, Field
+from src.routers.schemas.categories import CategoryBaseSchema
+from src.routers.schemas.subcategories import SubCategorySchema
 
 
 class ProductCreateSchema(BaseModel):
@@ -29,6 +31,27 @@ class ProductResponseSchema(BaseModel):
     category_id: int | None = None
     subcategory_id: int | None = None
 
+    category: CategoryBaseSchema | None = None
+    subcategory: SubCategorySchema | None = None
+
     created_at: datetime
 
+    model_config = ConfigDict(from_attributes=True)
+
+
+class ProductResponseIdsSchema(BaseModel):
+    id: int
+    article: str
+    name: str
+    description: str | None = None
+    compound: str
+    method_of_application: str
+    price: float
+    image_url: str
+    existence: bool
+
+    category_id: int | None = None
+    subcategory_id: int | None = None
+
+    created_at: datetime
     model_config = ConfigDict(from_attributes=True)

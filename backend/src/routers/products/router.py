@@ -6,6 +6,7 @@ from src.db.database import get_db
 from src.repositories.products.product_repository import ProductRepository
 from src.routers.schemas.products import (
     ProductCreateSchema,
+    ProductResponseIdsSchema,
     ProductResponseSchema,
 )
 from src.routers.schemas.s3 import PresignInSchema, PresignOutSchema
@@ -20,7 +21,7 @@ async def get_auth_repo(db: AsyncSession = Depends(get_db)) -> ProductRepository
 
 @product_router.get(
     "/products",
-    response_model=list[ProductResponseSchema],
+    response_model=list[ProductResponseIdsSchema],
     status_code=200,
     summary="Получение товаров",
 )
@@ -31,7 +32,27 @@ async def get_all_products(repo: ProductRepository = Depends(get_auth_repo)):
         raise HTTPException(status_code=400, detail=str(e)) from e
 
 
-@product_router.post("/products/upload", response_model=PresignOutSchema)
+@product_router.get(
+    "/products/{product_id}",
+    response_model=ProductResponseSchema,
+    status_code=200,
+    summary="Получение конкретного товара",
+)
+async def get_product_by_id(
+    product_id: int, repo: ProductRepository = Depends(get_auth_repo)
+):
+    try:
+        return await repo.get_product_by_id(product_id)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e)) from e
+
+
+@product_router.post(
+    "/products/upload",
+    response_model=PresignOutSchema,
+    status_code=200,
+    summary="Загрузка фото в S3",
+)
 def presign_product_image(
     data: PresignInSchema,
     s3: S3Service = Depends(get_s3_service),
@@ -44,7 +65,7 @@ def presign_product_image(
 
 @product_router.post(
     "/products",
-    response_model=ProductResponseSchema,
+    response_model=ProductResponseIdsSchema,
     status_code=200,
     summary="Создание товара",
 )
@@ -81,7 +102,7 @@ async def delete_product(
 
 @product_router.put(
     "/products/{product_id}",
-    response_model=ProductResponseSchema,
+    response_model=ProductResponseIdsSchema,
     summary="Изменение товара",
 )
 async def update_product(

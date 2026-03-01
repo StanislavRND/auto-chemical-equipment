@@ -5,6 +5,7 @@ from logger import logger
 from sqlalchemy import delete, desc, select, update
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import selectinload
 from src.db.models.products.products import ProductModel
 from src.repositories.exception import RepositoryError
 
@@ -24,6 +25,28 @@ class ProductRepository:
             raise RepositoryError(f"Failed to retrieve products: {e}") from e
 
     from sqlalchemy import func, select
+
+    async def get_product_by_id(self, product_id: int) -> ProductModel:
+        try:
+            stmt = (
+                select(ProductModel)
+                .where(ProductModel.id == product_id)
+                .options(
+                    selectinload(ProductModel.category),
+                    selectinload(ProductModel.subcategory),
+                )
+            )
+            result = await self.session.execute(stmt)
+            product = result.scalar_one_or_none()
+
+            if product is None:
+                raise ValueError("Товар не найден")
+
+            return product
+
+        except SQLAlchemyError as e:
+            logger.critical(f"Failed to retrieve product by id: {e}")
+            raise RepositoryError(f"Failed to retrieve product by id: {e}") from e
 
     async def create_product(
         self,
