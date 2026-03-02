@@ -41,6 +41,21 @@ class CategoriesRepository:
             logger.critical(f"Failed to retrieve categories: {e}")
             raise RepositoryError(f"Failed to retrieve categories: {e}") from e
 
+    async def get_category_by_id(self, category_id: int) -> CategoryModel:
+        try:
+            stmt = select(CategoryModel).where(CategoryModel.id == category_id)
+            result = await self.session.execute(stmt)
+            category = result.scalar_one_or_none()
+
+            if category is None:
+                raise ValueError("Категория не найдена")
+
+            return category
+
+        except SQLAlchemyError as e:
+            logger.critical(f"Failed to retrieve category by id: {e}")
+            raise RepositoryError(f"Failed to retrieve category by id: {e}") from e
+
     async def get_popularity_categories(self) -> list[CategoryModel] | None:
         try:
             stmt = (

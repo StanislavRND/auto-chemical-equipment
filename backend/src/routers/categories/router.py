@@ -52,6 +52,21 @@ async def get_popularity_categories(
         raise HTTPException(status_code=400, detail=str(e)) from e
 
 
+@category_router.get(
+    "/categories/{category_id}",
+    response_model=CategoryBaseSchema,
+    status_code=200,
+    summary="Получение конкретной категории",
+)
+async def get_category_by_id(
+    category_id: int, repo: CategoriesRepository = Depends(get_auth_repo)
+):
+    try:
+        return await repo.get_category_by_id(category_id)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e)) from e
+
+
 @category_router.post("/categories/upload", response_model=PresignOutSchema)
 def presign_product_image(
     data: PresignInSchema,
