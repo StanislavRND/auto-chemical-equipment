@@ -15,16 +15,40 @@ from src.repositories.exception import RepositoryError
 class ProductRepository:
     session: AsyncSession
 
-    async def get_products(self) -> list[ProductModel]:
+    async def get_products(
+        self,
+        sort: str = "name",
+        limit: int = 30,
+    ) -> list[ProductModel]:
         try:
             stmt = select(ProductModel)
+
+            match sort:
+                case "name":
+                    stmt = stmt.order_by(
+                        ProductModel.name.asc(), ProductModel.id.desc()
+                    )
+                case "price_desc":
+                    stmt = stmt.order_by(
+                        ProductModel.price.desc(), ProductModel.id.desc()
+                    )
+                case "price_asc":
+                    stmt = stmt.order_by(
+                        ProductModel.price.asc(), ProductModel.id.desc()
+                    )
+                case _:
+                    stmt = stmt.order_by(
+                        ProductModel.name.asc(), ProductModel.id.desc()
+                    )
+
+            stmt = stmt.limit(limit)
+
             result = await self.session.execute(stmt)
             return list(result.scalars().all())
+
         except SQLAlchemyError as e:
             logger.critical(f"Failed to retrieve products: {e}")
             raise RepositoryError(f"Failed to retrieve products: {e}") from e
-
-    from sqlalchemy import func, select
 
     async def get_product_by_id(self, product_id: int) -> ProductModel:
         try:

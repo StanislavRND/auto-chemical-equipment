@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 from src.core.deps import get_s3_service
@@ -20,14 +20,17 @@ async def get_auth_repo(db: AsyncSession = Depends(get_db)) -> ProductRepository
 
 
 @product_router.get(
-    "/products",
+    "/products/limit",
     response_model=list[ProductResponseIdsSchema],
     status_code=200,
-    summary="Получение товаров",
+    summary="Получение товаров c сортировкой и лимитом",
 )
-async def get_all_products(repo: ProductRepository = Depends(get_auth_repo)):
+async def get_limit_products(
+    sort: str = Query("name", description="name | price_desc | price_asc"),
+    repo: ProductRepository = Depends(get_auth_repo),
+):
     try:
-        return await repo.get_products()
+        return await repo.get_products(sort=sort, limit=30)
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e)) from e
 
