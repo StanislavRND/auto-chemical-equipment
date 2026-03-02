@@ -7,6 +7,8 @@ export const PATHS = {
   CART: "/cart",
   PRODUCT_NO_SUB: "/products/:categoryId/:productId",
   PRODUCT_WITH_SUB: "/products/:categoryId/:subcategoryId/:productId",
+  CATALOG_CATEGORY: "/catalog/:categoryId",
+  CATALOG_SUBCATEGORY: "/catalog/:categoryId/:subcategoryId",
   PROFILEME: "/profile/me",
   PROFILEORDERS: "/profile/orders",
   NOT_FOUND: "*",

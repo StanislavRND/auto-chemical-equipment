@@ -1,3 +1,5 @@
+import { useAppSelector } from "@app/store/hooks";
+import { selectCartTotalCount } from "@entities/Cart/model/cartSelectors";
 import { useGetCatalog } from "@shared/api/catalog/catalog";
 import { Catalog } from "@shared/ui/Catalog/Catalog";
 import { menuItems } from "../lib/data";
@@ -12,6 +14,7 @@ export const MenuMobile = () => {
     setIsCatalogOpen,
     isCatalogOpen,
   } = useActiveMenu(menuItems);
+  const cartCount = useAppSelector(selectCartTotalCount);
   const { data: categories, isLoading, error } = useGetCatalog();
 
   return (
@@ -22,17 +25,24 @@ export const MenuMobile = () => {
           {filteredMenuItems.map((item) => {
             const Icon = item.icon;
             const isActive = activePath === item.path;
+            const isCart = item.id === "cart";
 
             return (
               <button
                 key={item.id}
                 className={`${styles.item} ${isActive ? styles.active : ""}`}
                 onClick={() => handleNavigate(item.path, item.id)}
-                {...(item.id === "catalog"
-                  ? { "data-catalog-button": "true" }
-                  : {})}
               >
-                <Icon className={styles.icon} />
+                <div className={styles.iconWrapper}>
+                  <Icon className={styles.icon} />
+
+                  {isCart && (
+                    <span className={styles.cartBadge}>
+                      {cartCount > 99 ? "99+" : cartCount}
+                    </span>
+                  )}
+                </div>
+
                 <div className={styles.title}>{item.label}</div>
               </button>
             );

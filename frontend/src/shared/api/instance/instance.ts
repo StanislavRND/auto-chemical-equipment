@@ -30,7 +30,6 @@ if (typeof window !== "undefined") {
     const token = Cookies.get("access_token");
 
     if (token && now - lastRefresh > MAX_INACTIVITY) {
-      console.log("Periodic token refresh");
       lastRefresh = now;
       await refreshToken();
     }
@@ -41,7 +40,6 @@ if (typeof window !== "undefined") {
     const token = Cookies.get("access_token");
 
     if (token && now - lastRefresh > MAX_INACTIVITY) {
-      console.log("Focus-based token refresh");
       lastRefresh = now;
       refreshToken();
     }

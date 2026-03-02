@@ -4,13 +4,23 @@ import { Breadcrumbs } from "@shared/ui/BreadCrumb/BreadCrumb";
 import { Button } from "@shared/ui/Button/Button";
 import { ErrorMessage } from "@shared/ui/ErrorMessage/ErrorMessage";
 import { Loader } from "@shared/ui/Loader/Loader";
-import { PlusIcon } from "lucide-react";
+import { Minus, Plus, PlusIcon } from "lucide-react";
 import { useCurrentProduct } from "../model/useCurrentProduct";
 import styles from "./CurrentProductPage.module.scss";
 
 export const CurrentProductPage = () => {
   const { isMobile } = useBreakpoint();
-  const { breadcrumbs, productInfo, isLoading, error } = useCurrentProduct();
+  const {
+    breadcrumbs,
+    productInfo,
+    isLoading,
+    error,
+    isInCart,
+    cartQty,
+    handleAddToCart,
+    handleInc,
+    handleDec,
+  } = useCurrentProduct();
 
   const buttonSize = isMobile ? "sm" : "md";
 
@@ -70,6 +80,7 @@ export const CurrentProductPage = () => {
             <h3 className={styles.price}>
               {formatPrice(productInfo?.price || 0)} ₽
             </h3>
+
             <div
               className={`${styles.enabled} ${
                 productInfo?.existence ? styles.inStock : styles.outOfStock
@@ -79,14 +90,39 @@ export const CurrentProductPage = () => {
                 {productInfo?.existence ? "В наличии" : "Нет в наличии"}
               </span>
             </div>
-            <Button
-              onClick={() => alert("Добавлено")}
-              size={buttonSize}
-              className={styles.btn}
-              variant="outline"
-            >
-              <PlusIcon className={styles.plus} />В корзину
-            </Button>
+
+            {!isInCart ? (
+              <Button
+                onClick={handleAddToCart}
+                size={buttonSize}
+                className={styles.btn}
+                variant="outline"
+              >
+                <PlusIcon className={styles.plus} />В корзину
+              </Button>
+            ) : (
+              <div className={styles.cartActions}>
+                <Button
+                  size={buttonSize}
+                  variant="outline"
+                  className={styles.actionsBtn}
+                  onClick={handleDec}
+                >
+                  <Minus className={styles.cartIcon} size={24} />
+                </Button>
+
+                <div className={styles.actionsCount}>{cartQty}</div>
+
+                <Button
+                  size={buttonSize}
+                  variant="outline"
+                  className={styles.actionsBtn}
+                  onClick={handleInc}
+                >
+                  <Plus className={styles.cartIcon} size={24} />
+                </Button>
+              </div>
+            )}
           </div>
         </section>
       </div>

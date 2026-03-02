@@ -167,6 +167,37 @@
   }
 }
 
+.cartActions {
+  display: flex;
+  grid-area: item3;
+  align-items: center;
+  gap: 20px;
+
+  @include respond-to(tablet) {
+    gap: 12px;
+  }
+
+  .actionsBtn {
+    border-radius: 0.5rem;
+    .cartIcon {
+      width: 24px;
+      height: 24px;
+      @include respond-to(tablet) {
+        width: 18px;
+        height: 18px;
+      }
+    }
+  }
+
+  .actionsCount {
+    font-size: 1.25rem;
+    font-weight: 500;
+    @include respond-to(tablet) {
+      font-size: 1rem;
+    }
+  }
+}
+
 .loading {
   display: grid;
   justify-content: center;

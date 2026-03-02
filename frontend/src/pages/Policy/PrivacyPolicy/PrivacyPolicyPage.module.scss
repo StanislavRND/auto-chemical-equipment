@@ -13,6 +13,9 @@
   text-align: center;
   padding: 80px 20px;
   animation: fadeIn 0.5s ease;
+  @include respond-to(mobile) {
+    padding: 40px 20px;
+  }
 }
 
 .icon {
@@ -29,7 +32,7 @@
   white-space: wrap;
 
   @include respond-to(tablet) {
-    font-size: 1.7rem;
+    font-size: 1.5rem;
   }
 }
 
@@ -43,6 +46,9 @@
   @include respond-to(tablet) {
     font-size: 1rem;
     max-width: 540px;
+  }
+  @include respond-to(mobile) {
+    font-size: 0.875rem;
   }
 }
 
@@ -78,6 +84,9 @@
   @include respond-to(tablet) {
     font-size: 1.05rem;
   }
+  @include respond-to(mobile) {
+    font-size: 0.875rem;
+  }
 }
 
 .list {
@@ -89,6 +98,9 @@
     line-height: 1.6;
     margin: 6px 0;
     white-space: wrap;
+    @include respond-to(mobile) {
+      font-size: 0.875rem;
+    }
   }
 }
 

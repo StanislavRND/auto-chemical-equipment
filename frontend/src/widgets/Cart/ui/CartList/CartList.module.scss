@@ -1,0 +1,28 @@
+@import "@/shared/styles/mixin";
+
+.card {
+  padding: 40px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  border-radius: 1.15rem;
+  margin-bottom: 30px;
+  @include respond-to(tablet) {
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+}
+
+.title {
+  font-size: 1.5rem;
+  color: var(--text-primary);
+  margin-bottom: 20px;
+  font-weight: 500;
+  @include respond-to(tablet) {
+    font-size: 1rem;
+    margin-bottom: 5px;
+  }
+}
+
+.items {
+  display: flex;
+  flex-direction: column;
+}

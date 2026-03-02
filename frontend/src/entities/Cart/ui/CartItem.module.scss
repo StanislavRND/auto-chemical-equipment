@@ -1,0 +1,162 @@
+@import "@/shared/styles/mixin";
+
+.item {
+  display: grid;
+  align-items: center;
+  column-gap: 16px;
+  row-gap: 20px;
+  padding: 8px 8px 20px 8px;
+  border-bottom: 1px solid var(--grey-500);
+  grid-template-columns: 2fr 1fr 1fr;
+  grid-template-areas: "product actions price";
+}
+
+.product {
+  grid-area: product;
+}
+.actions {
+  grid-area: actions;
+}
+.price {
+  grid-area: price;
+}
+
+.product {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+
+  img {
+    max-width: 140px;
+    border-radius: 1rem;
+    @include respond-to(tablet) {
+      max-width: 80px;
+    }
+  }
+
+  .productInfo {
+    display: flex;
+    flex-direction: column;
+    color: var(--text-primary);
+  }
+
+  .productName {
+    font-size: 1.5rem;
+    @include respond-to(tablet) {
+      font-size: 1rem;
+    }
+  }
+
+  .productActicle {
+    color: var(--text-secondary);
+
+    span {
+      margin-left: 5px;
+      font-weight: 500;
+    }
+    @include respond-to(tablet) {
+      font-size: 0.875rem;
+    }
+  }
+
+  .productPrice {
+    font-size: 1.5rem;
+    color: var(--blue-500);
+    font-weight: 700;
+    margin-top: 5px;
+    @include respond-to(tablet) {
+      font-size: 1rem;
+    }
+  }
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  @include respond-to(tablet) {
+    gap: 12px;
+  }
+
+  .actionsBtn {
+    width: 50px;
+    height: 50px;
+    border-radius: 0.5rem;
+    @include respond-to(tablet) {
+      width: 30px;
+      height: 30px;
+
+      .icon {
+        width: 16px;
+        height: 16px;
+      }
+    }
+  }
+
+  .actionsCount {
+    font-size: 1.25rem;
+    font-weight: 500;
+    @include respond-to(tablet) {
+      font-size: 1rem;
+    }
+  }
+}
+
+.price {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 20px;
+  @include respond-to(mobile) {
+    gap: 15px;
+  }
+
+  .priceText {
+    font-size: 1.75rem;
+    color: var(--blue-500);
+    font-weight: 700;
+    white-space: nowrap;
+    @include respond-to(tablet) {
+      font-size: 1.25rem;
+    }
+    @include respond-to(mobile) {
+      font-size: 1.2rem;
+    }
+  }
+
+  .priceBtn {
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--red-500);
+    @include respond-to(tablet) {
+      width: 30px;
+      height: 30px;
+
+      .icon {
+        width: 16px;
+        height: 16px;
+      }
+    }
+
+    &:hover {
+      background-color: var(--red-50);
+    }
+  }
+}
+
+@include respond-to(tablet) {
+  .item {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "product product"
+      "actions price";
+    padding: 16px 8px;
+  }
+
+  .actions {
+    justify-self: start;
+  }
+  .price {
+    justify-self: end;
+  }
+}

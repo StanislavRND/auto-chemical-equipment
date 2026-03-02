@@ -1,3 +1,6 @@
+import { useAppDispatch, useAppSelector } from "@app/store/hooks";
+import { selectCartItemById } from "@entities/Cart/model/cartSelectors";
+import { cartActions } from "@entities/Cart/model/cartSlice";
 import type { BreadcrumbItem } from "@shared/ui/BreadCrumb/BreadCrumb";
 import { useMemo } from "react";
 import { useParams } from "react-router-dom";
@@ -12,6 +15,41 @@ export const useCurrentProduct = () => {
     error,
   } = useGetCurrentProduct(Number(productId));
 
+  const dispatch = useAppDispatch();
+
+  const cartItem = useAppSelector((state) =>
+    selectCartItemById(state, productInfo?.id ?? 0),
+  );
+
+  const isInCart = Boolean(cartItem);
+  const cartQty = cartItem?.qty ?? 0;
+
+  const handleAddToCart: React.MouseEventHandler = (e) => {
+    e.stopPropagation();
+    if (!productInfo) return;
+
+    dispatch(
+      cartActions.addToCart({
+        product: productInfo,
+        qty: 1,
+      }),
+    );
+  };
+
+  const handleInc: React.MouseEventHandler = (e) => {
+    e.stopPropagation();
+    if (!productInfo) return;
+
+    dispatch(cartActions.incQty({ productId: productInfo.id }));
+  };
+
+  const handleDec: React.MouseEventHandler = (e) => {
+    e.stopPropagation();
+    if (!productInfo) return;
+
+    dispatch(cartActions.decQty({ productId: productInfo.id }));
+  };
+
   const breadcrumbs = useMemo<BreadcrumbItem[]>(() => {
     if (!productInfo) return [];
 
@@ -19,26 +57,21 @@ export const useCurrentProduct = () => {
     const subcategoryId = productInfo.subcategory?.id;
 
     const items: BreadcrumbItem[] = [
-      {
-        label: "Главная",
-        to: "/home",
-      },
+      { label: "Главная", to: "/home" },
       {
         label: productInfo.category.name ?? "Категория",
-        to: `/products/${categoryId}`,
+        to: `/catalog/${categoryId}`,
       },
     ];
 
-    if (subcategoryId !== null && productInfo.subcategory) {
+    if (subcategoryId && productInfo.subcategory) {
       items.push({
         label: productInfo.subcategory.name,
-        to: `/products/${categoryId}/${subcategoryId}`,
+        to: `/catalog/${categoryId}/${subcategoryId}`,
       });
     }
 
-    items.push({
-      label: productInfo.name,
-    });
+    items.push({ label: productInfo.name });
 
     return items;
   }, [productInfo]);
@@ -48,5 +81,11 @@ export const useCurrentProduct = () => {
     productInfo,
     isLoading,
     error,
+
+    isInCart,
+    cartQty,
+    handleAddToCart,
+    handleInc,
+    handleDec,
   };
 };

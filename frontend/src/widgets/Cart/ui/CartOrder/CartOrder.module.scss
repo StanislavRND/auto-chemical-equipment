@@ -1,0 +1,56 @@
+@import "@/shared/styles/mixin";
+
+.order {
+  display: grid;
+  align-items: center;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: "button totalPrice";
+  padding: 30px 50px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  border-radius: 1.15rem;
+  gap: 30px;
+
+  @include respond-to(tablet) {
+    width: 100%;
+    gap: 10px;
+    padding: 20px;
+  }
+}
+
+.button {
+  max-width: 200px;
+  grid-area: button;
+  justify-self: center;
+  @include respond-to(tablet) {
+    max-width: 100%;
+  }
+}
+
+.totalPrice {
+  grid-area: totalPrice;
+  font-size: 3rem;
+  color: var(--blue-500);
+  font-weight: 700;
+  justify-self: center;
+  white-space: nowrap;
+  @include respond-to(tablet) {
+    font-size: 2rem;
+  }
+}
+
+@include respond-to(tablet) {
+  .order {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "totalPrice"
+      " button ";
+  }
+
+  .totalPrice {
+    justify-self: center;
+  }
+
+  .button {
+    justify-self: center;
+  }
+}

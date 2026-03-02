@@ -1,32 +1,44 @@
-import { useState } from "react";
+import { useBreakpoint } from "@shared/lib/hooks/useBreakpoint";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export const useToolbar = () => {
   const [isCatalogOpen, setIsCatalogOpen] = useState(false);
+  const [internalScrolled, setInternalScrolled] = useState(false);
+
+  const { isTablet } = useBreakpoint();
+  const sentinelRef = useRef<HTMLDivElement | null>(null);
   const navigate = useNavigate();
 
-  const toggleCatalog = () => {
-    setIsCatalogOpen(!isCatalogOpen);
-  };
+  useEffect(() => {
+    if (isTablet) return;
 
-  const handleToLogin = () => {
-    navigate("/login");
-  };
+    const el = sentinelRef.current;
+    if (!el) return;
 
-  const handleToCart = () => {
-    navigate("/cart");
-  };
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setInternalScrolled(!entry.isIntersecting);
+      },
+      { threshold: 1 },
+    );
 
-  const handleToProfile = () => {
-    navigate("/profile/me");
-  };
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [isTablet]);
+
+  const isScrolled = !isTablet && internalScrolled;
+
+  const toggleCatalog = () => setIsCatalogOpen((v) => !v);
 
   return {
+    sentinelRef,
     isCatalogOpen,
+    isScrolled,
     setIsCatalogOpen,
     toggleCatalog,
-    handleToLogin,
-    handleToCart,
-    handleToProfile,
+    handleToLogin: () => navigate("/login"),
+    handleToCart: () => navigate("/cart"),
+    handleToProfile: () => navigate("/profile/me"),
   };
 };

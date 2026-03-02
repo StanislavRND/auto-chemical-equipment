@@ -1,5 +1,6 @@
 import { ChevronRight } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { Button } from "../Button/Button";
 import styles from "./BreadCrumb.module.scss";
 
 export type BreadcrumbItem = {
@@ -14,12 +15,24 @@ interface BreadcrumbsProps {
 }
 
 export const Breadcrumbs = ({ items, className }: BreadcrumbsProps) => {
+  const navigate = useNavigate();
+
   return (
     <nav className={`${styles.nav} ${className ?? ""}`} aria-label="breadcrumb">
       <ul className={styles.list}>
+        <li className={styles.item}>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => navigate(-1)}
+            className={styles.backButton}
+          >
+            Назад
+          </Button>
+        </li>
         {items.map((item, idx) => {
           const isLast = idx === items.length - 1;
-          const isFirst = idx === 0; //
+          const isFirst = idx === 0;
 
           return (
             <li key={`${item.label}-${idx}`} className={styles.item}>
@@ -31,7 +44,7 @@ export const Breadcrumbs = ({ items, className }: BreadcrumbsProps) => {
                   {item.label}
                 </Link>
               ) : (
-                <span className={` ${isLast ? styles.current : ""}`}>
+                <span className={isLast ? styles.current : ""}>
                   {item.label}
                 </span>
               )}

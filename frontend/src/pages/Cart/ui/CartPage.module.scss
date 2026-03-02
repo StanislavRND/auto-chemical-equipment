@@ -1,0 +1,21 @@
+@import "@/shared/styles/mixin";
+
+.wrapper {
+  padding: 40px 0;
+  @include respond-to(tablet) {
+    padding: 20px 0;
+  }
+}
+
+.breadcrumbs {
+  margin-bottom: 20px;
+}
+
+.container {
+  @include container;
+}
+
+.wrapperOrder {
+  display: flex;
+  justify-content: flex-end;
+}

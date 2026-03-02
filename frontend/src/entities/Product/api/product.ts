@@ -19,7 +19,39 @@ export type UpdateProduct = Omit<Product, "id" | "article" | "existence">;
 
 export type SortValue = "name" | "price_desc" | "price_asc";
 
-export const useGetProducts = (sort: SortValue) => {
+type UseGetProductsParams = {
+  sort?: SortValue;
+  categoryId?: number;
+  subcategoryId?: number;
+};
+
+export const useGetProductsCatalog = (
+  { sort = "name", categoryId, subcategoryId }: UseGetProductsParams = {},
+  options?: { enabled: boolean },
+) => {
+  return useQuery<Product[]>({
+    queryKey: ["products", { sort, categoryId, subcategoryId }],
+    queryFn: async () => {
+      const res = await axiosInstance.get("/products/catalog", {
+        params: {
+          sort,
+          category_id: categoryId,
+          subcategory_id: subcategoryId,
+        },
+      });
+      return res.data;
+    },
+    enabled: options?.enabled ?? true,
+    staleTime: 5 * 60 * 1000,
+    refetchOnWindowFocus: false,
+    retry: false,
+  });
+};
+
+export const useGetProductsLimit = (
+  sort: SortValue,
+  options?: { enabled: boolean },
+) => {
   return useQuery<Product[]>({
     queryKey: ["products", sort],
     queryFn: async () => {
@@ -28,6 +60,7 @@ export const useGetProducts = (sort: SortValue) => {
       });
       return res.data;
     },
+    enabled: options?.enabled ?? true,
     staleTime: 5 * 60 * 1000,
     refetchOnWindowFocus: false,
     retry: false,

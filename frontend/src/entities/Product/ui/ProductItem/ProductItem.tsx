@@ -1,11 +1,9 @@
-import { useDeleteProduct, type Product } from "@entities/Product/api/product";
-import { useAuth } from "@entities/User/model/useAuth";
-import { useBreakpoint } from "@shared/lib/hooks/useBreakpoint";
-import { Button } from "@shared/ui/Button/Button";
-import { Pencil, PlusIcon, Trash } from "lucide-react";
-import { useNavigate } from "react-router-dom";
-import styles from "./ProductItem.module.scss";
+import { type Product } from "@entities/Product/api/product";
+import { useProductItem } from "@entities/Product/model/useProductItem";
 import { formatPrice } from "@shared/lib/formatting/formatPrice";
+import { Button } from "@shared/ui/Button/Button";
+import { Minus, Pencil, Plus, PlusIcon, Trash } from "lucide-react";
+import styles from "./ProductItem.module.scss";
 
 interface ProductItemProps {
   product: Product;
@@ -13,22 +11,20 @@ interface ProductItemProps {
 }
 
 export const ProductItem = ({ product, onEdit }: ProductItemProps) => {
-  const { isLaptop, isMobile, isTablet } = useBreakpoint();
-  const { role } = useAuth();
-  const { mutate: deleteProduct, isPending } = useDeleteProduct();
-  const navigate = useNavigate();
-
-  const buttonSize = isMobile ? "sm" : isTablet || isLaptop ? "md" : "lg";
-
-  const handleNavigate = () => {
-    if (product.subcategory_id !== null) {
-      navigate(
-        `/products/${product.category_id}/${product.subcategory_id}/${product.id}`,
-      );
-    } else {
-      navigate(`/products/${product.category_id}/${product.id}`);
-    }
-  };
+  const {
+    isAdmin,
+    isInCart,
+    cartQty,
+    buttonSize,
+    isDeleting,
+    stop,
+    handleNavigate,
+    handleAddToCart,
+    handleInc,
+    handleDec,
+    handleEdit,
+    handleDeleteProduct,
+  } = useProductItem({ product, onEdit });
 
   return (
     <div onClick={handleNavigate} className={styles.item}>
@@ -40,48 +36,65 @@ export const ProductItem = ({ product, onEdit }: ProductItemProps) => {
             alt="Фото товара"
           />
         </div>
+
         <div className={styles.itemInfo}>
           <h3 className={styles.price}>{formatPrice(product.price)} ₽</h3>
-          <h4 className={`${styles.name}`}>{product.name}</h4>
+          <h4 className={styles.name}>{product.name}</h4>
           <h4 className={`${styles.article} ${styles.subtitle}`}>
             арт: <span>{product.article}</span>
           </h4>
         </div>
-        {role !== "admin" ? (
-          <Button
-            onClick={(e) => {
-              e.stopPropagation();
-              alert("Добавлено");
-            }}
-            size={buttonSize}
-            className={styles.btn}
-            variant="outline"
-          >
-            <PlusIcon className={styles.plus} />В корзину
-          </Button>
-        ) : (
+
+        {isAdmin ? (
           <div className={styles.actions}>
-            <Button
-              onClick={(e) => {
-                e.stopPropagation();
-                if (onEdit) onEdit(product);
-              }}
-              className={styles.btnEdit}
-            >
+            <Button onClick={handleEdit} className={styles.btnEdit}>
               <Pencil size={18} />
             </Button>
+
             <Button
-              disabled={isPending}
-              loading={isPending}
-              onClick={(e) => {
-                e.stopPropagation();
-                deleteProduct(product.id);
-              }}
+              disabled={isDeleting}
+              loading={isDeleting}
+              onClick={handleDeleteProduct}
               className={styles.btnDelete}
             >
               <Trash size={18} />
             </Button>
           </div>
+        ) : (
+          <>
+            {!isInCart ? (
+              <Button
+                onClick={handleAddToCart}
+                size={buttonSize}
+                className={styles.btn}
+                variant="outline"
+              >
+                <PlusIcon className={styles.plus} />В корзину
+              </Button>
+            ) : (
+              <div className={styles.cartActions} onClick={stop}>
+                <Button
+                  size={buttonSize}
+                  variant="outline"
+                  className={styles.actionsBtn}
+                  onClick={handleDec}
+                >
+                  <Minus className={styles.cartIcon} size={24} />
+                </Button>
+
+                <div className={styles.actionsCount}>{cartQty}</div>
+
+                <Button
+                  size={buttonSize}
+                  variant="outline"
+                  className={styles.actionsBtn}
+                  onClick={handleInc}
+                >
+                  <Plus className={styles.cartIcon} size={24} />
+                </Button>
+              </div>
+            )}
+          </>
         )}
       </div>
     </div>

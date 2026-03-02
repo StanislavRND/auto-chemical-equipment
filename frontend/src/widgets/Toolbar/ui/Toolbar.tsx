@@ -1,3 +1,5 @@
+import { useAppSelector } from "@app/store/hooks";
+import { selectCartTotalCount } from "@entities/Cart/model/cartSelectors";
 import { useAuth } from "@entities/User/model/useAuth";
 import type { Category } from "@shared/api/catalog/catalog";
 import { useBreakpoint } from "@shared/lib/hooks/useBreakpoint";
@@ -18,6 +20,8 @@ export const Toolbar = (props: ToolbarProps) => {
   const { isLaptop, isMobile, isTablet } = useBreakpoint();
   const {
     isCatalogOpen,
+    sentinelRef,
+    isScrolled,
     setIsCatalogOpen,
     toggleCatalog,
     handleToLogin,
@@ -25,61 +29,76 @@ export const Toolbar = (props: ToolbarProps) => {
     handleToProfile,
   } = useToolbar();
   const { isAuthenticated, role } = useAuth();
+  const cartCount = useAppSelector(selectCartTotalCount);
 
   const buttonSize = isLaptop || isMobile || isTablet ? "md" : "lg";
 
   return (
-    <section className={styles.toolbar}>
-      <div className={styles.container}>
-        <Button
-          data-catalog-button="true"
-          size={buttonSize}
-          className={styles.btn}
-          onClick={toggleCatalog}
-        >
-          <Menu className={styles.menuIcon} />
-          Каталог
-        </Button>
-        <div className={styles.inputWrapper}>
-          <Input placeholder="Поиск" className={styles.input} />
-          <Search className={styles.searchIcon} />
-        </div>
-        {isAuthenticated ? (
-          <div className={styles.actions}>
-            {role !== "admin" && (
-              <button onClick={handleToCart} type="button" aria-label="Корзина">
-                <ShoppingCart className={styles.actionsIcon} />
-              </button>
-            )}
-
-            <button
-              onClick={handleToProfile}
-              type="button"
-              aria-label="Профиль"
-            >
-              <UserRound className={styles.actionsIcon} />
-            </button>
-          </div>
-        ) : (
+    <>
+      {" "}
+      <div ref={sentinelRef} style={{ height: 1 }} />
+      <section
+        className={`${styles.toolbar} ${isScrolled ? styles.scrolled : ""}`}
+      >
+        <div className={styles.container}>
           <Button
+            data-catalog-button="true"
             size={buttonSize}
-            className={styles.btnLogin}
-            variant="outline"
-            onClick={handleToLogin}
+            className={styles.btn}
+            onClick={toggleCatalog}
           >
-            Войти
+            <Menu className={styles.menuIcon} />
+            Каталог
           </Button>
-        )}
+          <div className={styles.inputWrapper}>
+            <Input placeholder="Поиск" className={styles.input} />
+            <Search className={styles.searchIcon} />
+          </div>
+          {isAuthenticated ? (
+            <div className={styles.actions}>
+              {role !== "admin" && (
+                <button
+                  onClick={handleToCart}
+                  type="button"
+                  aria-label="Корзина"
+                  className={styles.cartBtn}
+                >
+                  <ShoppingCart className={styles.actionsIcon} />
+                  <span className={styles.cartBadge}>
+                    {cartCount > 99 ? "99+" : cartCount}
+                  </span>
+                </button>
+              )}
 
-        <Catalog
-          categories={props.categories || []}
-          loading={props.loading}
-          error={props.error}
-          className={styles.toolbarCatalog}
-          isOpen={isCatalogOpen}
-          onClose={() => setIsCatalogOpen(false)}
-        />
-      </div>
-    </section>
+              <button
+                onClick={handleToProfile}
+                type="button"
+                aria-label="Профиль"
+              >
+                <UserRound className={styles.actionsIcon} />
+              </button>
+            </div>
+          ) : (
+            <Button
+              size={buttonSize}
+              className={styles.btnLogin}
+              variant="outline"
+              onClick={handleToLogin}
+            >
+              Войти
+            </Button>
+          )}
+
+          <Catalog
+            categories={props.categories || []}
+            loading={props.loading}
+            error={props.error}
+            className={styles.toolbarCatalog}
+            isOpen={isCatalogOpen}
+            onClose={() => setIsCatalogOpen(false)}
+          />
+        </div>
+      </section>
+    </>
   );
 };
