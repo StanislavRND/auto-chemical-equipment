@@ -150,8 +150,8 @@ export const RegisterForm = ({ onSuccess }: RegisterFormProps) => {
 
       <Checkbox checked={checked} onChange={handleCheck}>
         Я подтверждаю, что ознакомлен(а) и принимаю
-        <Link to={"/home"}> Пользовательское соглашение</Link> и{" "}
-        <Link to={"/home"}> Политику конфиденциальности</Link>
+        <Link to={"/user-agreement"}> Пользовательское соглашение</Link> и{" "}
+        <Link to={"/privacy-policy"}> Политику конфиденциальности</Link>
       </Checkbox>
 
       {apiErrorMessage &&

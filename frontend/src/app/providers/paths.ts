@@ -11,4 +11,6 @@ export const PATHS = {
   PROFILEORDERS: "/profile/orders",
   NOT_FOUND: "*",
   ACCESS_DENIED: "/access-denied",
+  PRIVACY_POLICY: "/privacy-policy",
+  USER_AGREEMENT: "/user-agreement",
 };

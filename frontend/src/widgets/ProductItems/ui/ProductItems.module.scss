@@ -13,6 +13,7 @@
   grid-template-columns: repeat(4, 1fr);
   gap: 25px;
   align-items: start;
+  margin-top: 30px;
   @include respond-to(laptop) {
     grid-template-columns: repeat(3, 1fr);
   }

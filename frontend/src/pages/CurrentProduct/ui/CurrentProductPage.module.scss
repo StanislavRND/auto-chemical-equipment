@@ -115,7 +115,7 @@
   border-radius: 12px;
   align-items: center;
   @include respond-to(mobile) {
-    padding: 10px 20px;
+    padding: 15px 15px;
   }
 
   grid-template-areas:

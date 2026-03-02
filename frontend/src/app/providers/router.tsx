@@ -6,6 +6,7 @@ import { CurrentProductPage } from "@pages/CurrentProduct/ui/CurrentProductPage"
 import { AccessDeniedPage } from "@pages/Fallback/AccessDeniedPage/AccessDeniedPage";
 import { NotFoundPage } from "@pages/Fallback/NotFoundPage/NotFoundPage";
 import { HomePage } from "@pages/Home/ui/HomePage";
+import { PrivacyPolicyPage } from "@pages/Policy/PrivacyPolicy/PrivacyPolicyPage";
 import { ProfileMePage } from "@pages/ProfileMe/ui/ProfileMePage";
 import { ProfileOrdersPage } from "@pages/ProfileOrders/ui/ProfileOrdersPage";
 import { RegisterPage } from "@pages/Register/ui/RegisterPage";
@@ -16,6 +17,7 @@ import {
 } from "react-router-dom";
 import { PATHS } from "./paths";
 import { ProtectedRoute } from "./ProtectedRoute";
+import { UserAgreementPage } from "@pages/Policy/UserAgreement/UserAgreementPage";
 
 const router = createBrowserRouter([
   {
@@ -38,6 +40,14 @@ const router = createBrowserRouter([
   {
     path: PATHS.NOT_FOUND,
     element: <NotFoundPage />,
+  },
+  {
+    path: PATHS.PRIVACY_POLICY,
+    element: <PrivacyPolicyPage />,
+  },
+  {
+    path: PATHS.USER_AGREEMENT,
+    element: <UserAgreementPage />,
   },
   {
     element: <MainLayout />,

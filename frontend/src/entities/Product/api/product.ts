@@ -21,7 +21,7 @@ export const useGetProducts = () => {
   return useQuery<Product[]>({
     queryKey: ["products"],
     queryFn: async () => {
-      const res = await axiosInstance.get("/products");
+      const res = await axiosInstance.get("/products/limit");
       return res.data;
     },
     staleTime: 5 * 60 * 1000,
