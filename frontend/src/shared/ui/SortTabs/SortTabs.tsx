@@ -1,6 +1,8 @@
+import { ChevronUp } from "lucide-react";
+import { useState } from "react";
 import styles from "./SortTabs.module.scss";
 
-export type SortValue = "name" | "price-desc" | "price-asc";
+export type SortValue = "name" | "price_desc" | "price_asc";
 
 interface SortTabsProps {
   value: SortValue;
@@ -8,32 +10,58 @@ interface SortTabsProps {
   className?: string;
 }
 
+const options: { label: string; value: SortValue }[] = [
+  { label: "по наименованию", value: "name" },
+  { label: "сначала дорогие", value: "price_desc" },
+  { label: "сначала дешевые", value: "price_asc" },
+];
+
 export const SortTabs = ({ value, onChange, className }: SortTabsProps) => {
+  const [open, setOpen] = useState(false);
+
+  const currentLabel = options.find((o) => o.value === value)?.label;
+
   return (
     <div className={`${styles.wrapper} ${className ?? ""}`}>
-      <div
-        className={`${styles.item} ${value === "name" ? styles.active : ""}`}
-        onClick={() => onChange("name")}
-      >
-        по наименованию
+      <div className={styles.tabs}>
+        {options.map((option) => (
+          <div
+            key={option.value}
+            className={`${styles.item} ${
+              value === option.value ? styles.active : ""
+            }`}
+            onClick={() => onChange(option.value)}
+          >
+            {option.label}
+          </div>
+        ))}
       </div>
 
-      <div
-        className={`${styles.item} ${
-          value === "price-desc" ? styles.active : ""
-        }`}
-        onClick={() => onChange("price-desc")}
-      >
-        cначала дорогие
-      </div>
+      <div className={styles.select}>
+        <div
+          className={`${styles.selectHeader} ${open ? styles.open : ""}`}
+          onClick={() => setOpen((prev) => !prev)}
+        >
+          <span>{currentLabel}</span>
+          <ChevronUp className={styles.icon} size={18} />
+        </div>
 
-      <div
-        className={`${styles.item} ${
-          value === "price-asc" ? styles.active : ""
-        }`}
-        onClick={() => onChange("price-asc")}
-      >
-        cначала дешевые
+        {open && (
+          <div className={styles.dropdown}>
+            {options.map((option) => (
+              <div
+                key={option.value}
+                className={styles.dropdownItem}
+                onClick={() => {
+                  onChange(option.value);
+                  setOpen(false);
+                }}
+              >
+                {option.label}
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

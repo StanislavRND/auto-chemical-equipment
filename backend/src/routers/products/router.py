@@ -3,6 +3,7 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 from src.core.deps import get_s3_service
 from src.db.database import get_db
+from src.repositories.products.product_query_repostory import ProductQueryRepository
 from src.repositories.products.product_repository import ProductRepository
 from src.routers.schemas.products import (
     ProductCreateSchema,
@@ -19,6 +20,12 @@ async def get_auth_repo(db: AsyncSession = Depends(get_db)) -> ProductRepository
     return ProductRepository(session=db)
 
 
+async def get_product_query_repo(
+    db: AsyncSession = Depends(get_db),
+) -> ProductQueryRepository:
+    return ProductQueryRepository(session=db)
+
+
 @product_router.get(
     "/products/limit",
     response_model=list[ProductResponseIdsSchema],
@@ -31,6 +38,28 @@ async def get_limit_products(
 ):
     try:
         return await repo.get_products(sort=sort, limit=30)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e)) from e
+
+
+@product_router.get(
+    "/products/catalog",
+    response_model=list[ProductResponseIdsSchema],
+    status_code=200,
+    summary="Получение товаров каталога по категории/подкатегории",
+)
+async def get_catalog_products(
+    category_id: int | None = Query(None),
+    subcategory_id: int | None = Query(None),
+    sort: str = Query("name", description="name | price_desc | price_asc"),
+    repo: ProductQueryRepository = Depends(get_product_query_repo),
+):
+    try:
+        return await repo.get_catalog_products(
+            category_id=category_id,
+            subcategory_id=subcategory_id,
+            sort=sort,
+        )
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e)) from e
 

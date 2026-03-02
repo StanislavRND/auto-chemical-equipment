@@ -17,11 +17,15 @@ export interface Product {
 
 export type UpdateProduct = Omit<Product, "id" | "article" | "existence">;
 
-export const useGetProducts = () => {
+export type SortValue = "name" | "price_desc" | "price_asc";
+
+export const useGetProducts = (sort: SortValue) => {
   return useQuery<Product[]>({
-    queryKey: ["products"],
+    queryKey: ["products", sort],
     queryFn: async () => {
-      const res = await axiosInstance.get("/products/limit");
+      const res = await axiosInstance.get("/products/limit", {
+        params: { sort },
+      });
       return res.data;
     },
     staleTime: 5 * 60 * 1000,

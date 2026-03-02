@@ -11,8 +11,9 @@ type ProductItemsProps = {
 };
 
 export const ProductItems = ({ onEdit }: ProductItemsProps) => {
-  const { data: products, isLoading, error } = useGetProducts();
   const [sort, setSort] = useState<SortValue>("name");
+
+  const { data: products, isLoading, error } = useGetProducts(sort);
 
   if (isLoading)
     return (
