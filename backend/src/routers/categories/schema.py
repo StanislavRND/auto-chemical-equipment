@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from pydantic import BaseModel
-from src.routers.schemas.subcategories import SubCategorySchema
+from src.routers.subcategories.schema import SubCategorySchema
 
 
 class CategoryBaseSchema(BaseModel):

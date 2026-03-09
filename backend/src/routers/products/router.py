@@ -3,15 +3,19 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 from src.core.deps import get_s3_service
 from src.db.database import get_db
+from src.db.models.users.users import UserModel
 from src.repositories.products.product_query_repostory import ProductQueryRepository
 from src.repositories.products.product_repository import ProductRepository
-from src.routers.schemas.products import (
+from src.repositories.users.users_repository import UserRepository
+from src.services.storage.s3 import S3Service
+
+from .schema import (
+    PresignInSchema,
+    PresignOutSchema,
     ProductCreateSchema,
     ProductResponseIdsSchema,
     ProductResponseSchema,
 )
-from src.routers.schemas.s3 import PresignInSchema, PresignOutSchema
-from src.services.storage.s3 import S3Service
 
 product_router = APIRouter(tags=["Товары"])
 
@@ -87,6 +91,7 @@ async def get_product_by_id(
 )
 def presign_product_image(
     data: PresignInSchema,
+    _: UserModel = Depends(UserRepository.get_admin_user_dependency),
     s3: S3Service = Depends(get_s3_service),
 ):
     key = s3.make_key(prefix="products", filename=data.filename)
@@ -104,6 +109,7 @@ def presign_product_image(
 async def create_product(
     product_data: ProductCreateSchema,
     repo: ProductRepository = Depends(get_auth_repo),
+    _: UserModel = Depends(UserRepository.get_admin_user_dependency),
 ):
     try:
         product = await repo.create_product(**product_data.model_dump())
@@ -124,6 +130,7 @@ async def create_product(
 )
 async def delete_product(
     product_id: int,
+    _: UserModel = Depends(UserRepository.get_admin_user_dependency),
     repo: ProductRepository = Depends(get_auth_repo),
 ):
     try:
@@ -140,6 +147,7 @@ async def delete_product(
 async def update_product(
     product_id: int,
     product_data: ProductCreateSchema,
+    _: UserModel = Depends(UserRepository.get_admin_user_dependency),
     repo: ProductRepository = Depends(get_auth_repo),
 ):
     try:

@@ -12,7 +12,7 @@ from src.core.config import settings
 from src.db.database import get_db
 from src.db.models.users.users import UserModel
 from src.repositories.exception import RepositoryError
-from src.routers.schemas.user import UserResponse
+from src.routers.users.schema import UserResponse
 
 
 @final
@@ -35,6 +35,20 @@ class UserRepository:
         except SQLAlchemyError as e:
             logger.critical(f"Failed to retrieve user {current_user.id}: {e}")
             raise RepositoryError(f"Failed to retrieve user: {e}") from e
+
+    @classmethod
+    async def get_admin_user_dependency(
+        cls, request: Request, db: AsyncSession = Depends(get_db)
+    ) -> UserModel:
+        user = await cls.get_current_user_dependency(request, db)
+
+        if user.role != "admin":
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Доступ только для администратора",
+            )
+
+        return user
 
     @classmethod
     async def get_current_user_dependency(

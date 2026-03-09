@@ -1,4 +1,5 @@
 from src.db.base import Base
+from src.db.models.cart.cart import CartModel
 from src.db.models.categories.categories import CategoryModel
 from src.db.models.codes.codes import CodeModel
 from src.db.models.products.products import ProductModel
@@ -7,6 +8,7 @@ from src.db.models.users.users import UserModel
 
 __all__ = (
     "Base",
+    "CartModel",
     "CategoryModel",
     "CodeModel",
     "ProductModel",

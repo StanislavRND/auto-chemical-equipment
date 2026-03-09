@@ -53,21 +53,6 @@ class SubCategoriesRepository:
             logger.error(f"Failed to create subcategory: {e}")
             raise RepositoryError(f"Failed to create subcategory: {e}") from e
 
-    async def get_subcategory_by_id(self, subcategory_id: int) -> SubCategoryModel:
-        try:
-            stmt = select(SubCategoryModel).where(SubCategoryModel.id == subcategory_id)
-            result = await self.session.execute(stmt)
-            subcategory = result.scalar_one_or_none()
-
-            if subcategory is None:
-                raise ValueError("Подкатегория не найдена")
-
-            return subcategory
-
-        except SQLAlchemyError as e:
-            logger.critical(f"Failed to retrieve subcategory by id: {e}")
-            raise RepositoryError(f"Failed to retrieve subcategory by id: {e}") from e
-
     async def update_subcategory(
         self, subcategory_id: int, subcategory_data
     ) -> SubCategoryModel:

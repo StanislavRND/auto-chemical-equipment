@@ -8,14 +8,15 @@ from src.repositories.categories.categories_repository import (
     CategoryAlreadyExistsError,
     CategoryNotFoundError,
 )
-from src.routers.schemas.categories import (
+from src.routers.products.schema import PresignInSchema, PresignOutSchema
+from src.services.storage.s3 import S3Service
+
+from .schema import (
     CategoryBaseSchema,
     CategoryCreateSchema,
     CategoryResponseSchema,
     CategoryWithSubcategoriesSchema,
 )
-from src.routers.schemas.s3 import PresignInSchema, PresignOutSchema
-from src.services.storage.s3 import S3Service
 
 category_router = APIRouter(tags=["Категории"])
 
@@ -48,21 +49,6 @@ async def get_popularity_categories(
 ):
     try:
         return await repo.get_popularity_categories()
-    except ValueError as e:
-        raise HTTPException(status_code=400, detail=str(e)) from e
-
-
-@category_router.get(
-    "/categories/{category_id}",
-    response_model=CategoryBaseSchema,
-    status_code=200,
-    summary="Получение конкретной категории",
-)
-async def get_category_by_id(
-    category_id: int, repo: CategoriesRepository = Depends(get_auth_repo)
-):
-    try:
-        return await repo.get_category_by_id(category_id)
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e)) from e
 

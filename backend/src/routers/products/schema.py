@@ -1,8 +1,8 @@
 from datetime import datetime
 
 from pydantic import BaseModel, ConfigDict, Field
-from src.routers.schemas.categories import CategoryBaseSchema
-from src.routers.schemas.subcategories import SubCategorySchema
+from src.routers.categories.schema import CategoryBaseSchema
+from src.routers.subcategories.schema import SubCategorySchema
 
 
 class ProductCreateSchema(BaseModel):
@@ -55,3 +55,12 @@ class ProductResponseIdsSchema(BaseModel):
 
     created_at: datetime
     model_config = ConfigDict(from_attributes=True)
+
+
+class PresignInSchema(BaseModel):
+    filename: str
+
+
+class PresignOutSchema(BaseModel):
+    upload_url: str
+    image_url: str

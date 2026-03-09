@@ -81,7 +81,7 @@ class VerificationService:
         message = EmailMessage()
         message["From"] = settings.SMTP_FROM
         message["To"] = email
-        message["Subject"] = "Код подтверждения регистрации в ОптАвтоХим"
+        message["Subject"] = "Код подтверждения регистрации в ОптовикАвтоХим"
 
         message.set_content(text_content)
         message.add_alternative(html_content, subtype="html")

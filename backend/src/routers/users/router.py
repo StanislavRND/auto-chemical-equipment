@@ -3,7 +3,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from src.db.database import get_db
 from src.db.models.users.users import UserModel
 from src.repositories.users.users_repository import UserRepository
-from src.routers.schemas.user import UserResponse
+
+from .schema import UserResponse
 
 user_router = APIRouter(tags=["Пользователи"])
 

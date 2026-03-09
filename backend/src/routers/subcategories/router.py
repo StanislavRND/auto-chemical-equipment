@@ -8,9 +8,9 @@ from src.repositories.subcategories.subcategories_repository import (
     SubCategoryAlreadyExistsError,
     SubCategoryNotFoundError,
 )
-from src.routers.schemas.subcategories import (
+
+from .schema import (
     SubCategoryCreateSchema,
-    SubCategorySchema,
     SubCategoryUpdateSchema,
 )
 
@@ -41,21 +41,6 @@ async def create_subcategory(
             status_code=409,
             detail="Subcategory with this name already exists",
         ) from e
-    except ValueError as e:
-        raise HTTPException(status_code=400, detail=str(e)) from e
-
-
-@sub_category_router.get(
-    "/subcategories/{subcategory_id}",
-    response_model=SubCategorySchema,
-    status_code=200,
-    summary="Получение конкретной подкатегории",
-)
-async def get_category_by_id(
-    subcategory_id: int, repo: SubCategoriesRepository = Depends(get_auth_repo)
-):
-    try:
-        return await repo.get_subcategory_by_id(subcategory_id)
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e)) from e
 
