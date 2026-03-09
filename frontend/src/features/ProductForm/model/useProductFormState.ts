@@ -1,5 +1,5 @@
 import type { Category } from "@shared/api/catalog/catalog";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import {
   createEmptyProductForm,
   ensureDefaultsFromCatalog,
@@ -13,42 +13,38 @@ import {
 } from "../types";
 
 type Args = {
-  mode: "create" | "edit";
   categories?: Category[];
-  initialValues?: Partial<ProductFormValues> | null;
 };
 
-export const useProductFormState = ({
-  mode,
-  categories,
-  initialValues,
-}: Args) => {
-  const [formData, setFormData] = useState<ProductFormValues>(
-    createEmptyProductForm,
+export const useProductFormState = ({ categories }: Args) => {
+  const [formData, setFormData] = useState<ProductFormValues>(() =>
+    categories?.length
+      ? ensureDefaultsFromCatalog(createEmptyProductForm(), categories)
+      : createEmptyProductForm(),
   );
+
   const [touched, setTouched] = useState<TouchedFields>(emptyTouched);
 
-  useEffect(() => {
-    if (!categories?.length) return;
-    const handleChandeFormData = () => {
-      setFormData((prev) => ensureDefaultsFromCatalog(prev, categories));
-    };
-    handleChandeFormData();
+  const resetCreateForm = useCallback(() => {
+    setFormData(
+      categories?.length
+        ? ensureDefaultsFromCatalog(createEmptyProductForm(), categories)
+        : createEmptyProductForm(),
+    );
+    setTouched(emptyTouched);
   }, [categories]);
 
-  useEffect(() => {
-    if (mode !== "edit") return;
-    if (!categories?.length) return;
-    if (!initialValues) return;
+  const resetEditForm = useCallback(
+    (initialValues?: Partial<ProductFormValues> | null) => {
+      if (!categories?.length || !initialValues) return;
 
-    const handleChangeFormData = () => {
       setFormData((prev) =>
         mergeInitialValues(prev, initialValues, categories),
       );
       setTouched(emptyTouched);
-    };
-    handleChangeFormData()
-  }, [mode, initialValues, categories]);
+    },
+    [categories],
+  );
 
   const handleBlur = useCallback((field: keyof ProductFormValues) => {
     setTouched((prev) => ({ ...prev, [field]: true }));
@@ -67,7 +63,6 @@ export const useProductFormState = ({
           return {
             ...prev,
             category_id: catId,
-
             subcategory_id: firstSubId,
           };
         }
@@ -93,11 +88,11 @@ export const useProductFormState = ({
 
   return {
     formData,
-    setFormData,
     touched,
-    setTouched,
     handleBlur,
     handleChange,
     touchAll,
+    resetCreateForm,
+    resetEditForm,
   };
 };

@@ -16,7 +16,6 @@ export type Mode = "create" | "edit";
 export type UseProductFormArgs = {
   mode: Mode;
   productId?: string;
-  initialValues?: Partial<ProductFormValues>;
   onSuccess?: () => void;
 };
 

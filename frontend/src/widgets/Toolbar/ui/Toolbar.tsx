@@ -1,5 +1,5 @@
 import { useAppSelector } from "@app/store/hooks";
-import { selectCartTotalCount } from "@entities/Cart/model/cartSelectors";
+import { selectCartTotalCount } from "@entities/Cart/model/store/cartSelectors";
 import { useAuth } from "@entities/User/model/useAuth";
 import type { Category } from "@shared/api/catalog/catalog";
 import { useBreakpoint } from "@shared/lib/hooks/useBreakpoint";
@@ -18,6 +18,7 @@ interface ToolbarProps {
 
 export const Toolbar = (props: ToolbarProps) => {
   const { isLaptop, isMobile, isTablet } = useBreakpoint();
+
   const {
     isCatalogOpen,
     sentinelRef,
@@ -28,6 +29,7 @@ export const Toolbar = (props: ToolbarProps) => {
     handleToCart,
     handleToProfile,
   } = useToolbar();
+
   const { isAuthenticated, role } = useAuth();
   const cartCount = useAppSelector(selectCartTotalCount);
 
@@ -35,8 +37,8 @@ export const Toolbar = (props: ToolbarProps) => {
 
   return (
     <>
-      {" "}
       <div ref={sentinelRef} style={{ height: 1 }} />
+
       <section
         className={`${styles.toolbar} ${isScrolled ? styles.scrolled : ""}`}
       >
@@ -50,44 +52,47 @@ export const Toolbar = (props: ToolbarProps) => {
             <Menu className={styles.menuIcon} />
             Каталог
           </Button>
+
           <div className={styles.inputWrapper}>
             <Input placeholder="Поиск" className={styles.input} />
             <Search className={styles.searchIcon} />
           </div>
-          {isAuthenticated ? (
-            <div className={styles.actions}>
-              {role !== "admin" && (
-                <button
-                  onClick={handleToCart}
-                  type="button"
-                  aria-label="Корзина"
-                  className={styles.cartBtn}
-                >
-                  <ShoppingCart className={styles.actionsIcon} />
-                  <span className={styles.cartBadge}>
-                    {cartCount > 99 ? "99+" : cartCount}
-                  </span>
-                </button>
-              )}
 
+          <div className={styles.actions}>
+            {role !== "admin" && isAuthenticated && (
+              <button
+                onClick={handleToCart}
+                type="button"
+                aria-label="Корзина"
+                className={styles.cartBtn}
+              >
+                <ShoppingCart className={styles.actionsIcon} />
+                <span className={styles.cartBadge}>
+                  {cartCount > 99 ? "99+" : cartCount}
+                </span>
+              </button>
+            )}
+
+            {isAuthenticated ? (
               <button
                 onClick={handleToProfile}
                 type="button"
                 aria-label="Профиль"
+                className={styles.profileBtn}
               >
                 <UserRound className={styles.actionsIcon} />
               </button>
-            </div>
-          ) : (
-            <Button
-              size={buttonSize}
-              className={styles.btnLogin}
-              variant="outline"
-              onClick={handleToLogin}
-            >
-              Войти
-            </Button>
-          )}
+            ) : (
+              <Button
+                size={buttonSize}
+                className={styles.btnLogin}
+                variant="outline"
+                onClick={handleToLogin}
+              >
+                Войти
+              </Button>
+            )}
+          </div>
 
           <Catalog
             categories={props.categories || []}

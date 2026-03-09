@@ -1,9 +1,8 @@
-import { useAppDispatch } from "@app/store/hooks";
 import { Button } from "@shared/ui/Button/Button";
 import { Minus, Plus, Trash } from "lucide-react";
 import { formatRub, parsePrice } from "../lib/formating";
-import { cartActions } from "../model/cartSlice";
 import type { CartItem as CartItemType } from "../model/types";
+import { useCartActions } from "../model/useCartActions";
 import styles from "./CartItem.module.scss";
 
 interface CartItemProps {
@@ -11,7 +10,7 @@ interface CartItemProps {
 }
 
 export const CartItem = ({ item }: CartItemProps) => {
-  const dispatch = useAppDispatch();
+  const { incQty, decQty, removeFromCart } = useCartActions();
 
   const unitPrice = parsePrice(item.price);
   const total = unitPrice * item.qty;
@@ -34,9 +33,7 @@ export const CartItem = ({ item }: CartItemProps) => {
           size="md"
           variant="outline"
           className={styles.actionsBtn}
-          onClick={() =>
-            dispatch(cartActions.decQty({ productId: item.productId }))
-          }
+          onClick={() => decQty(item.productId)}
         >
           <Minus className={styles.icon} size={20} color="var(--blue-500)" />
         </Button>
@@ -47,9 +44,7 @@ export const CartItem = ({ item }: CartItemProps) => {
           size="md"
           variant="outline"
           className={styles.actionsBtn}
-          onClick={() =>
-            dispatch(cartActions.incQty({ productId: item.productId }))
-          }
+          onClick={() => incQty(item.productId)}
         >
           <Plus className={styles.icon} size={20} color="var(--blue-500)" />
         </Button>
@@ -61,9 +56,7 @@ export const CartItem = ({ item }: CartItemProps) => {
           size="md"
           variant="outline"
           className={styles.priceBtn}
-          onClick={() =>
-            dispatch(cartActions.removeFromCart({ productId: item.productId }))
-          }
+          onClick={() => removeFromCart(item.productId)}
         >
           <Trash className={styles.icon} size={20} color="var(--red-500)" />
         </Button>

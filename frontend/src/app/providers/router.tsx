@@ -1,4 +1,5 @@
 import { MainLayout } from "@app/layouts/BaseLayout/BaseLayout";
+import { useSyncCart } from "@entities/Cart/model/useSyncCart";
 import { AboutPage } from "@pages/About/ui/About";
 import { AuthPage } from "@pages/Auth/ui/AuthPage";
 import { CartPage } from "@pages/Cart/ui/CartPage";
@@ -99,5 +100,6 @@ const router = createBrowserRouter([
 ]);
 
 export const AppRouter = () => {
+  useSyncCart();
   return <RouterProvider router={router} />;
 };

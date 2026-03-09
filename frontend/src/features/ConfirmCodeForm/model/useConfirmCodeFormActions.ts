@@ -3,9 +3,12 @@ import { AxiosError } from "axios";
 import { useCallback, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRegisterVerify } from "../api/useRegisterVerify";
+import { useLogin } from "@features/AuthForm/api/useLogin";
+
 
 export const useConfirmCodeForm = () => {
   const { mutate: verify, isError, error, isPending } = useRegisterVerify();
+  const { mutate: login } = useLogin();
   const registrationData = useAppSelector((state) => state.registration);
 
   const [code, setCode] = useState<string[]>(["", "", "", ""]);
@@ -15,12 +18,9 @@ export const useConfirmCodeForm = () => {
   const handleChange = (index: number, value: string) => {
     const numericValue = value.replace(/\D/g, "");
 
-    if (!numericValue && value !== "") {
-      return;
-    }
+    if (!numericValue && value !== "") return;
 
     const newValue = numericValue.charAt(0);
-
     const newCode = [...code];
     newCode[index] = newValue;
     setCode(newCode);
@@ -62,17 +62,27 @@ export const useConfirmCodeForm = () => {
     e.preventDefault();
     const verificationCode = code.join("");
 
-    if (verificationCode.length === 4) {
-      const verifyData = {
+    if (verificationCode.length !== 4) return;
+
+    verify(
+      {
         ...registrationData,
         code: verificationCode,
-      };
-      verify(verifyData, {
+      },
+      {
         onSuccess: () => {
-          navigate("/home");
+          login(
+            {
+              email: registrationData.email.trim(),
+              password: registrationData.password.trim(),
+            },
+            {
+              onSuccess: () => navigate("/home"),
+            },
+          );
         },
-      });
-    }
+      },
+    );
   };
 
   const getApiErrorMessage = (): string | null => {

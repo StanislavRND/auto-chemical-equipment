@@ -54,13 +54,7 @@ export const Catalog = ({
 
   return (
     <section className={`${styles.catalog} ${className}`} ref={catalogRef}>
-      <div
-        className={styles.overlay}
-        onClick={(e) => {
-          e.stopPropagation();
-          onClose();
-        }}
-      />
+      <div className={styles.overlay} onClick={onClose} />
 
       <div className={styles.general}>
         <div className={styles.title}>Каталог</div>

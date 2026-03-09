@@ -1,5 +1,5 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
-import type { CartItem, CartProduct, CartState } from "./types";
+import type { CartItem, CartProduct, CartState } from "../types";
 
 const initialState: CartState = {
   itemsById: {},
@@ -26,6 +26,11 @@ export const cartSlice = createSlice({
 
     clearCart(state) {
       state.itemsById = {};
+    },
+
+    upsertCartItem(state, action: PayloadAction<CartItem>) {
+      const item = action.payload;
+      state.itemsById[item.productId] = item;
     },
 
     addToCart(

@@ -1,6 +1,6 @@
-import { useAppDispatch, useAppSelector } from "@app/store/hooks";
-import { selectCartItemById } from "@entities/Cart/model/cartSelectors";
-import { cartActions } from "@entities/Cart/model/cartSlice";
+import { useAppSelector } from "@app/store/hooks";
+import { selectCartItemById } from "@entities/Cart/model/store/cartSelectors";
+import { useCartActions } from "@entities/Cart/model/useCartActions";
 import type { BreadcrumbItem } from "@shared/ui/BreadCrumb/BreadCrumb";
 import { useMemo } from "react";
 import { useParams } from "react-router-dom";
@@ -15,7 +15,7 @@ export const useCurrentProduct = () => {
     error,
   } = useGetCurrentProduct(Number(productId));
 
-  const dispatch = useAppDispatch();
+  const { addToCart, incQty, decQty } = useCartActions();
 
   const cartItem = useAppSelector((state) =>
     selectCartItemById(state, productInfo?.id ?? 0),
@@ -24,30 +24,25 @@ export const useCurrentProduct = () => {
   const isInCart = Boolean(cartItem);
   const cartQty = cartItem?.qty ?? 0;
 
-  const handleAddToCart: React.MouseEventHandler = (e) => {
+  const handleAddToCart: React.MouseEventHandler = async (e) => {
     e.stopPropagation();
     if (!productInfo) return;
 
-    dispatch(
-      cartActions.addToCart({
-        product: productInfo,
-        qty: 1,
-      }),
-    );
+    await addToCart(productInfo, 1);
   };
 
-  const handleInc: React.MouseEventHandler = (e) => {
+  const handleInc: React.MouseEventHandler = async (e) => {
     e.stopPropagation();
     if (!productInfo) return;
 
-    dispatch(cartActions.incQty({ productId: productInfo.id }));
+    await incQty(productInfo.id);
   };
 
-  const handleDec: React.MouseEventHandler = (e) => {
+  const handleDec: React.MouseEventHandler = async (e) => {
     e.stopPropagation();
     if (!productInfo) return;
 
-    dispatch(cartActions.decQty({ productId: productInfo.id }));
+    await decQty(productInfo.id);
   };
 
   const breadcrumbs = useMemo<BreadcrumbItem[]>(() => {

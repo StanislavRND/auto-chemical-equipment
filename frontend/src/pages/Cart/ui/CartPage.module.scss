@@ -15,7 +15,13 @@
   @include container;
 }
 
-.wrapperOrder {
+.wrapperBottomBlocks {
   display: flex;
   justify-content: flex-end;
+  gap: 30px;
+
+  @include respond-to(tablet) {
+    flex-direction: column;
+    gap: 20px;
+  }
 }

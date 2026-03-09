@@ -59,10 +59,14 @@
 .btnLogin {
   min-width: 190px;
   width: 190px;
+
   @include respond-to(tablet) {
+    width: 140px;
     min-width: 140px;
   }
+
   @include respond-to(mobile) {
+    width: 110px;
     min-width: 110px;
   }
 }
@@ -84,13 +88,13 @@
     width: 18px;
   }
 }
-
 .actions {
   display: flex;
   align-items: center;
   gap: 30px;
-  @include respond-to(tablet) {
-    display: none;
+
+  @include respond-to(mobile) {
+    gap: 10px;
   }
 
   .actionsIcon {
@@ -102,6 +106,13 @@
 
     &:hover {
       transform: translateY(-2px);
+    }
+  }
+
+  .cartBtn,
+  .profileBtn {
+    @include respond-to(tablet) {
+      display: none;
     }
   }
 

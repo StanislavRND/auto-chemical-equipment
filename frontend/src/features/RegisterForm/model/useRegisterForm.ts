@@ -3,7 +3,6 @@ import { updateField } from "@features/ConfirmCodeForm/model/registrationSlice";
 import { isValidEmail } from "@shared/lib/validation/email";
 import { AxiosError } from "axios";
 import { useCallback, useState } from "react";
-import { useGetCompanyByInn } from "../api/useCompanyRequest";
 import { useRegisterRequest } from "../api/useRegisterRequest";
 
 export const useRegisterForm = () => {
@@ -14,14 +13,9 @@ export const useRegisterForm = () => {
     isSuccess,
     error,
   } = useRegisterRequest();
+
   const dispatch = useAppDispatch();
   const formData = useAppSelector((state) => state.registration);
-  const {
-    refetch: fetchCompanyData,
-    isFetching: isCompanyLoading,
-    error: errorCompany,
-    isError: isErrorCompany,
-  } = useGetCompanyByInn(formData.inn);
   const [checked, setChecked] = useState(false);
 
   const [touched, setTouched] = useState({
@@ -82,44 +76,6 @@ export const useRegisterForm = () => {
     setChecked(!checked);
   };
 
-  const handleInnBlur = useCallback(async () => {
-    setTouched((prev) => ({ ...prev, inn: true }));
-
-    const isValidInn =
-      formData.inn &&
-      (formData.inn.length === 10 || formData.inn.length === 12) &&
-      /^\d+$/.test(formData.inn);
-
-    if (isValidInn) {
-      try {
-        const result = await fetchCompanyData();
-        const companyData = result.data;
-
-        if (companyData) {
-          dispatch(updateField({ field: "kpp", value: companyData.kpp || "" }));
-          dispatch(
-            updateField({ field: "legal_name", value: companyData.name || "" }),
-          );
-          dispatch(
-            updateField({
-              field: "legal_address",
-              value: companyData.address || "",
-            }),
-          );
-
-          setTouched((prev) => ({
-            ...prev,
-            kpp: true,
-            legal_address: true,
-            legal_name: true,
-          }));
-        }
-      } catch (error) {
-        console.error("Ошибка при загрузке данных компании:", error);
-      }
-    }
-  }, [formData.inn, fetchCompanyData, dispatch]);
-
   const handleBlur = useCallback((field: keyof typeof formData) => {
     setTouched((prev) => ({ ...prev, [field]: true }));
   }, []);
@@ -170,17 +126,6 @@ export const useRegisterForm = () => {
     return "Ошибка при регистрации. Попробуйте позже.";
   };
 
-  const getApiCompanyErrorMessage = (): string | null => {
-    if (!isErrorCompany) return null;
-    if (
-      errorCompany instanceof AxiosError &&
-      errorCompany.response?.data?.detail
-    ) {
-      return errorCompany.response.data.detail;
-    }
-    return "Ошибка при получение компании. Попробуйте позже.";
-  };
-
   return {
     formData,
     touched,
@@ -191,17 +136,14 @@ export const useRegisterForm = () => {
     legalNameError,
     passwordError,
     confirmPasswordError,
-    isCompanyLoading,
     checked,
 
     isSuccess,
     isPending,
     apiErrorMessage: getApiErrorMessage(),
-    apiCompanyErrorMessage: getApiCompanyErrorMessage(),
     handleBlur,
     handleChange,
     handleSubmit,
-    handleInnBlur,
     handleCheck,
   };
 };

@@ -1,6 +1,6 @@
-import { useAppDispatch, useAppSelector } from "@app/store/hooks";
-import { selectCartItemById } from "@entities/Cart/model/cartSelectors";
-import { cartActions } from "@entities/Cart/model/cartSlice";
+import { useAppSelector } from "@app/store/hooks";
+import { selectCartItemById } from "@entities/Cart/model/store/cartSelectors";
+import { useCartActions } from "@entities/Cart/model/useCartActions";
 import { useDeleteProduct, type Product } from "@entities/Product/api/product";
 import { useAuth } from "@entities/User/model/useAuth";
 import { useBreakpoint } from "@shared/lib/hooks/useBreakpoint";
@@ -26,7 +26,7 @@ export const useProductItem = ({ product, onEdit }: UseProductItemArgs) => {
   const isAdmin = role === "admin";
 
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
+  const { addToCart, incQty, decQty } = useCartActions();
 
   const { mutate: deleteProduct, isPending } = useDeleteProduct();
 
@@ -45,19 +45,19 @@ export const useProductItem = ({ product, onEdit }: UseProductItemArgs) => {
 
   const handleNavigate = () => navigate(productUrl);
 
-  const handleAddToCart: React.MouseEventHandler = (e) => {
+  const handleAddToCart: React.MouseEventHandler = async (e) => {
     e.stopPropagation();
-    dispatch(cartActions.addToCart({ product, qty: 1 }));
+    await addToCart(product, 1);
   };
 
-  const handleInc: React.MouseEventHandler = (e) => {
+  const handleInc: React.MouseEventHandler = async (e) => {
     e.stopPropagation();
-    dispatch(cartActions.incQty({ productId: product.id }));
+    await incQty(product.id);
   };
 
-  const handleDec: React.MouseEventHandler = (e) => {
+  const handleDec: React.MouseEventHandler = async (e) => {
     e.stopPropagation();
-    dispatch(cartActions.decQty({ productId: product.id }));
+    await decQty(product.id);
   };
 
   const handleEdit: React.MouseEventHandler = (e) => {

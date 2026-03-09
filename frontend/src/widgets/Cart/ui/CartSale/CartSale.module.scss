@@ -1,0 +1,36 @@
+@import "@/shared/styles/mixin";
+
+.sale {
+  padding: 30px 50px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  border-radius: 1.15rem;
+  gap: 30px;
+
+  @include respond-to(tablet) {
+    padding: 20px;
+  }
+}
+
+.discounts {
+  grid-area: discounts;
+}
+
+.discountTitle {
+  font-weight: 500;
+  margin-bottom: 10px;
+  font-size: 1.25rem;
+  @include respond-to(tablet) {
+    font-size: 1rem;
+  }
+}
+
+.discountList {
+  color: var(--text-secondary);
+  @include respond-to(tablet) {
+    font-size: 0.875rem;
+  }
+
+  li {
+    margin: 1px 0;
+  }
+}

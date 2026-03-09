@@ -1,5 +1,5 @@
 import { useAppSelector } from "@app/store/hooks";
-import { selectCartTotalCount } from "@entities/Cart/model/cartSelectors";
+import { selectCartTotalCount } from "@entities/Cart/model/store/cartSelectors";
 import { useGetCatalog } from "@shared/api/catalog/catalog";
 import { Catalog } from "@shared/ui/Catalog/Catalog";
 import { menuItems } from "../lib/data";
@@ -30,6 +30,7 @@ export const MenuMobile = () => {
             return (
               <button
                 key={item.id}
+                data-catalog-button={item.id === "catalog" ? "true" : undefined}
                 className={`${styles.item} ${isActive ? styles.active : ""}`}
                 onClick={() => handleNavigate(item.path, item.id)}
               >

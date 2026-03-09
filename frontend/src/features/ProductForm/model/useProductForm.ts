@@ -3,14 +3,13 @@ import { useGetCatalog } from "@shared/api/catalog/catalog";
 import { AxiosError } from "axios";
 import { useCallback, useMemo } from "react";
 import { useCreateProduct } from "../api/useProduct";
+import { isProductFormValid, validateProductForm } from "../lib/validation";
 import type { UseProductFormArgs } from "../types";
 import { useProductFormState } from "./useProductFormState";
-import { isProductFormValid, validateProductForm } from "../lib/validation";
 
 export const useProductForm = ({
   mode,
   productId,
-  initialValues,
   onSuccess,
 }: UseProductFormArgs) => {
   const { data: categories } = useGetCatalog();
@@ -33,12 +32,17 @@ export const useProductForm = ({
   const isError = isCreateError || isUpdateError;
   const error = (createError ?? updateError) as unknown;
 
-  const { formData, touched, handleBlur, handleChange, touchAll } =
-    useProductFormState({
-      mode,
-      categories,
-      initialValues,
-    });
+  const {
+    formData,
+    touched,
+    handleBlur,
+    handleChange,
+    touchAll,
+    resetCreateForm,
+    resetEditForm,
+  } = useProductFormState({
+    categories,
+  });
 
   const categoryOptions = useMemo(
     () =>
@@ -134,5 +138,7 @@ export const useProductForm = ({
     handleBlur,
     handleChange,
     handleSubmit,
+    resetCreateForm,
+    resetEditForm,
   };
 };

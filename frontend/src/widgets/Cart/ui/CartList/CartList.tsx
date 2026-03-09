@@ -1,5 +1,5 @@
 import { useAppSelector } from "@app/store/hooks";
-import { selectCartItemsArray } from "@entities/Cart/model/cartSelectors";
+import { selectCartItemsArray } from "@entities/Cart/model/store/cartSelectors";
 import { CartItem } from "@entities/Cart/ui/CartItem";
 import styles from "./CartList.module.scss";
 
