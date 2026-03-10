@@ -1,5 +1,6 @@
 import { type Product } from "@entities/Product/api/product";
 import { ProductItem } from "@entities/Product/ui/ProductItem/ProductItem";
+import { FilterProducts } from "@features/FilterProducts/ui/FilterProducts";
 import { Breadcrumbs } from "@shared/ui/BreadCrumb/BreadCrumb";
 import { Button } from "@shared/ui/Button/Button";
 import { ErrorMessage } from "@shared/ui/ErrorMessage/ErrorMessage";
@@ -64,16 +65,20 @@ export const ProductItems = ({
   return (
     <section className={styles.product}>
       <div className={styles.container}>
-        {isCatalogRoute && (
-          <div className={styles.breadcrumbs}>
-            <Breadcrumbs items={breadcrumbs} />
+        {isCatalogRoute && <FilterProducts />}
+        <div className={styles.wrapperRight}>
+          {isCatalogRoute && (
+            <div className={styles.breadcrumbs}>
+              <Breadcrumbs items={breadcrumbs} />
+            </div>
+          )}
+
+          <SortTabs value={sort} onChange={setSort} />
+          <div className={styles.items}>
+            {products?.map((p) => (
+              <ProductItem key={p.id} product={p} onEdit={() => onEdit?.(p)} />
+            ))}
           </div>
-        )}
-        <SortTabs value={sort} onChange={setSort} />
-        <div className={styles.items}>
-          {products?.map((p) => (
-            <ProductItem key={p.id} product={p} onEdit={() => onEdit?.(p)} />
-          ))}
         </div>
       </div>
     </section>

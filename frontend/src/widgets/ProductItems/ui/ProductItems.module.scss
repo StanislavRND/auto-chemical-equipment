@@ -6,10 +6,16 @@
 
 .container {
   @include container;
+  display: flex;
+  gap: 30px;
 }
 
 .breadcrumbs {
   margin-bottom: 20px;
+}
+
+.wrapperRight {
+    width: 100%;
 }
 
 .items {
