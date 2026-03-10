@@ -1,14 +1,40 @@
 import { useBreakpoint } from "@shared/lib/hooks/useBreakpoint";
 import { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 export const useToolbar = () => {
   const [isCatalogOpen, setIsCatalogOpen] = useState(false);
   const [internalScrolled, setInternalScrolled] = useState(false);
+  const [inputValue, setInputValue] = useState("");
 
+  const [searchParams] = useSearchParams();
   const { isTablet } = useBreakpoint();
   const sentinelRef = useRef<HTMLDivElement | null>(null);
   const navigate = useNavigate();
+
+  const urlQuery = searchParams.get("q") ?? "";
+
+  useEffect(() => {
+    setInputValue(urlQuery);
+  }, [urlQuery]);
+
+  const submitSearch = () => {
+    const trimmed = inputValue.trim();
+
+    if (!trimmed) {
+      navigate("/search");
+      return;
+    }
+
+    navigate(`/search?q=${encodeURIComponent(trimmed)}`);
+  };
+
+  const handleKeyDown: React.KeyboardEventHandler<HTMLInputElement> = (e) => {
+    if (e.key === "Enter") {
+      submitSearch();
+      e.currentTarget.blur();
+    }
+  };
 
   useEffect(() => {
     if (isTablet) return;
@@ -24,17 +50,20 @@ export const useToolbar = () => {
     );
 
     observer.observe(el);
+
     return () => observer.disconnect();
   }, [isTablet]);
 
   const isScrolled = !isTablet && internalScrolled;
-
-  const toggleCatalog = () => setIsCatalogOpen((v) => !v);
+  const toggleCatalog = () => setIsCatalogOpen((prev) => !prev);
 
   return {
     sentinelRef,
     isCatalogOpen,
     isScrolled,
+    inputValue,
+    setInputValue,
+    handleKeyDown,
     setIsCatalogOpen,
     toggleCatalog,
     handleToLogin: () => navigate("/login"),

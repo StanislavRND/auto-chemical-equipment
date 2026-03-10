@@ -13,6 +13,7 @@ import { UserAgreementPage } from "@pages/Policy/UserAgreement/UserAgreementPage
 import { ProfileMePage } from "@pages/ProfileMe/ui/ProfileMePage";
 import { ProfileOrdersPage } from "@pages/ProfileOrders/ui/ProfileOrdersPage";
 import { RegisterPage } from "@pages/Register/ui/RegisterPage";
+import { SearchPage } from "@pages/Search/ui/SearchPage";
 import {
   createBrowserRouter,
   Navigate,
@@ -81,6 +82,10 @@ const router = createBrowserRouter([
       {
         path: PATHS.CATALOG_CATEGORY,
         element: <CatalogProductPage />,
+      },
+      {
+        path: PATHS.SEARCH,
+        element: <SearchPage />,
       },
       {
         element: <ProtectedRoute />,

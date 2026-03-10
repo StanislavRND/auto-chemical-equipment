@@ -8,6 +8,7 @@ interface InputProps {
   value?: string;
   onChange?: (value: string) => void;
   onBlur?: () => void;
+  onKeyDown?: React.KeyboardEventHandler<HTMLInputElement>;
   type?: string;
   id?: string;
   className?: string;
@@ -21,6 +22,7 @@ export const Input = ({
   value = "",
   onChange,
   onBlur,
+  onKeyDown,
   type = "text",
   id,
   disabled,
@@ -79,6 +81,7 @@ export const Input = ({
         onChange={handleChange}
         onFocus={() => setIsFocused(true)}
         onBlur={handleBlur}
+        onKeyDown={onKeyDown}
         aria-label={ariaLabel || placeholder}
         disabled={disabled}
       />

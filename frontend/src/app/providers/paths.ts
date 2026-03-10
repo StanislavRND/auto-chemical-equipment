@@ -11,7 +11,9 @@ export const PATHS = {
   CATALOG_SUBCATEGORY: "/catalog/:categoryId/:subcategoryId",
   PROFILEME: "/profile/me",
   PROFILEORDERS: "/profile/orders",
+  SEARCH: "/search",
   NOT_FOUND: "*",
+
   ACCESS_DENIED: "/access-denied",
   PRIVACY_POLICY: "/privacy-policy",
   USER_AGREEMENT: "/user-agreement",

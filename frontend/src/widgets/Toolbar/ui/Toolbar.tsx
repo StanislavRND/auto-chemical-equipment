@@ -23,6 +23,9 @@ export const Toolbar = (props: ToolbarProps) => {
     isCatalogOpen,
     sentinelRef,
     isScrolled,
+    inputValue,
+    setInputValue,
+    handleKeyDown,
     setIsCatalogOpen,
     toggleCatalog,
     handleToLogin,
@@ -54,12 +57,18 @@ export const Toolbar = (props: ToolbarProps) => {
           </Button>
 
           <div className={styles.inputWrapper}>
-            <Input placeholder="Поиск" className={styles.input} />
+            <Input
+              placeholder="Для поиска нажмите Enter"
+              className={styles.input}
+              value={inputValue}
+              onChange={setInputValue}
+              onKeyDown={handleKeyDown}
+            />
             <Search className={styles.searchIcon} />
           </div>
 
           <div className={styles.actions}>
-            {role !== "admin" && isAuthenticated && (
+            {role !== "admin" && (
               <button
                 onClick={handleToCart}
                 type="button"
