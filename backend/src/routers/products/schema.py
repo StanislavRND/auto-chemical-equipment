@@ -57,6 +57,18 @@ class ProductResponseIdsSchema(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
 
+class PaginationSchema(BaseModel):
+    page: int
+    per_page: int
+    has_next: bool
+    total: int
+
+
+class ProductSearchResponseSchema(BaseModel):
+    items: list[ProductResponseIdsSchema]
+    pagination: PaginationSchema
+
+
 class PresignInSchema(BaseModel):
     filename: str
 

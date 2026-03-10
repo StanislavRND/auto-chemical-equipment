@@ -15,6 +15,7 @@ from .schema import (
     ProductCreateSchema,
     ProductResponseIdsSchema,
     ProductResponseSchema,
+    ProductSearchResponseSchema,
 )
 
 product_router = APIRouter(tags=["Товары"])
@@ -63,6 +64,37 @@ async def get_catalog_products(
             category_id=category_id,
             subcategory_id=subcategory_id,
             sort=sort,
+        )
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e)) from e
+
+
+@product_router.get(
+    "/products/search",
+    response_model=ProductSearchResponseSchema,
+    status_code=200,
+    summary="Поиск товаров по артикулу или названию",
+)
+async def search_products(
+    query: str = Query(
+        ...,
+    ),
+    page: int = Query(
+        1,
+        ge=1,
+    ),
+    per_page: int = Query(
+        20,
+        ge=1,
+        le=100,
+    ),
+    repo: ProductQueryRepository = Depends(get_product_query_repo),
+):
+    try:
+        return await repo.search_products(
+            query=query,
+            page=page,
+            per_page=per_page,
         )
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e)) from e

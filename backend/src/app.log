@@ -145,3 +145,13 @@ DETAIL:  Ключ "(name)=(Тестовая1)" уже существует.
 [SQL: INSERT INTO products (category_id, subcategory_id, article, name, image_url, description, compound, method_of_application, existence, price) VALUES ($1::INTEGER, $2::INTEGER, $3::VARCHAR, $4::VARCHAR, $5::VARCHAR, $6::VARCHAR, $7::VARCHAR, $8::VARCHAR, $9::BOOLEAN, $10::FLOAT) RETURNING products.id, products.created_at]
 [parameters: (49, 56, '000003', 'Тестовая1', 'https://ccc87c66ef78-optovikavtokhim.s3.ru1.storage.beget.cloud/products/70b035b7bc6c43c89b95bf21ba4c92c3.webp', 'Тестовая Тестовая Тестовая Тестовая Тестовая Тестовая', 'Тестовая Тестовая Тестовая Тестовая Тестовая Тестовая Тестовая', 'Тестовая Тестовая Тестовая Тестовая Тестовая Тестовая Тестовая', True, 1900.0)]
 (Background on this error at: https://sqlalche.me/e/20/gkpj)
+2026-03-09 16:48:04,722 - logger - CRITICAL - 2026-03-09 16:48:04.721615 Failed to delete product: (sqlalchemy.dialects.postgresql.asyncpg.IntegrityError) <class 'asyncpg.exceptions.ForeignKeyViolationError'>: UPDATE или DELETE в таблице "products" нарушает ограничение внешнего ключа "cart_product_id_fkey" таблицы "cart"
+DETAIL:  На ключ (id)=(17) всё ещё есть ссылки в таблице "cart".
+[SQL: DELETE FROM products WHERE products.id = $1::INTEGER RETURNING products.id]
+[parameters: (17,)]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2026-03-09 16:48:16,420 - logger - CRITICAL - 2026-03-09 16:48:16.420830 Failed to delete product: (sqlalchemy.dialects.postgresql.asyncpg.IntegrityError) <class 'asyncpg.exceptions.ForeignKeyViolationError'>: UPDATE или DELETE в таблице "products" нарушает ограничение внешнего ключа "cart_product_id_fkey" таблицы "cart"
+DETAIL:  На ключ (id)=(17) всё ещё есть ссылки в таблице "cart".
+[SQL: DELETE FROM products WHERE products.id = $1::INTEGER RETURNING products.id]
+[parameters: (17,)]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
