@@ -44,20 +44,63 @@ class ProductQueryRepository:
                     ProductModel.id.desc(),
                 )
 
+    def _apply_filters(
+        self,
+        stmt,
+        *,
+        category_id: int | None = None,
+        subcategory_id: int | None = None,
+        price_from: int | None = None,
+        price_to: int | None = None,
+        in_stock: bool | None = None,
+        with_discount: bool | None = None,
+    ):
+        if subcategory_id is not None:
+            stmt = stmt.where(ProductModel.subcategory_id == subcategory_id)
+        elif category_id is not None:
+            stmt = stmt.where(ProductModel.category_id == category_id)
+
+        if price_from is not None:
+            stmt = stmt.where(ProductModel.price >= price_from)
+
+        if price_to is not None:
+            stmt = stmt.where(ProductModel.price <= price_to)
+
+        if in_stock is True:
+            stmt = stmt.where(ProductModel.existence.is_(True))
+        elif in_stock is False:
+            stmt = stmt.where(ProductModel.existence.is_(False))
+
+        if with_discount is True:
+            stmt = stmt.where(ProductModel.discount_percent.is_not(None))
+        elif with_discount is False:
+            stmt = stmt.where(ProductModel.discount_percent.is_(None))
+
+        return stmt
+
     async def get_catalog_products(
         self,
         *,
         category_id: int | None = None,
         subcategory_id: int | None = None,
+        price_from: int | None = None,
+        price_to: int | None = None,
+        in_stock: bool | None = None,
+        with_discount: bool | None = None,
         sort: str = "name",
     ) -> list[ProductModel]:
         try:
             stmt = self._base_products_stmt()
 
-            if subcategory_id is not None:
-                stmt = stmt.where(ProductModel.subcategory_id == subcategory_id)
-            elif category_id is not None:
-                stmt = stmt.where(ProductModel.category_id == category_id)
+            stmt = self._apply_filters(
+                stmt,
+                category_id=category_id,
+                subcategory_id=subcategory_id,
+                price_from=price_from,
+                price_to=price_to,
+                in_stock=in_stock,
+                with_discount=with_discount,
+            )
 
             stmt = self._apply_sort(stmt, sort)
 

@@ -56,6 +56,10 @@ async def get_limit_products(
 async def get_catalog_products(
     category_id: int | None = Query(None),
     subcategory_id: int | None = Query(None),
+    price_from: int | None = Query(None, ge=0),
+    price_to: int | None = Query(None, ge=0),
+    in_stock: bool | None = Query(None),
+    with_discount: bool | None = Query(None),
     sort: str = Query("name", description="name | price_desc | price_asc"),
     repo: ProductQueryRepository = Depends(get_product_query_repo),
 ):
@@ -63,6 +67,10 @@ async def get_catalog_products(
         return await repo.get_catalog_products(
             category_id=category_id,
             subcategory_id=subcategory_id,
+            price_from=price_from,
+            price_to=price_to,
+            in_stock=in_stock,
+            with_discount=with_discount,
             sort=sort,
         )
     except ValueError as e:

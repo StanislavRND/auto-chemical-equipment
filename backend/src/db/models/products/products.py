@@ -40,6 +40,9 @@ class ProductModel(Base):
     method_of_application: Mapped[str] = mapped_column(Text, nullable=False)
     existence: Mapped[bool] = mapped_column(Boolean, nullable=False, default=True)
     price: Mapped[float] = mapped_column(Float, nullable=False)
+    discount_percent: Mapped[int | None] = mapped_column(
+        Integer, nullable=True, default=None
+    )
     created_at: Mapped[DateTime] = mapped_column(
         DateTime(timezone=True),
         server_default=func.now(),

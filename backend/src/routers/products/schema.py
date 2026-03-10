@@ -11,6 +11,7 @@ class ProductCreateSchema(BaseModel):
     compound: str = Field(min_length=1)
     method_of_application: str = Field(min_length=1)
     price: float = Field(gt=0)
+    discount_percent: int | None = None
     image_url: str = Field(min_length=1)
 
     category_id: int | None = None
@@ -25,6 +26,7 @@ class ProductResponseSchema(BaseModel):
     compound: str
     method_of_application: str
     price: float
+    discount_percent: int | None = None
     image_url: str
     existence: bool
 
@@ -47,6 +49,7 @@ class ProductResponseIdsSchema(BaseModel):
     compound: str
     method_of_application: str
     price: float
+    discount_percent: int | None = None
     image_url: str
     existence: bool
 
