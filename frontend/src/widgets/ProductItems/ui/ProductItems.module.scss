@@ -15,7 +15,7 @@
 }
 
 .wrapperRight {
-    width: 100%;
+  width: 100%;
 }
 
 .items {
@@ -27,7 +27,7 @@
   @include respond-to(laptop) {
     grid-template-columns: repeat(3, 1fr);
   }
-  @include respond-to(tablet) {
+  @media (max-width: 1250px) {
     grid-template-columns: repeat(2, 1fr);
   }
   @include respond-to(mobile) {
@@ -36,6 +36,33 @@
   }
   @include respond-to(smile-mobile) {
     grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+
+  @include respond-to(smile-mobile) {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .btnFilter {
+    max-width: 200px;
+    display: flex;
+    gap: 10px;
+
+    @include respond-to(mobile) {
+      max-width: 150px;
+    }
+  }
+
+  .filterIcon {
+    @include respond-to(mobile) {
+      width: 16px;
+      height: 16px;
+    }
   }
 }
 

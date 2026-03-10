@@ -1,9 +1,20 @@
+@import "@/shared/styles/mixin";
+
 .filter {
   background: var(--grey-100);
   border: 1px solid var(--grey-200);
   border-radius: 12px;
   padding: 25px;
   max-width: 300px;
+  max-height: 600px;
+  display: flex;
+  flex-direction: column;
+
+  @include respond-to(tablet) {
+    max-width: 100%;
+    margin-top: 15px;
+    padding: 15px;
+  }
 }
 
 .group {
@@ -15,6 +26,9 @@
   font-weight: 500;
   font-size: 1.1rem;
   color: var(--text-primary);
+  @include respond-to(tablet) {
+    font-size: 0.875rem;
+  }
 }
 
 .price {
@@ -28,6 +42,10 @@
     border-radius: 8px;
     background: var(--white);
     transition: border 0.2s;
+    @include respond-to(tablet) {
+      font-size: 0.875rem;
+      padding: 6.5px 10px;
+    }
 
     &:focus {
       border-color: var(--blue-500);
@@ -42,16 +60,22 @@
   color: var(--text-secondary);
   cursor: pointer;
   font-size: 0.95rem;
+  @include respond-to(tablet) {
+    font-size: 0.875rem;
+  }
 
   input {
     width: 16px;
     height: 16px;
     border: 2px solid var(--text-tertiary);
     border-radius: 50%;
-
     position: relative;
     cursor: pointer;
     transition: border 0.2s;
+    @include respond-to(tablet) {
+      width: 14px;
+      height: 14px;
+    }
   }
 
   input::before {
@@ -83,4 +107,5 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
+  margin-top: auto;
 }

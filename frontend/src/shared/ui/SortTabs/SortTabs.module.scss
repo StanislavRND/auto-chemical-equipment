@@ -46,6 +46,7 @@
   padding: 10px 16px;
   border: 1px solid var(--text-tertiary);
   border-radius: 8px;
+  gap: 8px;
   cursor: pointer;
   border-color: var(--blue-500);
   background-color: var(--blue-50);
@@ -54,7 +55,7 @@
   align-items: center;
   justify-content: space-between;
   @include respond-to(mobile) {
-    padding: 8px 16px;
+    padding: 6.5px 10px;
     font-size: 0.875rem;
   }
 }
@@ -93,7 +94,7 @@
   }
 }
 
-@include respond-to(tablet) {
+@media (max-width: 1250px) {
   .tabs {
     display: none;
   }
