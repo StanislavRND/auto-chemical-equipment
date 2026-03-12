@@ -155,3 +155,15 @@ DETAIL:  На ключ (id)=(17) всё ещё есть ссылки в таблице "cart".
 [SQL: DELETE FROM products WHERE products.id = $1::INTEGER RETURNING products.id]
 [parameters: (17,)]
 (Background on this error at: https://sqlalche.me/e/20/gkpj)
+2026-03-12 12:12:03,606 - logger - CRITICAL - 2026-03-12 12:12:03.606396 Failed to retrieve cart items: (sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class 'asyncpg.exceptions.UndefinedColumnError'>: столбец cart.discount_percent не существует
+[SQL: SELECT cart.id, cart.user_id, cart.product_id, cart.article, cart.name, cart.image_url, cart.price, cart.discount_percent, cart.qty, cart.created_at 
+FROM cart 
+WHERE cart.user_id = $1::INTEGER ORDER BY cart.created_at DESC, cart.id DESC]
+[parameters: (23,)]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2026-03-12 12:12:04,079 - logger - CRITICAL - 2026-03-12 12:12:04.077092 Failed to retrieve cart items: (sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class 'asyncpg.exceptions.UndefinedColumnError'>: столбец cart.discount_percent не существует
+[SQL: SELECT cart.id, cart.user_id, cart.product_id, cart.article, cart.name, cart.image_url, cart.price, cart.discount_percent, cart.qty, cart.created_at 
+FROM cart 
+WHERE cart.user_id = $1::INTEGER ORDER BY cart.created_at DESC, cart.id DESC]
+[parameters: (23,)]
+(Background on this error at: https://sqlalche.me/e/20/f405)

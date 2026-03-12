@@ -16,8 +16,8 @@ from sqlalchemy.sql import func
 from src.db.base import Base
 
 if TYPE_CHECKING:
-    from src.db.models.categories.categories import CategoryModel
-    from src.db.models.subcategories.subcategories import SubCategoryModel
+    from src.db.models.category.category import CategoryModel
+    from src.db.models.subcategory.subcategory import SubCategoryModel
 
 
 class ProductModel(Base):

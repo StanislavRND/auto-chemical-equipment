@@ -25,6 +25,7 @@ class CartModel(Base):
     name: Mapped[str] = mapped_column(String, nullable=False)
     image_url: Mapped[str] = mapped_column(String, nullable=False)
     price: Mapped[float] = mapped_column(Float, nullable=False)
+    discount_percent: Mapped[float] = mapped_column(Float, nullable=True)
     qty: Mapped[int] = mapped_column(Integer, nullable=False, default=1)
     created_at: Mapped[DateTime] = mapped_column(
         DateTime(timezone=True),

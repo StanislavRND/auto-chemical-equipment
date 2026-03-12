@@ -3,7 +3,7 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 from src.core.deps import get_s3_service
 from src.db.database import get_db
-from src.db.models.users.users import UserModel
+from src.db.models.user.user import UserModel
 from src.repositories.products.product_query_repostory import ProductQueryRepository
 from src.repositories.products.product_repository import ProductRepository
 from src.repositories.users.users_repository import UserRepository

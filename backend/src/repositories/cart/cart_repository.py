@@ -6,7 +6,7 @@ from sqlalchemy import delete, func, select
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession
 from src.db.models.cart.cart import CartModel
-from src.db.models.products.products import ProductModel
+from src.db.models.product.product import ProductModel
 from src.repositories.exception import RepositoryError
 
 
@@ -64,6 +64,7 @@ class CartRepository:
                     name=product.name,
                     image_url=product.image_url,
                     price=product.price,
+                    discount_percent=product.discount_percent,
                     qty=qty,
                 )
             self.session.add(cart_item)

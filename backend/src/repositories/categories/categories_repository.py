@@ -6,7 +6,7 @@ from sqlalchemy import delete, select
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
-from src.db.models.categories.categories import CategoryModel
+from src.db.models.category.category import CategoryModel
 from src.repositories.exception import RepositoryError
 
 

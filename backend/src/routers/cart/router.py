@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 from src.db.database import get_db
-from src.db.models.users.users import UserModel
+from src.db.models.user.user import UserModel
 from src.repositories.cart.cart_repository import CartRepository
 from src.repositories.users.users_repository import UserRepository
 from src.routers.cart.schema import (

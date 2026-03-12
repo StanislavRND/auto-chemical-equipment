@@ -11,6 +11,7 @@ class CartItemResponseSchema(BaseModel):
     name: str
     image_url: str
     price: float
+    discount_percent: float | None
     qty: int
 
 

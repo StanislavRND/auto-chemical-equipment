@@ -10,7 +10,7 @@ from sqlalchemy import delete, select
 from sqlalchemy.ext.asyncio import AsyncSession
 from src.core.config import settings
 from src.core.security import hash_code, verify_code
-from src.db.models.codes.codes import CodeModel
+from src.db.models.code.code import CodeModel
 from src.services.email_verification.templates.loader import template_loader
 
 

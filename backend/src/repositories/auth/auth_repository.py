@@ -16,7 +16,7 @@ from src.core.security import (
     verify_password,
     verify_token,
 )
-from src.db.models.users.users import UserModel
+from src.db.models.user.user import UserModel
 from src.routers.auth.schema import RegisterResponse, UserCreateSchema
 from src.services.email_verification.verification import VerificationService
 

@@ -6,7 +6,7 @@ from sqlalchemy import func, or_, select
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
-from src.db.models.products.products import ProductModel
+from src.db.models.product.product import ProductModel
 from src.repositories.exception import RepositoryError
 
 

@@ -10,7 +10,7 @@ from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession
 from src.core.config import settings
 from src.db.database import get_db
-from src.db.models.users.users import UserModel
+from src.db.models.user.user import UserModel
 from src.repositories.exception import RepositoryError
 from src.routers.users.schema import UserResponse
 
