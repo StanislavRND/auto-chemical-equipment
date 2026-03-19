@@ -105,6 +105,18 @@ export const ProductForm = ({
       {touched.price && formError.priceError && (
         <div className={styles.error}>{formError.priceError}</div>
       )}
+      <Input
+        placeholder="Скидка для товара"
+        type="text"
+        value={formData.discount_percent}
+        onChange={(value) => handleChange("discount_percent", value)}
+        onBlur={() => handleBlur("discount_percent")}
+        aria-label="Скидка для товара"
+      />
+
+      {touched.discount_percent && formError.discountPercentError && (
+        <div className={styles.error}>{formError.discountPercentError}</div>
+      )}
 
       <Select
         placeholder="Категория"

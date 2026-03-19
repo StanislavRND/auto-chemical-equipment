@@ -81,6 +81,7 @@ export const useProductFormState = ({ categories }: Args) => {
       method_of_application: true,
       image_url: true,
       price: true,
+      discount_percent: true,
       category_id: true,
       subcategory_id: true,
     });

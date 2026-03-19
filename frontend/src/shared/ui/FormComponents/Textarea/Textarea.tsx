@@ -11,6 +11,7 @@ interface TextareaProps extends Omit<
   onBlur?: () => void;
   floatingColor?: string;
   clearError?: () => void;
+  classNameContainer?: string;
 }
 
 export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
@@ -22,6 +23,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
       onBlur,
       id,
       className = "",
+      classNameContainer = "",
       disabled,
       floatingColor,
       clearError,
@@ -54,7 +56,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
     const shouldFloat = isFocused || textareaValue.length > 0;
 
     return (
-      <div className={styles.textareaContainer}>
+      <div className={`${styles.textareaContainer} ${classNameContainer}`}>
         <textarea
           id={textareaId}
           ref={ref}
@@ -65,7 +67,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
           onBlur={handleBlur}
           aria-label={placeholder}
           disabled={disabled}
-          placeholder="" 
+          placeholder=""
           {...rest}
         />
 

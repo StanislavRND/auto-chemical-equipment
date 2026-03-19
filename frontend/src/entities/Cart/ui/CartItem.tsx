@@ -13,7 +13,15 @@ export const CartItem = ({ item }: CartItemProps) => {
   const { incQty, decQty, removeFromCart } = useCartActions();
 
   const unitPrice = parsePrice(item.price);
-  const total = unitPrice * item.qty;
+  const discountPercent = Number(item.discount_percent) || 0;
+  const hasDiscount = discountPercent > 0;
+
+  const discountedUnitPrice = hasDiscount
+    ? Math.round(unitPrice - (unitPrice * discountPercent) / 100)
+    : unitPrice;
+
+  const total = discountedUnitPrice * item.qty;
+  const oldTotal = unitPrice * item.qty;
 
   return (
     <div className={styles.item}>
@@ -24,7 +32,16 @@ export const CartItem = ({ item }: CartItemProps) => {
           <h5 className={styles.productActicle}>
             Артикул: <span>{item.article}</span>
           </h5>
-          <div className={styles.productPrice}>{formatRub(unitPrice)}</div>
+
+          <div className={styles.productPriceBlock}>
+            {hasDiscount && (
+              <div className={styles.oldPrice}>{formatRub(unitPrice)}</div>
+            )}
+
+            <div className={styles.productPrice}>
+              {formatRub(discountedUnitPrice)}
+            </div>
+          </div>
         </div>
       </div>
 
@@ -51,7 +68,14 @@ export const CartItem = ({ item }: CartItemProps) => {
       </div>
 
       <div className={styles.price}>
-        <div className={styles.priceText}>{formatRub(total)}</div>
+        <div className={styles.priceBlock}>
+          {hasDiscount && (
+            <div className={styles.oldPrice}>{formatRub(oldTotal)}</div>
+          )}
+
+          <div className={styles.priceText}>{formatRub(total)}</div>
+        </div>
+
         <Button
           size="md"
           variant="outline"

@@ -5,6 +5,7 @@ export interface ProductFormValues {
   method_of_application: string;
   image_url: string;
   price: string;
+  discount_percent: string;
   category_id: number;
   subcategory_id: number | null;
 }
@@ -26,6 +27,7 @@ export const emptyTouched: TouchedFields = {
   method_of_application: false,
   image_url: false,
   price: false,
+  discount_percent: false,
   category_id: false,
   subcategory_id: false,
 };

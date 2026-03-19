@@ -1,5 +1,5 @@
 import { axiosInstance } from "@shared/api/instance/instance";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export type Category = {
   id: number;
@@ -15,6 +15,8 @@ export type Subcategory = {
   categoryId: number;
 };
 
+export type UpdateCategory = Omit<Category, "subcategories">;
+
 export const useGetCatalog = () => {
   return useQuery<Category[]>({
     queryKey: ["catalog"],
@@ -25,5 +27,28 @@ export const useGetCatalog = () => {
     staleTime: 10 * 60 * 1000,
     gcTime: 10 * 60 * 1000,
     refetchOnWindowFocus: false,
+  });
+};
+
+export const useUpdateСatalog = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation<
+    Category,
+    Error,
+    { data: UpdateCategory; сategoryId: string }
+  >({
+    mutationKey: ["update-category"],
+    mutationFn: async ({ data, сategoryId }) => {
+      const res = await axiosInstance.put<Category>(
+        `/categories/${сategoryId}`,
+        data,
+      );
+      return res.data;
+    },
+
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["catalog"] });
+    },
   });
 };

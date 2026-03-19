@@ -14,6 +14,7 @@ export const createEmptyProductForm = (): ProductFormValues => ({
   method_of_application: "",
   image_url: "",
   price: "",
+  discount_percent: "",
   category_id: 0,
   subcategory_id: 0,
 });

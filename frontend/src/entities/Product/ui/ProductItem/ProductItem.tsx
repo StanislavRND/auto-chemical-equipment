@@ -26,6 +26,14 @@ export const ProductItem = ({ product, onEdit }: ProductItemProps) => {
     handleDeleteProduct,
   } = useProductItem({ product, onEdit });
 
+  const price = Number(product.price) || 0;
+  const discountPercent = Number(product.discount_percent) || 0;
+  const hasDiscount = discountPercent > 0;
+
+  const discountedPrice = hasDiscount
+    ? Math.round(price - (price * discountPercent) / 100)
+    : price;
+
   return (
     <div onClick={handleNavigate} className={styles.item}>
       <div className={styles.inner}>
@@ -35,10 +43,23 @@ export const ProductItem = ({ product, onEdit }: ProductItemProps) => {
             src={product.image_url}
             alt="Фото товара"
           />
+
+          {hasDiscount && (
+            <div className={styles.discountBadge}>-{discountPercent}%</div>
+          )}
         </div>
 
         <div className={styles.itemInfo}>
-          <h3 className={styles.price}>{formatPrice(product.price)} ₽</h3>
+          <div className={styles.priceBlock}>
+            {hasDiscount && (
+              <span className={styles.oldPrice}>{formatPrice(price)} ₽</span>
+            )}
+
+            <h3 className={styles.price}>
+              {formatPrice(discountedPrice)} ₽
+            </h3>
+          </div>
+
           <h4 className={styles.name}>{product.name}</h4>
           <h4 className={`${styles.article} ${styles.subtitle}`}>
             арт: <span>{product.article}</span>
@@ -69,7 +90,8 @@ export const ProductItem = ({ product, onEdit }: ProductItemProps) => {
                 className={styles.btn}
                 variant="outline"
               >
-                <PlusIcon className={styles.plus} />В корзину
+                <PlusIcon className={styles.plus} />
+                В корзину
               </Button>
             ) : (
               <div className={styles.cartActions} onClick={stop}>

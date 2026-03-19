@@ -10,6 +10,10 @@
   @include container;
 }
 
+.breadcrumbs {
+  margin-bottom: 30px;
+}
+
 .userInfo {
   display: flex;
   justify-content: space-between;

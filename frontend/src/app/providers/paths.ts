@@ -9,11 +9,11 @@ export const PATHS = {
   PRODUCT_WITH_SUB: "/products/:categoryId/:subcategoryId/:productId",
   CATALOG_CATEGORY: "/catalog/:categoryId",
   CATALOG_SUBCATEGORY: "/catalog/:categoryId/:subcategoryId",
+  REGISTRATION_ORDERS: "/registration/orders",
   PROFILEME: "/profile/me",
   PROFILEORDERS: "/profile/orders",
   SEARCH: "/search",
   NOT_FOUND: "*",
-
   ACCESS_DENIED: "/access-denied",
   PRIVACY_POLICY: "/privacy-policy",
   USER_AGREEMENT: "/user-agreement",

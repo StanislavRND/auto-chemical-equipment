@@ -15,12 +15,6 @@ interface CatalogProps {
   error: Error | null;
 }
 
-const DEFAULT_CATALOG_SEARCH = new URLSearchParams({
-  sort: "name",
-  inStock: "true",
-  withDiscount: "false",
-}).toString();
-
 export const Catalog = ({
   isOpen,
   onClose,
@@ -44,21 +38,19 @@ export const Catalog = ({
 
   if (!isOpen) return null;
 
-  if (loading) {
+  if (loading)
     return (
       <section className={`${styles.catalog} ${className}`} ref={catalogRef}>
         <Loader size={32} text="Загрузка каталога..." />
       </section>
     );
-  }
 
-  if (error) {
+  if (error)
     return (
       <section className={`${styles.catalog} ${className}`} ref={catalogRef}>
         <ErrorMessage message="Ошибка получения каталога" />
       </section>
     );
-  }
 
   return (
     <section className={`${styles.catalog} ${className}`} ref={catalogRef}>
@@ -66,57 +58,32 @@ export const Catalog = ({
 
       <div className={styles.general}>
         <div className={styles.title}>Каталог</div>
-
-        {categoriesWithSubcats.map((category) => {
-          const isActive = activeSubCatalog === category.name;
-
-          if (!category.hasSubcats) {
-            return (
-              <Link
-                key={category.id}
-                to={{
-                  pathname: `/catalog/${category.id}`,
-                  search: `?${DEFAULT_CATALOG_SEARCH}`,
-                }}
-                className={`${styles.subtitle} ${isActive ? styles.active : ""}`}
-                onClick={onClose}
-              >
-                <span>{category.name}</span>
-              </Link>
-            );
-          }
-
-          return (
-            <div
-              key={category.id}
-              className={`${styles.subtitle} ${isActive ? styles.active : ""}`}
-              onClick={() =>
-                handleItemClick(category.name, category.hasSubcats, category.id)
-              }
-            >
-              <span>{category.name}</span>
-              {isActive && <ChevronRight size={16} />}
-            </div>
-          );
-        })}
+        {categoriesWithSubcats.map((category) => (
+          <div
+            key={category.id}
+            className={`${styles.subtitle} ${activeSubCatalog === category.name ? styles.active : ""}`}
+            onClick={() =>
+              handleItemClick(category.name, category.hasSubcats, category.id)
+            }
+          >
+            <span>{category.name}</span>
+            {activeSubCatalog === category.name && category.hasSubcats && (
+              <ChevronRight size={16} />
+            )}
+          </div>
+        ))}
       </div>
 
       {activeCategory && hasSubcategories && activeCategory.subcategories && (
         <div className={styles.dop}>
           <div className={styles.title}>{activeCategory.name}</div>
-
           {activeCategory.subcategories.map((subcategory) => (
             <div
               key={subcategory.id}
               className={styles.subtitle}
               onClick={onClose}
             >
-              <Link
-                to={{
-                  pathname: `/catalog/${activeCategory.id}/${subcategory.id}`,
-                  search: `?${DEFAULT_CATALOG_SEARCH}`,
-                }}
-              >
+              <Link to={`/catalog/${activeCategory.id}/${subcategory.id}`}>
                 {subcategory.name}
               </Link>
             </div>

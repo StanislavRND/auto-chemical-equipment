@@ -13,6 +13,7 @@ import { UserAgreementPage } from "@pages/Policy/UserAgreement/UserAgreementPage
 import { ProfileMePage } from "@pages/ProfileMe/ui/ProfileMePage";
 import { ProfileOrdersPage } from "@pages/ProfileOrders/ui/ProfileOrdersPage";
 import { RegisterPage } from "@pages/Register/ui/RegisterPage";
+import { RegistrationOrdersPage } from "@pages/RegistrationOrders/ui/RegistrationOrdersPage";
 import { SearchPage } from "@pages/Search/ui/SearchPage";
 import {
   createBrowserRouter,
@@ -87,6 +88,7 @@ const router = createBrowserRouter([
         path: PATHS.SEARCH,
         element: <SearchPage />,
       },
+
       {
         element: <ProtectedRoute />,
         children: [
@@ -97,6 +99,10 @@ const router = createBrowserRouter([
           {
             path: PATHS.PROFILEORDERS,
             element: <ProfileOrdersPage />,
+          },
+          {
+            path: PATHS.REGISTRATION_ORDERS,
+            element: <RegistrationOrdersPage />,
           },
         ],
       },

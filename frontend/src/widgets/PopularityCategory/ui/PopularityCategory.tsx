@@ -4,12 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { useGetPopularityCategory } from "../api/popularityCategory";
 import styles from "./PopularityCategory.module.scss";
 
-const DEFAULT_CATALOG_SEARCH = new URLSearchParams({
-  sort: "name",
-  inStock: "true",
-  withDiscount: "false",
-}).toString();
-
 export const PopularityCategory = () => {
   const navigate = useNavigate();
 
@@ -45,12 +39,7 @@ export const PopularityCategory = () => {
             <div
               key={el.name}
               className={styles.item}
-              onClick={() =>
-                navigate({
-                  pathname: `/catalog/${el.id}`,
-                  search: `?${DEFAULT_CATALOG_SEARCH}`,
-                })
-              }
+              onClick={() => navigate(`/catalog/${el.id}`)}
               role="button"
               tabIndex={0}
             >

@@ -2,8 +2,6 @@ import { axiosInstance } from "@shared/api/instance/instance";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import type { CartItem } from "../model/types";
 
-
-
 type CartItemDto = {
   id: number;
   user_id: number;
@@ -12,6 +10,7 @@ type CartItemDto = {
   name: string;
   image_url: string;
   price: number;
+  discount_percent: string;
   qty: number;
 };
 
@@ -22,6 +21,7 @@ const mapCartItemDto = (dto: CartItemDto): CartItem => {
     name: dto.name,
     image_url: dto.image_url,
     price: String(dto.price),
+    discount_percent: String(dto.discount_percent),
     qty: dto.qty,
   };
 };

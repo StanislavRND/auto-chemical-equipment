@@ -1,0 +1,169 @@
+@import "@/shared/styles/mixin";
+
+.registrationOrders {
+  padding: 40px 0;
+  @include respond-to(tablet) {
+    padding: 30px 0;
+  }
+}
+
+.container {
+  @include container;
+}
+
+.breadcrumbs {
+  margin-bottom: 20px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-rows: auto auto;
+  grid-template-areas:
+    "top top top"
+    "left center right";
+  gap: 30px;
+
+  @include respond-to(laptop) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: auto auto auto;
+    grid-template-areas:
+      "top top"
+      "left center"
+      "left right";
+  }
+
+  @include respond-to(tablet) {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto;
+    grid-template-areas:
+      "top"
+      "left"
+      "center"
+      "right";
+    gap: 20px;
+  }
+}
+
+.products {
+  grid-area: top;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin-bottom: 20px;
+  @include respond-to(tablet) {
+    font-size: 1rem;
+    margin-bottom: 15px;
+  }
+}
+
+.block {
+  padding: 30px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  border-radius: 1.15rem;
+  @include respond-to(tablet) {
+    padding: 20px;
+  }
+}
+
+.data {
+  grid-area: left;
+
+  .inputWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+}
+
+.comment {
+  grid-area: center;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+
+  .textareaContainer {
+    flex: 1;
+    min-height: 0;
+  }
+
+  .textarea {
+    height: 100%;
+    min-height: 0;
+    resize: none;
+  }
+}
+
+.cart {
+  grid-area: right;
+  display: flex;
+  flex-direction: column;
+  font-size: 1.25rem;
+  color: var(--text-primary);
+  @include respond-to(tablet) {
+    font-size: 0.875rem;
+  }
+
+  .cartInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .cartCount {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .cartTotal {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .cartPrices {
+    display: flex;
+    gap: 10px;
+  }
+
+  .oldPrice {
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--text-tertiary);
+    text-decoration: line-through;
+    @include respond-to(tablet) {
+      font-size: 0.875rem;
+    }
+  }
+
+  .currentPrice {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--blue-500);
+    @include respond-to(tablet) {
+      font-size: 1.25rem;
+    }
+  }
+
+  .cartButton {
+    width: 100%;
+    margin-top: auto;
+    @include respond-to(laptop) {
+      margin-top: 30px;
+    }
+  }
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.error {
+  font-size: 0.875rem;
+  color: var(--red-500);
+}

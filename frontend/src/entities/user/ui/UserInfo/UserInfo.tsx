@@ -7,10 +7,16 @@ import { Loader } from "@shared/ui/Loader/Loader";
 import { UserActions } from "@shared/ui/UserActions/UserActions";
 import { BriefcaseBusiness } from "lucide-react";
 import styles from "./UserInfo.module.scss";
+import { Breadcrumbs, type BreadcrumbItem } from "@shared/ui/BreadCrumb/BreadCrumb";
+import { useMemo } from "react";
 
 export const UserInfo = () => {
   const { data: user, isLoading, error } = useGetCurrentUser();
   const { logout, isLoading: isLoadingLogout } = useLogout();
+
+   const breadcrumbs = useMemo<BreadcrumbItem[]>(() => {
+      return [{ label: "Главная", to: "/home" }, { label: "Данные профиля" }];
+    }, []);
 
   if (isLoading)
     return (
@@ -34,6 +40,9 @@ export const UserInfo = () => {
   return (
     <section className={styles.wrapper}>
       <div className={styles.container}>
+        <div className={styles.breadcrumbs}>
+          <Breadcrumbs items={breadcrumbs} />
+        </div>
         <UserActions />
         <div className={styles.userInfo}>
           <div className={styles.leftBlock}>

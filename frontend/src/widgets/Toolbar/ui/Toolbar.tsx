@@ -58,7 +58,7 @@ export const Toolbar = (props: ToolbarProps) => {
 
           <div className={styles.inputWrapper}>
             <Input
-              placeholder="Для поиска нажмите Enter"
+              placeholder="Поиск (Enter)"
               className={styles.input}
               value={inputValue}
               onChange={setInputValue}

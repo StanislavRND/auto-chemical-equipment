@@ -82,6 +82,7 @@ export const useProductForm = ({
       compound: formData.compound.trim(),
       method_of_application: formData.method_of_application.trim(),
       price: formData.price.trim(),
+      discount_percent: formData.discount_percent.trim(),
       image_url: formData.image_url.trim(),
       category_id: formData.category_id,
       subcategory_id: hasSubcategories ? formData.subcategory_id : null,

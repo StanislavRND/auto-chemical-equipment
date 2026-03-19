@@ -8,6 +8,7 @@ export type ProductFormErrors = {
   methodError: string;
   priceError: string;
   categoryError: string;
+  discountPercentError: string;
   subcategoryError: string;
 };
 
@@ -51,6 +52,13 @@ export const validateProductForm = (
       : priceNumber <= 0
         ? "Только положительные числа"
         : "";
+  const discountPercentError = !rawPrice
+    ? REQUIRED
+    : Number.isNaN(priceNumber)
+      ? "Введите число"
+      : priceNumber <= 0
+        ? "Только положительные числа"
+        : "";
 
   const categoryError = !formData.category_id ? REQUIRED : "";
   const subcategoryError =
@@ -59,6 +67,7 @@ export const validateProductForm = (
   return {
     nameError,
     descError,
+    discountPercentError,
     imgError,
     compoundError,
     methodError,

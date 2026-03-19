@@ -56,7 +56,7 @@ export const useAuthForm = () => {
     if (isFormValid) {
       login(trimmedData, {
         onSuccess: () => {
-          navigate("/home");
+          navigate(-1);
         },
       });
     }
