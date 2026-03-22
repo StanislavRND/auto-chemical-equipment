@@ -21,6 +21,9 @@ class CartModel(Base):
     product_id: Mapped[int] = mapped_column(
         ForeignKey("products.id"), nullable=False, index=True
     )
+    category_id: Mapped[int] = mapped_column(
+        ForeignKey("categories.id"), nullable=False
+    )
     article: Mapped[str] = mapped_column(String(50), nullable=False)
     name: Mapped[str] = mapped_column(String, nullable=False)
     image_url: Mapped[str] = mapped_column(String, nullable=False)

@@ -60,6 +60,7 @@ class CartRepository:
                 cart_item = CartModel(
                     user_id=user_id,
                     product_id=product.id,
+                    category_id=product.category_id,
                     article=product.article,
                     name=product.name,
                     image_url=product.image_url,

@@ -85,7 +85,7 @@ class OrderRepository:
                 products=products,
                 total_products_count=total_products_count,
                 total_price=total_price,
-                status="new",
+                status="success",
             )
 
             self.session.add(order)

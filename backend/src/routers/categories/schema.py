@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from pydantic import BaseModel
-from src.routers.subcategories.schema import SubCategorySchema
+from src.routers.subcategories.schema import SubCategoryCreateSchema, SubCategorySchema
 
 
 class CategoryBaseSchema(BaseModel):
@@ -14,8 +14,11 @@ class CategoryBaseSchema(BaseModel):
         from_attributes = True
 
 
-class CategoryCreateSchema(CategoryBaseSchema):
-    pass
+class CategoryCreateSchema(BaseModel):
+    name: str
+    image_url: str | None = None
+    rating: int | None = None
+    subcategories: list[SubCategoryCreateSchema] = []
 
 
 class CategoryResponseSchema(CategoryBaseSchema):
@@ -25,3 +28,7 @@ class CategoryResponseSchema(CategoryBaseSchema):
 
 class CategoryWithSubcategoriesSchema(CategoryResponseSchema):
     subcategories: list["SubCategorySchema"] = []
+
+
+class CategoryIdsSchema(BaseModel):
+    category_ids: list[int]

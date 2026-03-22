@@ -14,6 +14,7 @@ from src.services.storage.s3 import S3Service
 from .schema import (
     CategoryBaseSchema,
     CategoryCreateSchema,
+    CategoryIdsSchema,
     CategoryResponseSchema,
     CategoryWithSubcategoriesSchema,
 )
@@ -53,7 +54,12 @@ async def get_popularity_categories(
         raise HTTPException(status_code=400, detail=str(e)) from e
 
 
-@category_router.post("/categories/upload", response_model=PresignOutSchema)
+@category_router.post(
+    "/categories/upload",
+    response_model=PresignOutSchema,
+    status_code=200,
+    summary="Загрузка фото для категории",
+)
 def presign_product_image(
     data: PresignInSchema,
     s3: S3Service = Depends(get_s3_service),
@@ -84,6 +90,22 @@ async def create_category(
         ) from e
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e)) from e
+
+
+@category_router.patch(
+    "/categories/increment-rating",
+    status_code=200,
+    summary="Увеличение рейтинга категорий на +1",
+)
+async def increment_categories_rating(
+    payload: CategoryIdsSchema,
+    repo: CategoriesRepository = Depends(get_auth_repo),
+):
+    if not payload.category_ids:
+        raise HTTPException(status_code=400, detail="Значение категорий не найдены")
+
+    await repo.increment_categories_rating(payload.category_ids)
+    return {"detail": f"Рейтинг увеличен для {len(payload.category_ids)} категорий"}
 
 
 @category_router.patch(

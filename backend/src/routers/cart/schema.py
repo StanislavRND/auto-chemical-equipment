@@ -7,6 +7,7 @@ class CartItemResponseSchema(BaseModel):
     id: int
     user_id: int
     product_id: int
+    category_id: int
     article: str
     name: str
     image_url: str

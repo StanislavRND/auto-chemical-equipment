@@ -14,7 +14,6 @@ class SubCategorySchema(BaseModel):
 
 class SubCategoryCreateSchema(BaseModel):
     name: str
-    category_id: int
 
 
 class SubCategoryUpdateSchema(BaseModel):
