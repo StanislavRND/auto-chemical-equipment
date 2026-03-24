@@ -46,7 +46,7 @@ async def create_subcategory(
 
 
 @sub_category_router.patch(
-    "/subcategories/{id}",
+    "/subcategories/{subcategory_id}",
     response_model=SubCategoryUpdateSchema,
     status_code=200,
     summary="Обновление подкатегории",
@@ -68,7 +68,7 @@ async def update_subcategory(
 
 
 @sub_category_router.delete(
-    "/subcategories/{id}",
+    "/subcategories/{subcategory_id}",
     status_code=200,
     summary="Удалении подкатегории",
 )

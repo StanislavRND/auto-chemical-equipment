@@ -13,8 +13,8 @@ async def lifespan(app: FastAPI):
 app = FastAPI(
     title="ОптовикАвтоХим API",
     description="API для системы ОптовикАвтоХим",
-    docs_url="/api/docs",  
-    redoc_url="/api/redoc",  
+    docs_url="/api/docs",
+    redoc_url="/api/redoc",
     openapi_url="/api/openapi.json",
     lifespan=lifespan,
 )

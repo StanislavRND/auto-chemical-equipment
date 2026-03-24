@@ -25,10 +25,10 @@ class ProductModel(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True, index=True)
     category_id: Mapped[int] = mapped_column(
-        Integer, ForeignKey("categories.id"), nullable=True
+        Integer, ForeignKey("categories.id", ondelete="CASCADE"), nullable=True
     )
     subcategory_id: Mapped[int] = mapped_column(
-        Integer, ForeignKey("subcategories.id"), nullable=True
+        Integer, ForeignKey("subcategories.id", ondelete="CASCADE"), nullable=True
     )
     article: Mapped[str] = mapped_column(
         String(6), unique=True, index=True, nullable=False

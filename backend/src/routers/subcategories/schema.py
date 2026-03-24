@@ -17,4 +17,7 @@ class SubCategoryCreateSchema(BaseModel):
 
 
 class SubCategoryUpdateSchema(BaseModel):
+    id: int
     name: str
+    
+    

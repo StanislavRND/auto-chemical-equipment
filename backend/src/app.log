@@ -167,3 +167,28 @@ FROM cart
 WHERE cart.user_id = $1::INTEGER ORDER BY cart.created_at DESC, cart.id DESC]
 [parameters: (23,)]
 (Background on this error at: https://sqlalche.me/e/20/f405)
+2026-03-24 14:28:00,039 - logger - CRITICAL - 2026-03-24 14:28:00.038160 Failed to delete category '53': (sqlalchemy.dialects.postgresql.asyncpg.IntegrityError) <class 'asyncpg.exceptions.ForeignKeyViolationError'>: UPDATE или DELETE в таблице "categories" нарушает ограничение внешнего ключа "products_category_id_fkey" таблицы "products"
+DETAIL:  На ключ (id)=(53) всё ещё есть ссылки в таблице "products".
+[SQL: DELETE FROM categories WHERE categories.id = $1::INTEGER]
+[parameters: (53,)]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2026-03-24 14:29:36,878 - logger - CRITICAL - 2026-03-24 14:29:36.875219 Failed to delete category '53': (sqlalchemy.dialects.postgresql.asyncpg.IntegrityError) <class 'asyncpg.exceptions.ForeignKeyViolationError'>: UPDATE или DELETE в таблице "categories" нарушает ограничение внешнего ключа "products_category_id_fkey" таблицы "products"
+DETAIL:  На ключ (id)=(53) всё ещё есть ссылки в таблице "products".
+[SQL: DELETE FROM categories WHERE categories.id = $1::INTEGER]
+[parameters: (53,)]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2026-03-24 14:30:25,169 - logger - CRITICAL - 2026-03-24 14:30:25.169417 Failed to delete category '53': (sqlalchemy.dialects.postgresql.asyncpg.IntegrityError) <class 'asyncpg.exceptions.ForeignKeyViolationError'>: UPDATE или DELETE в таблице "categories" нарушает ограничение внешнего ключа "products_category_id_fkey" таблицы "products"
+DETAIL:  На ключ (id)=(53) всё ещё есть ссылки в таблице "products".
+[SQL: DELETE FROM categories WHERE categories.id = $1::INTEGER]
+[parameters: (53,)]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2026-03-24 14:32:43,427 - logger - CRITICAL - 2026-03-24 14:32:43.426446 Failed to delete category '47': (sqlalchemy.dialects.postgresql.asyncpg.IntegrityError) <class 'asyncpg.exceptions.ForeignKeyViolationError'>: UPDATE или DELETE в таблице "categories" нарушает ограничение внешнего ключа "products_category_id_fkey" таблицы "products"
+DETAIL:  На ключ (id)=(47) всё ещё есть ссылки в таблице "products".
+[SQL: DELETE FROM categories WHERE categories.id = $1::INTEGER]
+[parameters: (47,)]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2026-03-24 14:33:49,959 - logger - CRITICAL - 2026-03-24 14:33:49.958432 Failed to delete subcategory '56': (sqlalchemy.dialects.postgresql.asyncpg.IntegrityError) <class 'asyncpg.exceptions.ForeignKeyViolationError'>: UPDATE или DELETE в таблице "subcategories" нарушает ограничение внешнего ключа "products_subcategory_id_fkey" таблицы "products"
+DETAIL:  На ключ (id)=(56) всё ещё есть ссылки в таблице "products".
+[SQL: DELETE FROM subcategories WHERE subcategories.id = $1::INTEGER]
+[parameters: (56,)]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)

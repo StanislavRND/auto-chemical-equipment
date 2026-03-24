@@ -1,13 +1,13 @@
 from dataclasses import dataclass
 from typing import final
 
-from src.db.models.subcategory.subcategory import SubCategoryModel
 from logger import logger
 from sqlalchemy import delete, select
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 from src.db.models.category.category import CategoryModel
+from src.db.models.subcategory.subcategory import SubCategoryModel
 from src.repositories.exception import RepositoryError
 
 
@@ -67,7 +67,6 @@ class CategoriesRepository:
             category = CategoryModel(
                 name=category_data.name,
                 image_url=category_data.image_url,
-                rating=category_data.rating,
             )
 
             self.session.add(category)
@@ -92,7 +91,11 @@ class CategoriesRepository:
 
     async def update_category(self, category_id: int, category_data) -> CategoryModel:
         try:
-            stmt = select(CategoryModel).where(CategoryModel.id == category_id)
+            stmt = (
+                select(CategoryModel)
+                .options(selectinload(CategoryModel.subcategories))
+                .where(CategoryModel.id == category_id)
+            )
             result = await self.session.execute(stmt)
             category = result.scalar_one_or_none()
 
@@ -101,27 +104,36 @@ class CategoriesRepository:
 
             if category_data.name is not None:
                 category.name = category_data.name
-                category.rating = category_data.rating
                 category.image_url = category_data.image_url
 
             if category_data.subcategories is not None:
+                existing_subs = {sub.id: sub for sub in category.subcategories}
+                new_subs = category_data.subcategories
 
-                await self.session.execute(
-                    delete(SubCategoryModel).where(
-                        SubCategoryModel.category_id == category.id
-                    )
-                )
+                new_ids = set()
+                for sub in new_subs:
+                    if hasattr(sub, "id") and sub.id in existing_subs:
 
-            for sub in category_data.subcategories:
-                subcategory = SubCategoryModel(
-                    name=sub.name,
-                    category_id=category.id
-                )
-                self.session.add(subcategory)
+                        existing_subs[sub.id].name = sub.name
+                        new_ids.add(sub.id)
+                    else:
+                        new_sub = SubCategoryModel(
+                            name=sub.name, category_id=category.id
+                        )
+                        self.session.add(new_sub)
+
+                for sub_id in existing_subs:
+                    if sub_id not in new_ids:
+                        await self.session.execute(
+                            delete(SubCategoryModel).where(
+                                SubCategoryModel.id == sub_id
+                            )
+                        )
 
             await self.session.commit()
             await self.session.refresh(category)
             return category
+
         except IntegrityError as e:
             await self.session.rollback()
             logger.critical(f"Conflict while saving category: {e}")

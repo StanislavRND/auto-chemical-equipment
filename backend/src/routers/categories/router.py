@@ -16,6 +16,7 @@ from .schema import (
     CategoryCreateSchema,
     CategoryIdsSchema,
     CategoryResponseSchema,
+    CategoryUpdateSchema,
     CategoryWithSubcategoriesSchema,
 )
 
@@ -109,14 +110,14 @@ async def increment_categories_rating(
 
 
 @category_router.patch(
-    "/categories/{id}",
+    "/categories/{category_id}",
     response_model=CategoryResponseSchema,
     status_code=200,
     summary="Обновление категории",
 )
 async def update_category(
     category_id: int,
-    category_data: CategoryCreateSchema,
+    category_data: CategoryUpdateSchema,
     repo: CategoriesRepository = Depends(get_auth_repo),
 ):
     try:
@@ -131,7 +132,7 @@ async def update_category(
 
 
 @category_router.delete(
-    "/categories/{id}",
+    "/categories/{category_id}",
     status_code=200,
     summary="Удалении категории",
 )
