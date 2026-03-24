@@ -6,7 +6,9 @@ from src.repositories.auth.auth_repository import AuthRepository
 from .schema import (
     LoginRequest,
     RegisterResponse,
-    UserCreateSchema,
+    UserBaseSchema,
+    UserLegalSchema,
+    UserPersonSchema,
     UserSchema,
     VerifyCodeRequest,
 )
@@ -25,7 +27,7 @@ async def get_auth_repo(db: AsyncSession = Depends(get_db)) -> AuthRepository:
     summary="Отправить код подтверждения",
 )
 async def request_registration(
-    user_data: UserCreateSchema, repo: AuthRepository = Depends(get_auth_repo)
+    user_data: UserBaseSchema, repo: AuthRepository = Depends(get_auth_repo)
 ):
     try:
         return await repo.request_registration(user_data)
@@ -43,10 +45,15 @@ async def verify_and_register(
     verify_data: VerifyCodeRequest, repo: AuthRepository = Depends(get_auth_repo)
 ):
     try:
+        data_dict = verify_data.model_dump(exclude={"code"})
+
+        if verify_data.user_type == "person":
+            user_data = UserPersonSchema(**data_dict)
+        else:
+            user_data = UserLegalSchema(**data_dict)
+
         user = await repo.verify_and_create_user(
-            email=verify_data.email,
-            code=verify_data.code,
-            user_data=UserCreateSchema(**verify_data.dict()),
+            email=verify_data.email, code=verify_data.code, user_data=user_data
         )
         return user
     except ValueError as e:

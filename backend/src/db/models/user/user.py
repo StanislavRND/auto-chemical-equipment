@@ -15,6 +15,9 @@ class UserModel(Base):
     kpp: Mapped[str] = mapped_column(String, nullable=True)
     legal_address: Mapped[str] = mapped_column(String, nullable=True)
     legal_name: Mapped[str] = mapped_column(String, nullable=True)
+    user_type: Mapped[str] = mapped_column(String, nullable=False, default="legal")
+    full_name: Mapped[str] = mapped_column(String, nullable=True)
+    phone: Mapped[str] = mapped_column(String, nullable=True)
     created_at: Mapped[DateTime] = mapped_column(
         DateTime(timezone=True),
         server_default=func.now(),

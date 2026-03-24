@@ -17,7 +17,7 @@ from src.core.security import (
     verify_token,
 )
 from src.db.models.user.user import UserModel
-from src.routers.auth.schema import RegisterResponse, UserCreateSchema
+from src.routers.auth.schema import RegisterResponse, UserBaseSchema
 from src.services.email_verification.verification import VerificationService
 
 
@@ -30,21 +30,35 @@ class AuthRepository:
     def verification_service(self) -> VerificationService:
         return VerificationService(session=self.session)
 
-    async def register_user(self, user_data: UserCreateSchema) -> UserModel:
+    async def register_user(self, user_data: UserBaseSchema) -> UserModel:
         if await self.session.scalar(
             select(UserModel).where(UserModel.email == user_data.email)
         ):
             raise ValueError("Пользователь с таким email уже существует")
 
-        user = UserModel(
-            inn=user_data.inn,
-            kpp=user_data.kpp,
-            legal_name=user_data.legal_name,
-            legal_address=user_data.legal_address,
-            email=user_data.email,
-            hashed_password=get_password_hash(user_data.password),
-            role="user",
-        )
+        user_dict = user_data.dict(exclude={"password_confirm"})
+
+        if user_data.user_type == "person":
+            user = UserModel(
+                full_name=user_dict.get("full_name"),
+                phone=user_dict.get("phone"),
+                email=user_dict["email"],
+                hashed_password=get_password_hash(user_dict["password"]),
+                role="user",
+                user_type="person",
+            )
+        else:
+            user = UserModel(
+                inn=user_dict.get("inn"),
+                kpp=user_dict.get("kpp"),
+                legal_name=user_dict.get("legal_name"),
+                legal_address=user_dict.get("legal_address"),
+                email=user_dict["email"],
+                hashed_password=get_password_hash(user_dict["password"]),
+                role="user",
+                user_type="legal",
+            )
+
         self.session.add(user)
         try:
             await self.session.commit()
@@ -55,7 +69,7 @@ class AuthRepository:
             raise ValueError(f"Ошибка уникальности данных: {e}") from e
 
     async def request_registration(
-        self, user_data: UserCreateSchema
+        self, user_data: UserBaseSchema
     ) -> RegisterResponse:
         code = await self.verification_service.store_code(
             email=user_data.email,
@@ -76,7 +90,7 @@ class AuthRepository:
         )
 
     async def verify_and_create_user(
-        self, email: str, code: str, user_data: UserCreateSchema
+        self, email: str, code: str, user_data: UserBaseSchema
     ) -> UserModel:
         if not await self.verification_service.verify_code(email, code):
             raise ValueError("Неверный или просроченный код подтверждения")
