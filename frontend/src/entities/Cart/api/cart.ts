@@ -6,6 +6,7 @@ type CartItemDto = {
   id: number;
   user_id: number;
   product_id: number;
+  category_id: number;
   article: string;
   name: string;
   image_url: string;
@@ -18,6 +19,7 @@ const mapCartItemDto = (dto: CartItemDto): CartItem => {
   return {
     productId: dto.product_id,
     article: dto.article,
+    categoryId: dto.category_id,
     name: dto.name,
     image_url: dto.image_url,
     price: String(dto.price),

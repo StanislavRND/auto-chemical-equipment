@@ -1,0 +1,157 @@
+@import "@/shared/styles/mixin";
+
+.item {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--text-tertiary);
+  transition: all 0.3s ease;
+
+  @include respond-to(tablet) {
+    padding: 0;
+    border-bottom: none;
+  }
+
+  &:hover {
+    background: var(--grey-50);
+  }
+}
+
+.desktop {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr 1fr 1fr 1fr 1fr;
+  align-items: center;
+
+  span {
+    margin: 0 6px;
+  }
+
+  @include respond-to(tablet) {
+    display: none;
+  }
+}
+
+.mobile {
+  display: none;
+
+  @include respond-to(tablet) {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 15px;
+    border: 1px solid var(--text-tertiary);
+    border-radius: 1rem;
+  }
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.divider {
+  flex: 1;
+  border-bottom: 1px dashed var(--text-tertiary);
+  transform: translateY(2px);
+}
+
+.label {
+  white-space: nowrap;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+
+  @include respond-to(smile-mobile) {
+    font-size: 0.75rem;
+  }
+}
+
+.value {
+  font-size: 0.85rem;
+  white-space: normal;
+  text-align: right;
+  word-break: break-word;
+  @include respond-to(smile-mobile) {
+    font-size: 0.75rem;
+  }
+}
+
+.numberValue {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.dateValue {
+  color: var(--text-secondary);
+}
+
+.priceValue {
+  font-weight: 600;
+  color: var(--green-500);
+}
+
+.number {
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--text-primary);
+}
+
+.name {
+  font-size: 14px;
+}
+
+.date {
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+.price {
+  font-weight: 600;
+  color: var(--green-500);
+}
+
+.count {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.status {
+  padding: 8px 10px;
+  border-radius: 0.5rem;
+  font-size: 12px;
+  font-weight: 500;
+  text-align: center;
+}
+
+.successWrapper {
+  @include respond-to(laptop) {
+    display: flex;
+    justify-content: center;
+  }
+}
+
+.success {
+  width: 80%;
+  background: var(--green-50);
+  color: var(--green-500);
+  border: 1px solid var(--green-100);
+  @include respond-to(tablet) {
+    width: auto;
+  }
+}
+
+.btnWrapper {
+  @include respond-to(laptop) {
+    display: flex;
+    justify-content: center;
+  }
+}
+
+.btn {
+  width: 80%;
+  @include respond-to(tablet) {
+    width: 100%;
+  }
+
+  @include respond-to(tablet) {
+    margin-top: 10px;
+  }
+}

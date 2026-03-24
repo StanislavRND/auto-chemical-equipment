@@ -36,8 +36,8 @@
   @include respond-to(laptop) {
     gap: 30px;
   }
-  @include respond-to(mobile) {
-    gap: 10px;
+  @include respond-to(tablet) {
+    gap: 0;
   }
 }
 
@@ -63,6 +63,7 @@
   @include respond-to(tablet) {
     width: 140px;
     min-width: 140px;
+    margin-left: 20px;
   }
 
   @include respond-to(mobile) {

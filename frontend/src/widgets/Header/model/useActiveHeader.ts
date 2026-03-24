@@ -9,7 +9,9 @@ export const useActiveHeader = () => {
     const currentPath = location.pathname;
 
     const timeoutId = setTimeout(() => {
-      if (currentPath.includes("/home")) {
+      if (currentPath.includes("/catalog/admin")) {
+        setActivePath("/catalog/admin");
+      } else if (currentPath.includes("/home")) {
         setActivePath("/home");
       } else if (currentPath.includes("/about")) {
         setActivePath("/about");

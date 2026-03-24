@@ -1,3 +1,4 @@
+import type { Product } from "@entities/Product/api/product";
 import { ProductItem } from "@entities/Product/ui/ProductItem/ProductItem";
 import { Breadcrumbs } from "@shared/ui/BreadCrumb/BreadCrumb";
 import { Button } from "@shared/ui/Button/Button";
@@ -10,9 +11,13 @@ import styles from "./ProductListSearch.module.scss";
 
 type ProductListSearchProps = {
   query: string;
+  onEdit?: (product: Product) => void;
 };
 
-export const ProductListSearch = ({ query }: ProductListSearchProps) => {
+export const ProductListSearch = ({
+  query,
+  onEdit,
+}: ProductListSearchProps) => {
   const navigate = useNavigate();
 
   const {
@@ -91,7 +96,11 @@ export const ProductListSearch = ({ query }: ProductListSearchProps) => {
 
         <div className={styles.items}>
           {items.map((product) => (
-            <ProductItem key={product.id} product={product} />
+            <ProductItem
+              key={product.id}
+              product={product}
+              onEdit={() => onEdit?.(product)}
+            />
           ))}
         </div>
 

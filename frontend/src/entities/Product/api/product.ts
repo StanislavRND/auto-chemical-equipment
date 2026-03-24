@@ -10,7 +10,7 @@ export interface Product {
   image_url: string;
   description: string;
   compound: string;
-  discount_percent: string;
+  discount_percent: number;
   method_of_application: string;
   existence: boolean;
   price: string;

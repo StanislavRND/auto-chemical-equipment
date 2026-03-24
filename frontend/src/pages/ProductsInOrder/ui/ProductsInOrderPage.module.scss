@@ -1,0 +1,161 @@
+@import "@/shared/styles/mixin";
+
+.wrapper {
+  padding: 40px 0;
+  @include respond-to(tablet) {
+    padding: 20px 0;
+  }
+}
+.container {
+  @include container;
+}
+
+.breadcrumbs {
+  margin-bottom: 30px;
+}
+
+.title {
+  font-size: 1.25rem;
+  font-weight: 500;
+  text-align: center;
+
+  @include respond-to(tablet) {
+    font-size: 1rem;
+  }
+}
+
+.productsList {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 30px;
+  padding: 30px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  border-radius: 1.15rem;
+  @include respond-to(tablet) {
+    padding: 20px;
+    margin-top: 20px;
+    gap: 15px;
+  }
+
+  @include respond-to(mobile) {
+    padding: 15px;
+  }
+}
+
+.item {
+  display: grid;
+  align-items: center;
+  column-gap: 16px;
+  row-gap: 20px;
+  padding: 8px 8px 20px 8px;
+  border-bottom: 1px solid var(--grey-500);
+  grid-template-columns: 2fr 1fr 1fr;
+  grid-template-areas: "product actions price";
+}
+
+.product {
+  grid-area: product;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+
+  img {
+    max-width: 100px;
+    border-radius: 1rem;
+    @include respond-to(tablet) {
+      max-width: 60px;
+    }
+  }
+
+  .productInfo {
+    display: flex;
+    flex-direction: column;
+    color: var(--text-primary);
+  }
+
+  .productName {
+    font-size: 1.25rem;
+    @include respond-to(tablet) {
+      font-size: 0.875rem;
+    }
+  }
+
+  .productActicle {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    span {
+      margin-left: 5px;
+      font-weight: 500;
+    }
+    @include respond-to(tablet) {
+      font-size: 0.75rem;
+    }
+  }
+
+  .productPriceBlock {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    color: var(--blue-500);
+    font-weight: 500;
+  }
+}
+
+.actions {
+  grid-area: actions;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .actionsCount {
+    color: var(--text-secondary);
+    font-size: 1.25rem;
+    @include respond-to(tablet) {
+      font-size: 0.875rem;
+    }
+  }
+}
+
+.price {
+  grid-area: price;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  .priceText {
+    font-size: 1.5rem;
+    color: var(--blue-500);
+    font-weight: 700;
+    white-space: nowrap;
+    @include respond-to(tablet) {
+      font-size: 1rem;
+    }
+  }
+}
+
+@include respond-to(tablet) {
+  .item {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "product product"
+      "actions price";
+    padding: 16px 8px;
+  }
+
+  .actions {
+    justify-self: start;
+  }
+
+  .price {
+    justify-self: end;
+  }
+}
+
+.loader {
+  margin-top: 10px;
+}
+
+.error {
+  padding: 15px;
+}

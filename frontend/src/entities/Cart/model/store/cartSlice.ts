@@ -9,7 +9,7 @@ function toCartItem(product: CartProduct, qty: number): CartItem {
   return {
     productId: product.id,
     name: product.name,
-    category_id: product.category_id,
+    categoryId: product.category_id,
     article: product.article,
     image_url: product.image_url,
     price: product.price,

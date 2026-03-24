@@ -1,0 +1,177 @@
+@import "@/shared/styles/mixin";
+
+.catalog {
+  padding: 35px 0;
+
+  @include respond-to(tablet) {
+    padding: 20px 0;
+  }
+}
+
+.container {
+  @include container;
+}
+
+.btnWrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+
+  .btn {
+    display: flex;
+    gap: 6px;
+    width: 300px;
+
+    .plus {
+      width: 20px;
+      height: 20px;
+    }
+
+    @include respond-to(tablet) {
+      width: 200px;
+      font-size: 0.875rem;
+
+      .plus {
+        width: 16px;
+        height: 16px;
+      }
+    }
+  }
+}
+
+.list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  align-items: start;
+}
+
+.card {
+  border: 1px solid var(--grey-200);
+  border-radius: 0.5rem;
+  padding: 1.25rem;
+  box-shadow: 0 0 10px rgba(121, 121, 121, 0.1);
+  color: var(--text-primary);
+  cursor: pointer;
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    .arrow {
+      cursor: pointer;
+    }
+
+    .catName {
+      font-weight: 500;
+      cursor: default;
+    }
+  }
+}
+
+.arrow {
+  width: 18px;
+  height: 18px;
+  transition: transform 0.2s ease;
+}
+
+.arrowOpen {
+  transform: rotate(180deg);
+}
+
+.subList {
+  margin-top: 15px;
+  padding-left: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-top: 1px solid var(--grey-200);
+  padding-top: 10px;
+}
+
+.subItem {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  font-size: 1rem;
+  color: var(--text-secondary);
+  position: relative;
+  padding-left: 12px;
+  @include respond-to(mobile) {
+    font-size: 0.875rem;
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: -5px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 6px;
+    height: 6px;
+    background-color: var(--text-secondary);
+    border-radius: 50%;
+  }
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+}
+
+.actionBtn {
+  width: 28px;
+  height: 28px;
+
+  @include respond-to(tablet) {
+    width: 24px;
+    height: 24px;
+
+    .trash {
+      width: 14px;
+      height: 14px;
+    }
+  }
+}
+
+.btnDelete {
+  background-color: var(--red-500);
+  &:hover {
+    background-color: var(--red-600) !important;
+  }
+}
+
+.btnSub {
+  width: 24px;
+  height: 24px;
+  background-color: var(--red-500);
+  &:hover {
+    background-color: var(--red-600) !important;
+  }
+
+  .trashSub {
+    width: 14px;
+    height: 14px;
+  }
+
+  @include respond-to(tablet) {
+    width: 20px;
+    height: 20px;
+
+    .trashSub {
+      width: 12px;
+      height: 12px;
+    }
+  }
+}
+
+.error {
+  margin-bottom: 15px;
+}

@@ -1,3 +1,4 @@
+import type { CartItem } from "@entities/Cart/model/types";
 import { axiosInstance } from "@shared/api/instance/instance";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
@@ -15,8 +16,6 @@ export type Subcategory = {
   categoryId: number;
 };
 
-export type UpdateCategory = Omit<Category, "subcategories">;
-
 export const useGetCatalog = () => {
   return useQuery<Category[]>({
     queryKey: ["catalog"],
@@ -30,25 +29,48 @@ export const useGetCatalog = () => {
   });
 };
 
-export const useUpdateСatalog = () => {
+export const useUpdateCatalogRatingBatch = () => {
   const queryClient = useQueryClient();
 
-  return useMutation<
-    Category,
+  const mutation = useMutation<
+    { detail: string },
     Error,
-    { data: UpdateCategory; сategoryId: string }
+    { categoryIds: number[] }
   >({
-    mutationKey: ["update-category"],
-    mutationFn: async ({ data, сategoryId }) => {
-      const res = await axiosInstance.put<Category>(
-        `/categories/${сategoryId}`,
-        data,
-      );
+    mutationKey: ["increment-categories-rating"],
+    mutationFn: async ({ categoryIds }) => {
+      const res = await axiosInstance.patch("/categories/increment-rating", {
+        category_ids: categoryIds,
+      });
       return res.data;
     },
-
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["catalog"] });
     },
   });
+
+  const increaseRating = (items: CartItem[]) => {
+    return new Promise<void>((resolve, reject) => {
+      const uniqueCategoryIds = Array.from(
+        new Set(items.map((i) => i.categoryId)),
+      );
+      if (uniqueCategoryIds.length === 0) {
+        resolve();
+        return;
+      }
+
+      mutation.mutate(
+        { categoryIds: uniqueCategoryIds },
+        {
+          onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["catalog"] });
+            resolve();
+          },
+          onError: (err) => reject(err),
+        },
+      );
+    });
+  };
+
+  return { increaseRating, isPending: mutation.isPending };
 };

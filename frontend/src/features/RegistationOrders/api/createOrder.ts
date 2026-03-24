@@ -1,5 +1,5 @@
 import { axiosInstance } from "@shared/api/instance/instance";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 
 export type OrderProduct = {
@@ -28,16 +28,17 @@ const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export const useCreateOrder = () => {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   return useMutation<Order, Error, CreateOrder>({
     mutationKey: ["create-order"],
     mutationFn: async (data) => {
       await delay(500);
-
       const res = await axiosInstance.post<Order>("/orders", data);
       return res.data;
     },
-    onSuccess: () => {
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["order"] });
       navigate("/profile/orders");
     },
   });

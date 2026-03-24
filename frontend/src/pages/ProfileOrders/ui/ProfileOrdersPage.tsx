@@ -1,9 +1,5 @@
-import { UserActions } from "@shared/ui/UserActions/UserActions";
+import { UserOrders } from "@entities/User/ui/UserOrders/UserOrders";
 
 export const ProfileOrdersPage = () => {
-  return (
-    <div>
-      <UserActions />
-    </div>
-  );
+  return <UserOrders />;
 };

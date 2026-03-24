@@ -1,12 +1,12 @@
 import {
-    selectCartPriceData,
-    selectCartTotalCount,
+  selectCartPriceData,
+  selectCartTotalCount,
 } from "@entities/Cart/model/store/cartSelectors";
 import { formatPrice } from "@shared/lib/formatting/formatPrice";
 import { useBreakpoint } from "@shared/lib/hooks/useBreakpoint";
 import {
-    Breadcrumbs,
-    type BreadcrumbItem,
+  Breadcrumbs,
+  type BreadcrumbItem,
 } from "@shared/ui/BreadCrumb/BreadCrumb";
 import { Button } from "@shared/ui/Button/Button";
 import { Input } from "@shared/ui/FormComponents/Input/Input";
@@ -41,10 +41,6 @@ export const RegistrationOrders = () => {
         </div>
 
         <div className={styles.grid}>
-          <div className={styles.products}>
-            <CartList title="Заказ" />
-          </div>
-
           <div className={`${styles.data} ${styles.block}`}>
             <div className={styles.title}>Данные</div>
             <div className={styles.inputWrapper}>
@@ -146,8 +142,11 @@ export const RegistrationOrders = () => {
               loading={isPending}
               disabled={isPending}
             >
-            Оформить заказ
+              Оформить заказ
             </Button>
+          </div>
+          <div className={styles.products}>
+            <CartList title="Заказ" />
           </div>
         </div>
       </div>

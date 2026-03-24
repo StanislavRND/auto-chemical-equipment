@@ -36,7 +36,7 @@ export const ProductItems = ({
     toggleFilter,
     setFilters,
     resetFilters,
-    handleCloseFilter
+    handleCloseFilter,
   } = useProductItems({
     isCatalog,
   });
@@ -102,7 +102,7 @@ export const ProductItems = ({
           <div className={styles.actions}>
             <SortTabs value={sort} onChange={setSort} />
 
-            {(isTablet || isMobile) && (
+            {isCatalogRoute && (isTablet || isMobile) && (
               <Button
                 size={buttonSize}
                 className={styles.btnFilter}
@@ -117,7 +117,7 @@ export const ProductItems = ({
           {(isTablet || isMobile) && isFilterOpen && (
             <div className={styles.filterDropdown}>
               <FilterProducts
-              handleCloseFilter={handleCloseFilter}
+                handleCloseFilter={handleCloseFilter}
                 initialFilters={filters}
                 onApply={setFilters}
                 onReset={resetFilters}

@@ -1,0 +1,21 @@
+import { useAuth } from "@entities/User/model/useAuth";
+import { Navigate, Outlet } from "react-router-dom";
+import { PATHS } from "./paths";
+
+export const AdminRoute = () => {
+  const { isAuthenticated, loading, user } = useAuth();
+
+  if (loading) {
+    return <div style={{ display: "none" }}>Loading...</div>;
+  }
+
+  if (!isAuthenticated) {
+    return <Navigate to={PATHS.ACCESS_DENIED} replace />;
+  }
+
+  if (user?.role !== "admin") {
+    return <Navigate to={PATHS.ACCESS_DENIED} replace />;
+  }
+
+  return <Outlet />;
+};

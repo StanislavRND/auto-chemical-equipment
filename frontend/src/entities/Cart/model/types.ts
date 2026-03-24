@@ -1,7 +1,7 @@
 import type { Product } from "@entities/Product/api/product";
 export interface CartItem {
   productId: Product["id"];
-  category_id: Product["category_id"];
+  categoryId: Product["category_id"];
   name: string;
   article: string;
   image_url: string;

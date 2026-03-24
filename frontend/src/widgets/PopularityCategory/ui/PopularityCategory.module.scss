@@ -20,6 +20,7 @@
     font-size: 1.25rem;
     margin-bottom: 15px;
   }
+  
 }
 
 .items {
@@ -118,11 +119,11 @@
   color: var(--text-primary);
   z-index: 3;
   @include respond-to(mobile) {
-    font-size: 1rem;
+    font-size: 0.9rem;
     padding: 10px 0 0 15px;
   }
   @include respond-to(smile-mobile) {
-    font-size: 0.875rem;
+    font-size: 0.87rem;
     padding: 10px 0 0 10px;
   }
 }

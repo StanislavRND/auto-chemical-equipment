@@ -4,7 +4,7 @@ import { useCartActions } from "@entities/Cart/model/useCartActions";
 import { useDeleteProduct, type Product } from "@entities/Product/api/product";
 import { useAuth } from "@entities/User/model/useAuth";
 import { useBreakpoint } from "@shared/lib/hooks/useBreakpoint";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 type UseProductItemArgs = {
@@ -15,6 +15,7 @@ type UseProductItemArgs = {
 type ButtonSize = "sm" | "md" | "lg";
 
 export const useProductItem = ({ product, onEdit }: UseProductItemArgs) => {
+  const [confirmOpen, setConfirmOpen] = useState(false);
   const { isLaptop, isMobile, isTablet } = useBreakpoint();
   const buttonSize: ButtonSize = isMobile
     ? "sm"
@@ -47,7 +48,13 @@ export const useProductItem = ({ product, onEdit }: UseProductItemArgs) => {
 
   const handleAddToCart: React.MouseEventHandler = async (e) => {
     e.stopPropagation();
-    await addToCart(product, 1);
+    await addToCart(
+      {
+        ...product,
+        discount_percent: product.discount_percent.toString(),
+      },
+      1,
+    );
   };
 
   const handleInc: React.MouseEventHandler = async (e) => {
@@ -65,9 +72,9 @@ export const useProductItem = ({ product, onEdit }: UseProductItemArgs) => {
     onEdit?.(product);
   };
 
-  const handleDeleteProduct: React.MouseEventHandler = (e) => {
-    e.stopPropagation();
+  const handleDeleteProductConfirmed = () => {
     deleteProduct(product.id);
+    setConfirmOpen(false);
   };
 
   return {
@@ -76,6 +83,8 @@ export const useProductItem = ({ product, onEdit }: UseProductItemArgs) => {
     cartQty: cartItem?.qty ?? 0,
     buttonSize,
     isDeleting: isPending,
+    confirmOpen,
+    setConfirmOpen,
 
     stop,
     handleNavigate,
@@ -83,6 +92,6 @@ export const useProductItem = ({ product, onEdit }: UseProductItemArgs) => {
     handleInc,
     handleDec,
     handleEdit,
-    handleDeleteProduct,
+    handleDeleteProductConfirmed,
   };
 };

@@ -1,6 +1,7 @@
 import { MainLayout } from "@app/layouts/BaseLayout/BaseLayout";
 import { useSyncCart } from "@entities/Cart/model/useSyncCart";
 import { AboutPage } from "@pages/About/ui/About";
+import { AdminCatalogPage } from "@pages/AdminCatalog/ui/AdminCatalogPage";
 import { AuthPage } from "@pages/Auth/ui/AuthPage";
 import { CartPage } from "@pages/Cart/ui/CartPage";
 import { CatalogProductPage } from "@pages/CatalogProduct/ui/CatalogProductPage";
@@ -10,6 +11,7 @@ import { NotFoundPage } from "@pages/Fallback/NotFoundPage/NotFoundPage";
 import { HomePage } from "@pages/Home/ui/HomePage";
 import { PrivacyPolicyPage } from "@pages/Policy/PrivacyPolicy/PrivacyPolicyPage";
 import { UserAgreementPage } from "@pages/Policy/UserAgreement/UserAgreementPage";
+import { ProductsInOrderPage } from "@pages/ProductsInOrder/ui/ProductsInOrderPage";
 import { ProfileMePage } from "@pages/ProfileMe/ui/ProfileMePage";
 import { ProfileOrdersPage } from "@pages/ProfileOrders/ui/ProfileOrdersPage";
 import { RegisterPage } from "@pages/Register/ui/RegisterPage";
@@ -20,7 +22,9 @@ import {
   Navigate,
   RouterProvider,
 } from "react-router-dom";
+import { AdminRoute } from "./AdminRoute";
 import { PATHS } from "./paths";
+import { ProductModalProvider } from "./ProductModalContext";
 import { ProtectedRoute } from "./ProtectedRoute";
 
 const router = createBrowserRouter([
@@ -93,16 +97,29 @@ const router = createBrowserRouter([
         element: <ProtectedRoute />,
         children: [
           {
-            path: PATHS.PROFILEME,
+            path: PATHS.PROFILE_ME,
             element: <ProfileMePage />,
           },
           {
-            path: PATHS.PROFILEORDERS,
+            path: PATHS.PROFILE_ORDERS,
             element: <ProfileOrdersPage />,
           },
           {
             path: PATHS.REGISTRATION_ORDERS,
             element: <RegistrationOrdersPage />,
+          },
+          {
+            path: PATHS.PROFILE_PRODUCTS_IN_ORDER,
+            element: <ProductsInOrderPage />,
+          },
+        ],
+      },
+      {
+        element: <AdminRoute />,
+        children: [
+          {
+            path: PATHS.ADMIN_CATALOG,
+            element: <AdminCatalogPage />,
           },
         ],
       },
@@ -112,5 +129,9 @@ const router = createBrowserRouter([
 
 export const AppRouter = () => {
   useSyncCart();
-  return <RouterProvider router={router} />;
+  return (
+    <ProductModalProvider>
+      <RouterProvider router={router} />
+    </ProductModalProvider>
+  );
 };

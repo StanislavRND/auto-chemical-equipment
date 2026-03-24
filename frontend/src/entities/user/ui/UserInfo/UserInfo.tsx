@@ -1,22 +1,25 @@
 import { useGetCurrentUser, useLogout } from "@entities/User/api/user";
 import { FIELD_CONFIGS } from "@entities/User/lib/data";
+import {
+  Breadcrumbs,
+  type BreadcrumbItem,
+} from "@shared/ui/BreadCrumb/BreadCrumb";
 import { Button } from "@shared/ui/Button/Button";
 import { ErrorMessage } from "@shared/ui/ErrorMessage/ErrorMessage";
 import { Input } from "@shared/ui/FormComponents/Input/Input";
 import { Loader } from "@shared/ui/Loader/Loader";
 import { UserActions } from "@shared/ui/UserActions/UserActions";
 import { BriefcaseBusiness } from "lucide-react";
-import styles from "./UserInfo.module.scss";
-import { Breadcrumbs, type BreadcrumbItem } from "@shared/ui/BreadCrumb/BreadCrumb";
 import { useMemo } from "react";
+import styles from "./UserInfo.module.scss";
 
 export const UserInfo = () => {
   const { data: user, isLoading, error } = useGetCurrentUser();
   const { logout, isLoading: isLoadingLogout } = useLogout();
 
-   const breadcrumbs = useMemo<BreadcrumbItem[]>(() => {
-      return [{ label: "Главная", to: "/home" }, { label: "Данные профиля" }];
-    }, []);
+  const breadcrumbs = useMemo<BreadcrumbItem[]>(() => {
+    return [{ label: "Главная", to: "/home" }, { label: "Данные профиля" }];
+  }, []);
 
   if (isLoading)
     return (
@@ -43,7 +46,9 @@ export const UserInfo = () => {
         <div className={styles.breadcrumbs}>
           <Breadcrumbs items={breadcrumbs} />
         </div>
-        <UserActions />
+
+        {user.role !== "admin" && <UserActions />}
+
         <div className={styles.userInfo}>
           <div className={styles.leftBlock}>
             <div className={styles.avatar}>

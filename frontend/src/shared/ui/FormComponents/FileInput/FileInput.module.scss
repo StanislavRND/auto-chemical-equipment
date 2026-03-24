@@ -1,8 +1,14 @@
+@import "@/shared/styles/mixin";
+
 .container {
   position: relative;
   width: 100%;
   height: 56px;
   cursor: pointer;
+
+  @include respond-to(laptop) {
+    height: 48px;
+  }
 }
 
 .hidden {
