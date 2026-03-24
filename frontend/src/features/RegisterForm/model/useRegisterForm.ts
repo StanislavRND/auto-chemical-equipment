@@ -3,9 +3,9 @@ import { updateField } from "@features/ConfirmCodeForm/model/registrationSlice";
 import { isValidEmail } from "@shared/lib/validation/email";
 import { AxiosError } from "axios";
 import { useCallback, useState } from "react";
-import { useRegisterRequest } from "../api/useRegisterRequest";
+import { useRegisterRequest, type RegisterRequestData } from "../api/useRegisterRequest";
 
-export const useRegisterForm = () => {
+export const useRegisterForm = (typeRegister: "person" | "legal") => {
   const {
     mutate: registerRequest,
     isPending,
@@ -26,7 +26,11 @@ export const useRegisterForm = () => {
     email: false,
     password: false,
     password_confirm: false,
+    full_name: false,
+    phone: false,
   });
+
+  const isLegal = typeRegister === "legal";
 
   const innError = !formData.inn
     ? "Обязательное поле"
@@ -44,6 +48,14 @@ export const useRegisterForm = () => {
 
   const legalAddressError = !formData.legal_address ? "Обязательное поле" : "";
   const legalNameError = !formData.legal_name ? "Обязательное поле" : "";
+
+  const fullNameError = !formData.full_name ? "Обязательное поле" : "";
+
+  const phoneError = !formData.phone
+    ? "Обязательное поле"
+    : !/^\+?\d{10,15}$/.test(formData.phone)
+      ? "Некорректный телефон"
+      : "";
 
   const emailError = !formData.email
     ? "Обязательное поле"
@@ -63,14 +75,12 @@ export const useRegisterForm = () => {
       ? "Пароли не совпадают"
       : "";
 
-  const isFormValid =
-    !innError &&
-    !kppError &&
-    !legalAddressError &&
-    !emailError &&
-    !passwordError &&
-    !legalNameError &&
-    !confirmPasswordError;
+  const isFormValid = isLegal
+    ? !innError && !kppError && !legalAddressError && !legalNameError
+    : !fullNameError && !phoneError;
+
+  const finalValid =
+    isFormValid && !emailError && !passwordError && !confirmPasswordError;
 
   const handleCheck = () => {
     setChecked(!checked);
@@ -87,35 +97,55 @@ export const useRegisterForm = () => {
     [dispatch],
   );
 
+
   const handleSubmit = useCallback(
     (e: React.FormEvent) => {
       e.preventDefault();
 
-      setTouched({
+      setTouched((prev) => ({
+        ...prev,
         inn: true,
         kpp: true,
         legal_address: true,
         legal_name: true,
+        full_name: true,
+        phone: true,
         email: true,
         password: true,
         password_confirm: true,
-      });
+      }));
 
-      const trimmedData = {
-        inn: formData.inn.trim(),
-        kpp: formData.kpp.trim(),
-        legal_name: formData.legal_name.trim(),
-        legal_address: formData.legal_address.trim(),
+      const base = {
         email: formData.email.trim(),
         password: formData.password.trim(),
         password_confirm: formData.password_confirm.trim(),
       };
 
-      if (isFormValid) {
-        registerRequest(trimmedData);
+      let requestData: RegisterRequestData;
+
+      if (isLegal) {
+        requestData = {
+          ...base,
+          user_type: "legal",
+          inn: formData.inn.trim(),
+          kpp: formData.kpp.trim(),
+          legal_name: formData.legal_name.trim(),
+          legal_address: formData.legal_address.trim(),
+        };
+      } else {
+        requestData = {
+          ...base,
+          user_type: "person",
+          full_name: formData.full_name.trim(),
+          phone: formData.phone.trim(),
+        };
+      }
+
+      if (finalValid) {
+        registerRequest(requestData);
       }
     },
-    [isFormValid, formData, registerRequest],
+    [formData, finalValid, registerRequest, isLegal],
   );
 
   const getApiErrorMessage = (): string | null => {
@@ -129,18 +159,22 @@ export const useRegisterForm = () => {
   return {
     formData,
     touched,
+
     innError,
     kppError,
     legalAddressError,
-    emailError,
     legalNameError,
+    fullNameError,
+    phoneError,
+    emailError,
     passwordError,
     confirmPasswordError,
-    checked,
 
+    checked,
     isSuccess,
     isPending,
     apiErrorMessage: getApiErrorMessage(),
+
     handleBlur,
     handleChange,
     handleSubmit,

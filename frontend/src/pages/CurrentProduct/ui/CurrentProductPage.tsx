@@ -1,3 +1,4 @@
+import { useAuth } from "@entities/User/model/useAuth";
 import { formatPrice } from "@shared/lib/formatting/formatPrice";
 import { useBreakpoint } from "@shared/lib/hooks/useBreakpoint";
 import { Breadcrumbs } from "@shared/ui/BreadCrumb/BreadCrumb";
@@ -21,6 +22,7 @@ export const CurrentProductPage = () => {
     handleInc,
     handleDec,
   } = useCurrentProduct();
+  const { role } = useAuth();
 
   const buttonSize = isMobile ? "sm" : "md";
 
@@ -91,37 +93,42 @@ export const CurrentProductPage = () => {
               </span>
             </div>
 
-            {!isInCart ? (
-              <Button
-                onClick={handleAddToCart}
-                size={buttonSize}
-                className={styles.btn}
-                variant="outline"
-              >
-                <PlusIcon className={styles.plus} />В корзину
-              </Button>
-            ) : (
-              <div className={styles.cartActions}>
-                <Button
-                  size={buttonSize}
-                  variant="outline"
-                  className={styles.actionsBtn}
-                  onClick={handleDec}
-                >
-                  <Minus className={styles.cartIcon} size={24} />
-                </Button>
+            {role !== "admin" && (
+              <>
+                {" "}
+                {!isInCart ? (
+                  <Button
+                    onClick={handleAddToCart}
+                    size={buttonSize}
+                    className={styles.btn}
+                    variant="outline"
+                  >
+                    <PlusIcon className={styles.plus} />В корзину
+                  </Button>
+                ) : (
+                  <div className={styles.cartActions}>
+                    <Button
+                      size={buttonSize}
+                      variant="outline"
+                      className={styles.actionsBtn}
+                      onClick={handleDec}
+                    >
+                      <Minus className={styles.cartIcon} size={24} />
+                    </Button>
 
-                <div className={styles.actionsCount}>{cartQty}</div>
+                    <div className={styles.actionsCount}>{cartQty}</div>
 
-                <Button
-                  size={buttonSize}
-                  variant="outline"
-                  className={styles.actionsBtn}
-                  onClick={handleInc}
-                >
-                  <Plus className={styles.cartIcon} size={24} />
-                </Button>
-              </div>
+                    <Button
+                      size={buttonSize}
+                      variant="outline"
+                      className={styles.actionsBtn}
+                      onClick={handleInc}
+                    >
+                      <Plus className={styles.cartIcon} size={24} />
+                    </Button>
+                  </div>
+                )}
+              </>
             )}
           </div>
         </section>

@@ -51,7 +51,7 @@ export const useProductItem = ({ product, onEdit }: UseProductItemArgs) => {
     await addToCart(
       {
         ...product,
-        discount_percent: product.discount_percent.toString(),
+        discount_percent: product.discount_percent?.toString() ?? "0",
       },
       1,
     );

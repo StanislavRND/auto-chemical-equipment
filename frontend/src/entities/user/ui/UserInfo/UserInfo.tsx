@@ -1,5 +1,5 @@
 import { useGetCurrentUser, useLogout } from "@entities/User/api/user";
-import { FIELD_CONFIGS } from "@entities/User/lib/data";
+import { LEGAL_FIELDS, PERSON_FIELDS } from "@entities/User/lib/data";
 import {
   Breadcrumbs,
   type BreadcrumbItem,
@@ -20,6 +20,8 @@ export const UserInfo = () => {
   const breadcrumbs = useMemo<BreadcrumbItem[]>(() => {
     return [{ label: "Главная", to: "/home" }, { label: "Данные профиля" }];
   }, []);
+
+  const fields = user?.user_type === "legal" ? LEGAL_FIELDS : PERSON_FIELDS;
 
   if (isLoading)
     return (
@@ -59,12 +61,14 @@ export const UserInfo = () => {
               />
             </div>
             <h3 className={styles.name}>
-              {user.legal_name || "Название не указано"}
+              {user.user_type === "legal"
+                ? user.legal_name || "Название не указано"
+                : user.full_name || "ФИО не указано"}
             </h3>
           </div>
           <div className={styles.rightBlock}>
             <div className={styles.inputs}>
-              {FIELD_CONFIGS.map(({ placeholder, key }) => (
+              {fields.map(({ placeholder, key }) => (
                 <Input
                   key={key}
                   className={styles.input}

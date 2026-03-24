@@ -1,0 +1,38 @@
+.switcher {
+  display: inline-flex;
+  gap: 0.5rem;
+  margin-bottom: 30px;
+  background-color: var(--grey-100);
+  padding: 0.25rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.option {
+  position: relative;
+  padding: 0.625rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: transparent;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  z-index: 1;
+
+  &:hover {
+    color: var(--text-primary);
+    background-color: rgba(0, 0, 0, 0.04);
+  }
+
+  &.active {
+    color: var(--blue-500);
+    background-color: var(--blue-50);
+    border: 1px solid var(--blue-100);
+    box-shadow:
+      0 1px 3px rgba(0, 0, 0, 0.1),
+      0 1px 2px rgba(0, 0, 0, 0.06);
+    text-decoration: none;
+  }
+}

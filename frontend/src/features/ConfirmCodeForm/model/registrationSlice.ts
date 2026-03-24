@@ -1,20 +1,26 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
-export interface RegistrationData {
+type RegistrationState = {
+  user_type: "legal" | "person";
   inn: string;
   kpp: string;
   legal_name: string;
   legal_address: string;
+  full_name: string;
+  phone: string;
   email: string;
   password: string;
   password_confirm: string;
-}
+};
 
-const initialState: RegistrationData = {
+const initialState: RegistrationState = {
+  user_type: "person",
   inn: "",
   kpp: "",
   legal_name: "",
   legal_address: "",
+  full_name: "",
+  phone: "",
   email: "",
   password: "",
   password_confirm: "",
@@ -26,12 +32,17 @@ const registrationSlice = createSlice({
   reducers: {
     updateField: (
       state,
-      action: PayloadAction<{ field: keyof RegistrationData; value: string }>,
+      action: PayloadAction<{ field: keyof RegistrationState; value: string }>,
     ) => {
-      state[action.payload.field] = action.payload.value;
+      if (action.payload.field === "user_type") {
+        const v = action.payload.value as "legal" | "person";
+        state.user_type = v;
+      } else {
+        state[action.payload.field] = action.payload.value;
+      }
     },
 
-    setFormData: (state, action: PayloadAction<RegistrationData>) => {
+    setFormData: (state, action: PayloadAction<RegistrationState>) => {
       return { ...state, ...action.payload };
     },
   },

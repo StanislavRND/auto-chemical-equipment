@@ -6,10 +6,13 @@ export interface User {
   id: number;
   email: string;
   role: string;
-  inn: string;
-  kpp: string;
-  legal_address: string;
-  legal_name: string;
+  inn: string |null;
+  kpp: string |null;
+  legal_address: string |null;
+  legal_name: string |null;
+  full_name: string |null;
+  phone: string |null;
+  user_type: "legal" | "person";
 }
 
 export const useGetCurrentUser = () => {

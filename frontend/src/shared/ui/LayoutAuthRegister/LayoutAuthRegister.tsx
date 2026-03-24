@@ -1,10 +1,14 @@
+import { useAppSelector } from "@app/store/hooks";
 import { AuthForm } from "@features/AuthForm/ui/AuthForm";
 import { ConfirmCodeForm } from "@features/ConfirmCodeForm/ui/ConfirmCodeForm";
 import { RegisterForm } from "@features/RegisterForm/ui/RegisterForm";
 import authRegister from "@shared/assets/images/auth-register.webp";
 import { CircleArrowLeft } from "lucide-react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { RegisterSwitcher } from "../RegisterSwitcher/RegisterSwitcher";
 import styles from "./LayoutAuthRegister.module.scss";
+import { updateField } from "@features/ConfirmCodeForm/model/registrationSlice";
 
 interface LayoutAuthRegister {
   type: string;
@@ -18,6 +22,8 @@ interface LayoutAuthRegister {
 
 export const LayoutAuthRegister = (props: LayoutAuthRegister) => {
   const navigate = useNavigate();
+  const typeRegister = useAppSelector((state) => state.registration.user_type);
+  const dispatch = useDispatch();
 
   const handleBackClick = () => {
     if (props.mode === "confirm" && props.onBackToRegister) {
@@ -36,7 +42,9 @@ export const LayoutAuthRegister = (props: LayoutAuthRegister) => {
       return <ConfirmCodeForm />;
     }
 
-    return <RegisterForm onSuccess={props.onSuccess} />;
+    return (
+      <RegisterForm typeRegister={typeRegister} onSuccess={props.onSuccess} />
+    );
   };
 
   return (
@@ -62,6 +70,14 @@ export const LayoutAuthRegister = (props: LayoutAuthRegister) => {
         <div className={styles.contentLeft}>
           {props.mode !== "confirm" && (
             <h1 className={styles.contentTitle}>{props.title}</h1>
+          )}
+          {props.mode === "register" && (
+            <RegisterSwitcher
+              mode={typeRegister}
+              onChange={(value: "person" | "legal") =>
+                dispatch(updateField({ field: "user_type", value }))
+              }
+            />
           )}
 
           {renderForm()}

@@ -9,9 +9,13 @@ import styles from "./RegisterForm.module.scss";
 
 interface RegisterFormProps {
   onSuccess?: () => void;
+  typeRegister: "person" | "legal";
 }
 
-export const RegisterForm = ({ onSuccess }: RegisterFormProps) => {
+export const RegisterForm = ({
+  onSuccess,
+  typeRegister,
+}: RegisterFormProps) => {
   const { isLaptop, isMobile, isTablet } = useBreakpoint();
   const buttonSize = isLaptop || isTablet || isMobile ? "md" : "lg";
 
@@ -33,7 +37,9 @@ export const RegisterForm = ({ onSuccess }: RegisterFormProps) => {
     handleChange,
     handleSubmit,
     handleCheck,
-  } = useRegisterForm();
+  } = useRegisterForm(typeRegister);
+
+  const isLegal = typeRegister === "legal";
 
   useEffect(() => {
     if (isSuccess && onSuccess) {
@@ -45,57 +51,84 @@ export const RegisterForm = ({ onSuccess }: RegisterFormProps) => {
     e.preventDefault();
     handleSubmit(e);
   };
+
   return (
     <form onSubmit={handleFormSubmit} className={styles.form}>
-      <Input
-        placeholder="ИНН"
-        id="register-inn"
-        aria-label="ИНН"
-        type="text"
-        value={formData.inn}
-        onChange={(value) => handleChange("inn", value)}
-      />
-      {touched.inn && innError && (
-        <div className={styles.error}>{innError}</div>
+      {isLegal && (
+        <>
+          <Input
+            placeholder="ИНН"
+            id="register-inn"
+            aria-label="ИНН"
+            type="text"
+            value={formData.inn}
+            onChange={(value) => handleChange("inn", value)}
+          />
+          {touched.inn && innError && (
+            <div className={styles.error}>{innError}</div>
+          )}
+
+          <Input
+            placeholder="КПП"
+            id="register-kpp"
+            aria-label="КПП"
+            type="text"
+            value={formData.kpp}
+            onChange={(value) => handleChange("kpp", value)}
+            onBlur={() => handleBlur("kpp")}
+          />
+          {touched.kpp && kppError && (
+            <div className={styles.error}>{kppError}</div>
+          )}
+
+          <Input
+            placeholder="Юридическое наименование"
+            id="register-address"
+            aria-label="Юридическое наименование"
+            type="text"
+            value={formData.legal_name}
+            onChange={(value) => handleChange("legal_name", value)}
+            onBlur={() => handleBlur("legal_name")}
+          />
+          {touched.legal_name && legalNameError && (
+            <div className={styles.error}>{legalNameError}</div>
+          )}
+
+          <Input
+            placeholder="Юридический адрес"
+            id="register-address"
+            aria-label="Юридическое адрес"
+            type="text"
+            value={formData.legal_address}
+            onChange={(value) => handleChange("legal_address", value)}
+            onBlur={() => handleBlur("legal_address")}
+          />
+          {touched.legal_address && legalAddressError && (
+            <div className={styles.error}>{legalAddressError}</div>
+          )}
+        </>
       )}
 
-      <Input
-        placeholder="КПП"
-        id="register-kpp"
-        aria-label="КПП"
-        type="text"
-        value={formData.kpp}
-        onChange={(value) => handleChange("kpp", value)}
-        onBlur={() => handleBlur("kpp")}
-      />
-      {touched.kpp && kppError && (
-        <div className={styles.error}>{kppError}</div>
-      )}
+      {!isLegal && (
+        <>
+          <Input
+            placeholder="ФИО"
+            id="register-fullname"
+            aria-label="ФИО"
+            type="text"
+            value={formData.full_name}
+            onChange={(value) => handleChange("full_name", value)}
+          />
 
-      <Input
-        placeholder="Юридическое наименование"
-        id="register-address"
-        aria-label="Юридическое наименование"
-        type="text"
-        value={formData.legal_name}
-        onChange={(value) => handleChange("legal_name", value)}
-        onBlur={() => handleBlur("legal_name")}
-      />
-      {touched.legal_name && legalNameError && (
-        <div className={styles.error}>{legalNameError}</div>
-      )}
-
-      <Input
-        placeholder="Юридический адрес"
-        id="register-address"
-        aria-label="Юридическое адрес"
-        type="text"
-        value={formData.legal_address}
-        onChange={(value) => handleChange("legal_address", value)}
-        onBlur={() => handleBlur("legal_address")}
-      />
-      {touched.legal_address && legalAddressError && (
-        <div className={styles.error}>{legalAddressError}</div>
+          <Input
+            placeholder="Телефон"
+            id="register-phone"
+            aria-label="Телефон"
+            type="text"
+            value={formData.phone}
+            onChange={(value) => handleChange("phone", value)}
+          />
+        </>
       )}
 
       <Input
