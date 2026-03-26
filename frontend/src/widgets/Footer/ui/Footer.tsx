@@ -30,7 +30,11 @@ export const Footer = () => {
           <div className={styles.dopTitle}>Время работы</div>
           <div className={styles.dopSubtile}>ПН-ПТ с 8:30 до 22:00 (МСК)</div>
           <div className={styles.dopTitle}>Общие вопросы</div>
-          <div className={styles.dopSubtile}>8 800 535-77-77</div>
+          <div className={styles.dopSubtile}>
+            <a href="mailto:optovikautohim@mail.ru">
+              optovikautohim@mail.ru
+            </a>
+          </div>
         </div>
       </div>
       <div className={styles.police}>

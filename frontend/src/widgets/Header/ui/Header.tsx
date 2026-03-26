@@ -1,8 +1,8 @@
+import { useAuth } from "@entities/User/model/useAuth";
 import imgLogo from "@shared/assets/images/logo-text.png";
 import { Link } from "react-router-dom";
 import { useActiveHeader } from "../model/useActiveHeader";
 import styles from "./Header.module.scss";
-import { useAuth } from "@entities/User/model/useAuth";
 
 export const Header = () => {
   const { activePath } = useActiveHeader();
@@ -44,8 +44,9 @@ export const Header = () => {
           </ul>
         </nav>
         <div className={styles.contacts}>
-          <div className={styles.phone}>8 800 535-77-77</div>
-          <div className={styles.email}>test@gmail.com</div>
+          <a href="mailto:optovikautohim@mail.ru" className={styles.email}>
+            optovikautohim@mail.ru
+          </a>
         </div>
       </div>
     </header>
