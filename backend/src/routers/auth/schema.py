@@ -36,6 +36,7 @@ class UserLegalSchema(BaseModel):
     legal_name: str
     legal_address: str
 
+
 class UserPersonSchema(BaseModel):
     user_type: Literal["person"]
     email: EmailStr
@@ -43,6 +44,7 @@ class UserPersonSchema(BaseModel):
     password_confirm: str
     full_name: str
     phone: str
+
 
 RegisterRequestSchema = Union[UserLegalSchema, UserPersonSchema]
 
