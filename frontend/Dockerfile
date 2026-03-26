@@ -1,4 +1,4 @@
-FROM node:alpine
+FROM node:alpine AS build
 
 WORKDIR /app
 
@@ -9,6 +9,12 @@ COPY . .
 
 RUN npm run build
 
-EXPOSE 5555
+FROM node:alpine
 
-CMD ["npx", "vite", "preview", "--host", "0.0.0.0", "--port", "5555"]
+WORKDIR /app
+RUN npm install -g serve
+
+COPY --from=build /app/dist ./dist
+
+EXPOSE 5555
+CMD ["serve", "-s", "dist", "-l", "5555"]
