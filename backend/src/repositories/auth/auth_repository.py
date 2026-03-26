@@ -1,6 +1,6 @@
 import asyncio
 from dataclasses import dataclass
-from typing import Any, final
+from typing import Any, Union, final
 
 from fastapi import Request, Response
 from sqlalchemy import select
@@ -17,7 +17,7 @@ from src.core.security import (
     verify_token,
 )
 from src.db.models.user.user import UserModel
-from src.routers.auth.schema import RegisterResponse, UserBaseSchema
+from src.routers.auth.schema import RegisterResponse, UserBaseSchema, UserLegalSchema, UserPersonSchema
 from src.services.email_verification.verification import VerificationService
 
 
@@ -30,7 +30,7 @@ class AuthRepository:
     def verification_service(self) -> VerificationService:
         return VerificationService(session=self.session)
 
-    async def register_user(self, user_data: UserBaseSchema) -> UserModel:
+    async def register_user(self, user_data: Union[UserPersonSchema, UserLegalSchema]) -> UserModel:
         if await self.session.scalar(
             select(UserModel).where(UserModel.email == user_data.email)
         ):
@@ -68,9 +68,7 @@ class AuthRepository:
             await self.session.rollback()
             raise ValueError(f"Ошибка уникальности данных: {e}") from e
 
-    async def request_registration(
-        self, user_data: UserBaseSchema
-    ) -> RegisterResponse:
+    async def request_registration(self, user_data: UserBaseSchema) -> RegisterResponse:
         code = await self.verification_service.store_code(
             email=user_data.email,
             expires_minutes=settings.VERIFICATION_CODE_EXPIRE_MINUTES,
@@ -90,7 +88,10 @@ class AuthRepository:
         )
 
     async def verify_and_create_user(
-        self, email: str, code: str, user_data: UserBaseSchema
+        self,
+        email: str,
+        code: str,
+        user_data: Union[UserPersonSchema, UserLegalSchema],
     ) -> UserModel:
         if not await self.verification_service.verify_code(email, code):
             raise ValueError("Неверный или просроченный код подтверждения")

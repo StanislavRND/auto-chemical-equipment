@@ -1,4 +1,5 @@
 from datetime import datetime
+from typing import Literal, Union
 
 from pydantic import BaseModel, ConfigDict, EmailStr, Field
 
@@ -25,16 +26,25 @@ class UserSchema(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
 
-class UserLegalSchema(UserBaseSchema):
-    inn: str = Field(..., pattern=r"^\d{10}$|^\d{12}$")
-    kpp: str = Field(..., pattern=r"^\d{9}$")
-    legal_name: str = Field(..., max_length=200)
-    legal_address: str = Field(..., max_length=500)
+class UserLegalSchema(BaseModel):
+    user_type: Literal["legal"]
+    email: EmailStr
+    password: str
+    password_confirm: str
+    inn: str
+    kpp: str
+    legal_name: str
+    legal_address: str
 
+class UserPersonSchema(BaseModel):
+    user_type: Literal["person"]
+    email: EmailStr
+    password: str
+    password_confirm: str
+    full_name: str
+    phone: str
 
-class UserPersonSchema(UserBaseSchema):
-    full_name: str = Field(..., max_length=200)
-    phone: str = Field(..., pattern=r"^\+?\d{10,15}$")
+RegisterRequestSchema = Union[UserLegalSchema, UserPersonSchema]
 
 
 class VerifyCodeRequest(BaseModel):
