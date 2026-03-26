@@ -1,5 +1,4 @@
 import { useAppDispatch } from "@app/store/hooks";
-import { useAuth } from "@entities/User/model/useAuth";
 import {
   useAddToCartApi,
   useDecrementCartItemApi,
@@ -8,6 +7,7 @@ import {
 } from "../api/cart";
 import { cartActions } from "./store/cartSlice";
 import type { CartProduct } from "./types";
+import { useAuth } from "@entities/User/model/useAuth";
 
 export const useCartActions = () => {
   const dispatch = useAppDispatch();

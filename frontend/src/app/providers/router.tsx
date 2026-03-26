@@ -2,7 +2,6 @@ import { MainLayout } from "@app/layouts/BaseLayout/BaseLayout";
 import { useSyncCart } from "@entities/Cart/model/useSyncCart";
 import { AboutPage } from "@pages/About/ui/About";
 import { AdminCatalogPage } from "@pages/AdminCatalog/ui/AdminCatalogPage";
-import { AuthPage } from "@pages/Auth/ui/AuthPage";
 import { CartPage } from "@pages/Cart/ui/CartPage";
 import { CatalogProductPage } from "@pages/CatalogProduct/ui/CatalogProductPage";
 import { CurrentProductPage } from "@pages/CurrentProduct/ui/CurrentProductPage";
@@ -14,7 +13,6 @@ import { UserAgreementPage } from "@pages/Policy/UserAgreement/UserAgreementPage
 import { ProductsInOrderPage } from "@pages/ProductsInOrder/ui/ProductsInOrderPage";
 import { ProfileMePage } from "@pages/ProfileMe/ui/ProfileMePage";
 import { ProfileOrdersPage } from "@pages/ProfileOrders/ui/ProfileOrdersPage";
-import { RegisterPage } from "@pages/Register/ui/RegisterPage";
 import { RegistrationOrdersPage } from "@pages/RegistrationOrders/ui/RegistrationOrdersPage";
 import { SearchPage } from "@pages/Search/ui/SearchPage";
 import {
@@ -26,6 +24,8 @@ import { AdminRoute } from "./AdminRoute";
 import { PATHS } from "./paths";
 import { ProductModalProvider } from "./ProductModalContext";
 import { ProtectedRoute } from "./ProtectedRoute";
+import { AuthPage } from "@pages/Auth/ui/AuthPage";
+import { RegisterPage } from "@pages/Register/ui/RegisterPage";
 
 const router = createBrowserRouter([
   {
@@ -39,7 +39,7 @@ const router = createBrowserRouter([
   },
   {
     path: PATHS.REGISTER,
-    element: <RegisterPage />,
+    element: <RegisterPage/>,
   },
   {
     path: PATHS.ACCESS_DENIED,

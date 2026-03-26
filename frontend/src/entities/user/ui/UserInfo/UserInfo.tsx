@@ -1,5 +1,4 @@
 import { useGetCurrentUser, useLogout } from "@entities/User/api/user";
-import { LEGAL_FIELDS, PERSON_FIELDS } from "@entities/User/lib/data";
 import {
   Breadcrumbs,
   type BreadcrumbItem,
@@ -12,6 +11,9 @@ import { UserActions } from "@shared/ui/UserActions/UserActions";
 import { BriefcaseBusiness } from "lucide-react";
 import { useMemo } from "react";
 import styles from "./UserInfo.module.scss";
+import { LEGAL_FIELDS, PERSON_FIELDS, type UserField } from "@entities/User/lib/data";
+
+
 
 export const UserInfo = () => {
   const { data: user, isLoading, error } = useGetCurrentUser();
@@ -20,6 +22,8 @@ export const UserInfo = () => {
   const breadcrumbs = useMemo<BreadcrumbItem[]>(() => {
     return [{ label: "Главная", to: "/home" }, { label: "Данные профиля" }];
   }, []);
+
+  
 
   const fields = user?.user_type === "legal" ? LEGAL_FIELDS : PERSON_FIELDS;
 
@@ -68,7 +72,7 @@ export const UserInfo = () => {
           </div>
           <div className={styles.rightBlock}>
             <div className={styles.inputs}>
-              {fields.map(({ placeholder, key }) => (
+              {fields.map(({ placeholder, key }: UserField) => (
                 <Input
                   key={key}
                   className={styles.input}

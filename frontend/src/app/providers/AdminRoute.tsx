@@ -1,6 +1,7 @@
-import { useAuth } from "@entities/User/model/useAuth";
+
 import { Navigate, Outlet } from "react-router-dom";
 import { PATHS } from "./paths";
+import { useAuth } from "@entities/User/model/useAuth";
 
 export const AdminRoute = () => {
   const { isAuthenticated, loading, user } = useAuth();

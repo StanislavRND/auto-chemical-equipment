@@ -1,6 +1,6 @@
 import { useAppSelector } from "@app/store/hooks";
 import { selectCartTotalCount } from "@entities/Cart/model/store/cartSelectors";
-import { useAuth } from "@entities/User/model/useAuth";
+
 import type { Category } from "@shared/api/catalog/catalog";
 import { useBreakpoint } from "@shared/lib/hooks/useBreakpoint";
 import { Button } from "@shared/ui/Button/Button";
@@ -9,6 +9,7 @@ import { Input } from "@shared/ui/FormComponents/Input/Input";
 import { Menu, Search, ShoppingCart, UserRound } from "lucide-react";
 import { useToolbar } from "../model/useToolbar";
 import styles from "./Toolbar.module.scss";
+import { useAuth } from "@entities/User/model/useAuth";
 
 interface ToolbarProps {
   categories: Category[];

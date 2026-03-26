@@ -49,7 +49,6 @@ export const HomePage = () => {
         loading={productForm.isPending || isUploading}
       >
         <ProductForm
-        
           formData={productForm.formData}
           touched={productForm.touched}
           formError={productForm.formError}

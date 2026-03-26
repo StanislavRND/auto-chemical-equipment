@@ -6,9 +6,8 @@ export const ProtectedRoute = () => {
   const { isAuthenticated, loading } = useAuth();
 
   if (loading) {
-    return <div style={{ display: 'none' }}>Loading...</div>; 
+    return <div style={{ display: "none" }}>Loading...</div>;
   }
-
 
   if (!isAuthenticated) {
     return <Navigate to={PATHS.ACCESS_DENIED} replace />;
