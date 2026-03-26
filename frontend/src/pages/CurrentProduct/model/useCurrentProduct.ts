@@ -28,7 +28,16 @@ export const useCurrentProduct = () => {
     e.stopPropagation();
     if (!productInfo) return;
 
-    await addToCart(productInfo, 1);
+    if (productInfo) {
+      await addToCart(
+        {
+          ...productInfo,
+          discount_percent: productInfo.discount_percent.toString() ?? "0",
+          category_id: productInfo.category.id,
+        },
+        1,
+      );
+    }
   };
 
   const handleInc: React.MouseEventHandler = async (e) => {
