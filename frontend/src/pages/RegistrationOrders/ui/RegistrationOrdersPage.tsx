@@ -1,5 +1,7 @@
 import { RegistrationOrders } from "@features/RegistationOrders/ui/RegistrationOrders";
 
-export const RegistrationOrdersPage = () => {
+ const RegistrationOrdersPage = () => {
   return <RegistrationOrders />;
 };
+
+export default RegistrationOrdersPage;

@@ -4,7 +4,7 @@ import { FileText } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import styles from "./UserAgreementPage.module.scss";
 
-export const UserAgreementPage = () => {
+const UserAgreementPage = () => {
   const navigate = useNavigate();
 
   return (
@@ -184,3 +184,5 @@ export const UserAgreementPage = () => {
     </section>
   );
 };
+
+export default UserAgreementPage;

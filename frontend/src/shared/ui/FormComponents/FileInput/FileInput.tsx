@@ -112,7 +112,7 @@ export const FilepInput = ({
         </span>
 
         {(value || fileName) &&
-          !loading && ( // ✅
+          !loading && ( 
             <button type="button" className={styles.clear} onClick={clear}>
               <X size={20} color="var(--text-secondary)" />
             </button>

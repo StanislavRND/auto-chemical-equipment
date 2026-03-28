@@ -26,7 +26,7 @@ export const CartItem = ({ item }: CartItemProps) => {
   return (
     <div className={styles.item}>
       <div className={styles.product}>
-        <img src={item.image_url} alt={item.name} />
+        <img loading="lazy" src={item.image_url} alt={item.name} />
         <div className={styles.productInfo}>
           <h4 className={styles.productName}>{item.name}</h4>
           <h5 className={styles.productActicle}>

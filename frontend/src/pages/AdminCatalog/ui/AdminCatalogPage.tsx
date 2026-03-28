@@ -16,7 +16,7 @@ import { useState } from "react";
 import { useAdminCatalogActions } from "../model/useAdminCatalogACtions";
 import styles from "./AdminCatalogPage.module.scss";
 
-export const AdminCatalogPage = () => {
+const AdminCatalogPage = () => {
   const { isLaptop, isMobile, isTablet } = useBreakpoint();
   const { data: categories, isLoading, isError } = useGetCatalog();
   const { mutate: deleteSubCatalog } = useDeleteSubCatalog();
@@ -213,3 +213,5 @@ export const AdminCatalogPage = () => {
     </>
   );
 };
+
+export default AdminCatalogPage;

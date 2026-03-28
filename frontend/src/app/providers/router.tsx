@@ -1,20 +1,6 @@
+import React, { Suspense, lazy } from "react";
 import { MainLayout } from "@app/layouts/BaseLayout/BaseLayout";
 import { useSyncCart } from "@entities/Cart/model/useSyncCart";
-import { AboutPage } from "@pages/About/ui/About";
-import { AdminCatalogPage } from "@pages/AdminCatalog/ui/AdminCatalogPage";
-import { CartPage } from "@pages/Cart/ui/CartPage";
-import { CatalogProductPage } from "@pages/CatalogProduct/ui/CatalogProductPage";
-import { CurrentProductPage } from "@pages/CurrentProduct/ui/CurrentProductPage";
-import { AccessDeniedPage } from "@pages/Fallback/AccessDeniedPage/AccessDeniedPage";
-import { NotFoundPage } from "@pages/Fallback/NotFoundPage/NotFoundPage";
-import { HomePage } from "@pages/Home/ui/HomePage";
-import { PrivacyPolicyPage } from "@pages/Policy/PrivacyPolicy/PrivacyPolicyPage";
-import { UserAgreementPage } from "@pages/Policy/UserAgreement/UserAgreementPage";
-import { ProductsInOrderPage } from "@pages/ProductsInOrder/ui/ProductsInOrderPage";
-import { ProfileMePage } from "@pages/ProfileMe/ui/ProfileMePage";
-import { ProfileOrdersPage } from "@pages/ProfileOrders/ui/ProfileOrdersPage";
-import { RegistrationOrdersPage } from "@pages/RegistrationOrders/ui/RegistrationOrdersPage";
-import { SearchPage } from "@pages/Search/ui/SearchPage";
 import {
   createBrowserRouter,
   Navigate,
@@ -24,104 +10,63 @@ import { AdminRoute } from "./AdminRoute";
 import { PATHS } from "./paths";
 import { ProductModalProvider } from "./ProductModalContext";
 import { ProtectedRoute } from "./ProtectedRoute";
-import { AuthPage } from "@pages/Auth/ui/AuthPage";
-import { RegisterPage } from "@pages/Register/ui/RegisterPage";
+
+const HomePage = lazy(() => import("@pages/Home/ui/HomePage"));
+const AboutPage = lazy(() => import("@pages/About/ui/About"));
+const CartPage = lazy(() => import("@pages/Cart/ui/CartPage"));
+const CurrentProductPage = lazy(() => import("@pages/CurrentProduct/ui/CurrentProductPage"));
+const CatalogProductPage = lazy(() => import("@pages/CatalogProduct/ui/CatalogProductPage"));
+const SearchPage = lazy(() => import("@pages/Search/ui/SearchPage"));
+const ProfileMePage = lazy(() => import("@pages/ProfileMe/ui/ProfileMePage"));
+const ProfileOrdersPage = lazy(() => import("@pages/ProfileOrders/ui/ProfileOrdersPage"));
+const RegistrationOrdersPage = lazy(() => import("@pages/RegistrationOrders/ui/RegistrationOrdersPage"));
+const ProductsInOrderPage = lazy(() => import("@pages/ProductsInOrder/ui/ProductsInOrderPage"));
+const AdminCatalogPage = lazy(() => import("@pages/AdminCatalog/ui/AdminCatalogPage"));
+const AuthPage = lazy(() => import("@pages/Auth/ui/AuthPage"));
+const RegisterPage = lazy(() => import("@pages/Register/ui/RegisterPage"));
+const PrivacyPolicyPage = lazy(() => import("@pages/Policy/PrivacyPolicy/PrivacyPolicyPage"));
+const UserAgreementPage = lazy(() => import("@pages/Policy/UserAgreement/UserAgreementPage"));
+const AccessDeniedPage = lazy(() => import("@pages/Fallback/AccessDeniedPage/AccessDeniedPage"));
+const NotFoundPage = lazy(() => import("@pages/Fallback/NotFoundPage/NotFoundPage"));
+
+const SuspenseWrapper = (Component: React.LazyExoticComponent<React.ComponentType>) => (
+  <Suspense fallback={<div>Loading...</div>}>
+    <Component />
+  </Suspense>
+);
 
 const router = createBrowserRouter([
-  {
-    path: PATHS.ROOT,
-    element: <Navigate to={PATHS.HOME} replace />,
-  },
-
-  {
-    path: PATHS.LOGIN,
-    element: <AuthPage />,
-  },
-  {
-    path: PATHS.REGISTER,
-    element: <RegisterPage/>,
-  },
-  {
-    path: PATHS.ACCESS_DENIED,
-    element: <AccessDeniedPage />,
-  },
-  {
-    path: PATHS.NOT_FOUND,
-    element: <NotFoundPage />,
-  },
-  {
-    path: PATHS.PRIVACY_POLICY,
-    element: <PrivacyPolicyPage />,
-  },
-  {
-    path: PATHS.USER_AGREEMENT,
-    element: <UserAgreementPage />,
-  },
+  { path: PATHS.ROOT, element: <Navigate to={PATHS.HOME} replace /> },
+  { path: PATHS.LOGIN, element: SuspenseWrapper(AuthPage) },
+  { path: PATHS.REGISTER, element: SuspenseWrapper(RegisterPage) },
+  { path: PATHS.ACCESS_DENIED, element: SuspenseWrapper(AccessDeniedPage) },
+  { path: PATHS.NOT_FOUND, element: SuspenseWrapper(NotFoundPage) },
+  { path: PATHS.PRIVACY_POLICY, element: SuspenseWrapper(PrivacyPolicyPage) },
+  { path: PATHS.USER_AGREEMENT, element: SuspenseWrapper(UserAgreementPage) },
   {
     element: <MainLayout />,
     children: [
-      {
-        path: PATHS.HOME,
-        element: <HomePage />,
-      },
-      {
-        path: PATHS.ABOUT,
-        element: <AboutPage />,
-      },
-      {
-        path: PATHS.CART,
-        element: <CartPage />,
-      },
-      {
-        path: PATHS.PRODUCT_WITH_SUB,
-        element: <CurrentProductPage />,
-      },
-      {
-        path: PATHS.PRODUCT_NO_SUB,
-        element: <CurrentProductPage />,
-      },
-      {
-        path: PATHS.CATALOG_SUBCATEGORY,
-        element: <CatalogProductPage />,
-      },
-      {
-        path: PATHS.CATALOG_CATEGORY,
-        element: <CatalogProductPage />,
-      },
-      {
-        path: PATHS.SEARCH,
-        element: <SearchPage />,
-      },
+      { path: PATHS.HOME, element: SuspenseWrapper(HomePage) },
+      { path: PATHS.ABOUT, element: SuspenseWrapper(AboutPage) },
+      { path: PATHS.CART, element: SuspenseWrapper(CartPage) },
+      { path: PATHS.PRODUCT_WITH_SUB, element: SuspenseWrapper(CurrentProductPage) },
+      { path: PATHS.PRODUCT_NO_SUB, element: SuspenseWrapper(CurrentProductPage) },
+      { path: PATHS.CATALOG_SUBCATEGORY, element: SuspenseWrapper(CatalogProductPage) },
+      { path: PATHS.CATALOG_CATEGORY, element: SuspenseWrapper(CatalogProductPage) },
+      { path: PATHS.SEARCH, element: SuspenseWrapper(SearchPage) },
 
       {
         element: <ProtectedRoute />,
         children: [
-          {
-            path: PATHS.PROFILE_ME,
-            element: <ProfileMePage />,
-          },
-          {
-            path: PATHS.PROFILE_ORDERS,
-            element: <ProfileOrdersPage />,
-          },
-          {
-            path: PATHS.REGISTRATION_ORDERS,
-            element: <RegistrationOrdersPage />,
-          },
-          {
-            path: PATHS.PROFILE_PRODUCTS_IN_ORDER,
-            element: <ProductsInOrderPage />,
-          },
+          { path: PATHS.PROFILE_ME, element: SuspenseWrapper(ProfileMePage) },
+          { path: PATHS.PROFILE_ORDERS, element: SuspenseWrapper(ProfileOrdersPage) },
+          { path: PATHS.REGISTRATION_ORDERS, element: SuspenseWrapper(RegistrationOrdersPage) },
+          { path: PATHS.PROFILE_PRODUCTS_IN_ORDER, element: SuspenseWrapper(ProductsInOrderPage) },
         ],
       },
       {
         element: <AdminRoute />,
-        children: [
-          {
-            path: PATHS.ADMIN_CATALOG,
-            element: <AdminCatalogPage />,
-          },
-        ],
+        children: [{ path: PATHS.ADMIN_CATALOG, element: SuspenseWrapper(AdminCatalogPage) }],
       },
     ],
   },
@@ -129,6 +74,7 @@ const router = createBrowserRouter([
 
 export const AppRouter = () => {
   useSyncCart();
+
   return (
     <ProductModalProvider>
       <RouterProvider router={router} />

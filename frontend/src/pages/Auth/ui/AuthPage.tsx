@@ -1,6 +1,6 @@
 import { LayoutAuthRegister } from "@shared/ui/LayoutAuthRegister/LayoutAuthRegister";
 
-export const AuthPage = () => {
+const AuthPage = () => {
   return (
     <>
       <LayoutAuthRegister
@@ -12,3 +12,4 @@ export const AuthPage = () => {
     </>
   );
 };
+export default AuthPage;

@@ -3,7 +3,7 @@ import { FileQuestion } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import styles from "./NotFoundPage.module.scss";
 
-export const NotFoundPage = () => {
+const NotFoundPage = () => {
   const navigate = useNavigate();
 
   return (
@@ -38,3 +38,5 @@ export const NotFoundPage = () => {
     </section>
   );
 };
+
+export default NotFoundPage;

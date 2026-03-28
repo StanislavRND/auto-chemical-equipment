@@ -1,4 +1,3 @@
-// ProductsInOrderPage.tsx
 import {
   useGetProductInOrder,
   type ProductInOrder,
@@ -14,7 +13,7 @@ import { useMemo } from "react";
 import { useParams } from "react-router-dom";
 import styles from "./ProductsInOrderPage.module.scss";
 
-export const ProductsInOrderPage = () => {
+const ProductsInOrderPage = () => {
   const params = useParams();
   const orderId = Number(params.orderId);
 
@@ -79,3 +78,5 @@ export const ProductsInOrderPage = () => {
     </section>
   );
 };
+
+export default ProductsInOrderPage;

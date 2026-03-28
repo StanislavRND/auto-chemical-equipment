@@ -8,7 +8,7 @@ import { CartSale } from "@widgets/Cart/ui/CartSale/CartSale";
 import { breadcrumbsItems } from "../lib/breadcrums";
 import styles from "./CartPage.module.scss";
 
-export const CartPage = () => {
+const CartPage = () => {
   const cartItems = useAppSelector(selectCartItemsArray);
   const isCartEmpty = !cartItems || cartItems.length === 0;
 
@@ -34,3 +34,5 @@ export const CartPage = () => {
     </div>
   );
 };
+
+export default CartPage;

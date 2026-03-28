@@ -5,7 +5,7 @@ import {
   ShoppingCart,
   UserRound,
   type LucideIcon,
-  Settings, // или любой подходящий icon
+  Settings, 
 } from "lucide-react";
 
 export interface MenuItem {

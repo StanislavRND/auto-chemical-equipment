@@ -9,7 +9,7 @@ import { Minus, Plus, PlusIcon } from "lucide-react";
 import { useCurrentProduct } from "../model/useCurrentProduct";
 import styles from "./CurrentProductPage.module.scss";
 
-export const CurrentProductPage = () => {
+const CurrentProductPage = () => {
   const { isMobile } = useBreakpoint();
   const {
     breadcrumbs,
@@ -136,3 +136,5 @@ export const CurrentProductPage = () => {
     </div>
   );
 };
+
+export default CurrentProductPage;

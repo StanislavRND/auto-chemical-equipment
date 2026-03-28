@@ -1,7 +1,7 @@
 import { LayoutAuthRegister } from "@shared/ui/LayoutAuthRegister/LayoutAuthRegister";
 import { useRegisterActions } from "../model/RegisterActions";
 
-export const RegisterPage = () => {
+ const RegisterPage = () => {
   const { mode, handleSuccess, handleBackToRegister } = useRegisterActions();
   return (
     <>
@@ -17,3 +17,6 @@ export const RegisterPage = () => {
     </>
   );
 };
+
+
+export default RegisterPage;

@@ -3,7 +3,7 @@ import { ShieldClose } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import styles from "./AccessDeniedPage.module.scss";
 
-export const AccessDeniedPage = () => {
+ const AccessDeniedPage = () => {
   const navigate = useNavigate();
 
   return (
@@ -39,3 +39,5 @@ export const AccessDeniedPage = () => {
     </section>
   );
 };
+
+export default AccessDeniedPage

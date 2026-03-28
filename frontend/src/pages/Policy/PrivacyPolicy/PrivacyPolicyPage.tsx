@@ -180,3 +180,5 @@ export const PrivacyPolicyPage = () => {
     </section>
   );
 };
+
+export default PrivacyPolicyPage;

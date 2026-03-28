@@ -5,7 +5,7 @@ import { ProductListSearch } from "@features/SearchProducts/ui/ProductListSearch
 import { Modal } from "@shared/ui/Modal/Modal";
 import { useSearchParams } from "react-router-dom";
 
-export const SearchPage = () => {
+const SearchPage = () => {
   const { mode, openEdit, isOpen, productForm, handleCloseModal } =
     useProductModal();
   const { mutateAsync: uploadImage, isPending: isUploading } =
@@ -35,3 +35,5 @@ export const SearchPage = () => {
     </>
   );
 };
+
+export default SearchPage;

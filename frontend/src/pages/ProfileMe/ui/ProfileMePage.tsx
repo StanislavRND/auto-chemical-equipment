@@ -1,9 +1,11 @@
 import { UserInfo } from "@entities/User/ui/UserInfo/UserInfo";
 
-export const ProfileMePage = () => {
+const ProfileMePage = () => {
   return (
     <>
       <UserInfo />
     </>
   );
 };
+
+export default ProfileMePage;

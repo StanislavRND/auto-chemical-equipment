@@ -45,6 +45,7 @@ export const ProductItem = ({ product, onEdit }: ProductItemProps) => {
             <img
               className={styles.img}
               src={product.image_url}
+              loading="lazy"
               alt="Фото товара"
             />
             {hasDiscount && (

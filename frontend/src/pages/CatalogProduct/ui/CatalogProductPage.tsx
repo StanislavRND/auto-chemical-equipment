@@ -4,7 +4,7 @@ import { ProductForm } from "@features/ProductForm/ui/ProductForm";
 import { Modal } from "@shared/ui/Modal/Modal";
 import { ProductItems } from "@widgets/ProductItems/ui/ProductItems";
 
-export const CatalogProductPage = () => {
+const CatalogProductPage = () => {
   const { mode, openEdit, isOpen, productForm, handleCloseModal } =
     useProductModal();
   const { mutateAsync: uploadImage, isPending: isUploading } =
@@ -32,3 +32,5 @@ export const CatalogProductPage = () => {
     </div>
   );
 };
+
+export default CatalogProductPage;

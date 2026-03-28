@@ -47,7 +47,7 @@ export const PopularityCategory = () => {
                 <div className={styles.name}>{el.name}</div>
 
                 <div className={styles.imgWrapper}>
-                  <img src={el.image_url} alt={el.name} />
+                  <img loading="lazy" src={el.image_url} alt={el.name} />
                 </div>
               </div>
             </div>
