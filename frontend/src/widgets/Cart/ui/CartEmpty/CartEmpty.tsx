@@ -1,4 +1,4 @@
-import cartImg from "@shared/assets/images/empty-cart.png";
+import cartImg from "@shared/assets/images/empty-cart.webp";
 import { useBreakpoint } from "@shared/lib/hooks/useBreakpoint";
 import { Button } from "@shared/ui/Button/Button";
 import { useNavigate } from "react-router-dom";
