@@ -1,5 +1,6 @@
 import { useAppSelector } from "@app/store/hooks";
 import { AuthForm } from "@features/AuthForm/ui/AuthForm";
+import { updateField } from "@features/ConfirmCodeForm/model/registrationSlice";
 import { ConfirmCodeForm } from "@features/ConfirmCodeForm/ui/ConfirmCodeForm";
 import { RegisterForm } from "@features/RegisterForm/ui/RegisterForm";
 import authRegister from "@shared/assets/images/auth-register.webp";
@@ -8,7 +9,6 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { RegisterSwitcher } from "../RegisterSwitcher/RegisterSwitcher";
 import styles from "./LayoutAuthRegister.module.scss";
-import { updateField } from "@features/ConfirmCodeForm/model/registrationSlice";
 
 interface LayoutAuthRegister {
   type: string;
@@ -103,6 +103,7 @@ export const LayoutAuthRegister = (props: LayoutAuthRegister) => {
           )}
         </div>
         <img
+          loading="lazy"
           className={styles.contentRight}
           src={authRegister}
           alt="Декоративное изображение для страницы авторизации"

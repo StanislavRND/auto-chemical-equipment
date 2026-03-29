@@ -30,7 +30,7 @@ const AccessDeniedPage = lazy(() => import("@pages/Fallback/AccessDeniedPage/Acc
 const NotFoundPage = lazy(() => import("@pages/Fallback/NotFoundPage/NotFoundPage"));
 
 const SuspenseWrapper = (Component: React.LazyExoticComponent<React.ComponentType>) => (
-  <Suspense fallback={<div>Loading...</div>}>
+  <Suspense>
     <Component />
   </Suspense>
 );

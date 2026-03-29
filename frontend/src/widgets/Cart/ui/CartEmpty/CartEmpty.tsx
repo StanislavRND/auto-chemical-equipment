@@ -15,6 +15,7 @@ export const CartEmpty = () => {
       <div className={styles.container}>
         <div className={styles.imageWrapper}>
           <img
+            loading="lazy"
             className={styles.cartImg}
             src={cartImg}
             alt="Фото пустой корзины"

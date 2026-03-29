@@ -45,8 +45,10 @@ export const ProductItem = ({ product, onEdit }: ProductItemProps) => {
             <img
               className={styles.img}
               src={product.image_url}
-              loading="lazy"
+              fetchPriority="high"
               alt="Фото товара"
+              width={300}
+              height={300}
             />
             {hasDiscount && (
               <div className={styles.discountBadge}>-{discountPercent}%</div>

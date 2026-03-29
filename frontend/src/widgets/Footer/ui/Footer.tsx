@@ -1,4 +1,4 @@
-import imgLogo from "@shared/assets/images/logo-text.png";
+import imgLogo from "@shared/assets/images/logo-text.webp";
 import { Link } from "react-router-dom";
 import styles from "./Footer.module.scss";
 
@@ -13,7 +13,7 @@ export const Footer = () => {
       <div className={styles.container}>
         <div className={styles.img}>
           <Link to={"/home"}>
-            <img src={imgLogo} alt="Логотип компании" />
+            <img loading="lazy" src={imgLogo} alt="Логотип компании" />
           </Link>
         </div>
         <nav className={styles.nav}>
@@ -31,9 +31,7 @@ export const Footer = () => {
           <div className={styles.dopSubtile}>ПН-ПТ с 8:30 до 22:00 (МСК)</div>
           <div className={styles.dopTitle}>Общие вопросы</div>
           <div className={styles.dopSubtile}>
-            <a href="mailto:optovikautohim@mail.ru">
-              optovikautohim@mail.ru
-            </a>
+            <a href="mailto:optovikautohim@mail.ru">optovikautohim@mail.ru</a>
           </div>
         </div>
       </div>

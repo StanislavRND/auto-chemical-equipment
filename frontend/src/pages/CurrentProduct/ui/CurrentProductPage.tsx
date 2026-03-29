@@ -49,7 +49,7 @@ const CurrentProductPage = () => {
         <Breadcrumbs items={breadcrumbs} />
         <section className={styles.product}>
           <div className={styles.imgWrapper}>
-            <img src={productInfo?.image_url} alt="Фото товара" />
+            <img loading="lazy" src={productInfo?.image_url} alt="Фото товара" />
           </div>
           <div className={styles.info}>
             <h3 className={styles.infoTitle}>{productInfo?.name}</h3>

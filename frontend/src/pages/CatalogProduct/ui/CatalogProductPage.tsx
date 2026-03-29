@@ -2,7 +2,7 @@ import { useProductModal } from "@app/providers/ProductModalContext";
 import { useUploadProductImage } from "@features/ProductForm/api/useImageUpload";
 import { ProductForm } from "@features/ProductForm/ui/ProductForm";
 import { Modal } from "@shared/ui/Modal/Modal";
-import { ProductItems } from "@widgets/ProductItems/ui/ProductItems";
+import ProductItems from "@widgets/ProductItems/ui/ProductItems";
 
 const CatalogProductPage = () => {
   const { mode, openEdit, isOpen, productForm, handleCloseModal } =

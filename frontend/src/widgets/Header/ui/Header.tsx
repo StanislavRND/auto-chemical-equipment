@@ -1,5 +1,5 @@
 import { useAuth } from "@entities/User/model/useAuth";
-import imgLogo from "@shared/assets/images/logo-text.png";
+import imgLogo from "@shared/assets/images/logo-text.webp";
 import { Link } from "react-router-dom";
 import { useActiveHeader } from "../model/useActiveHeader";
 import styles from "./Header.module.scss";
@@ -13,10 +13,11 @@ export const Header = () => {
         <div className={styles.img}>
           <Link to={"/home"}>
             <img
-              width={160}
-              height={160}
+              width={120}
+              height={120}
               src={imgLogo}
               alt="Логотип компании"
+              fetchPriority="high"
             />
           </Link>
         </div>

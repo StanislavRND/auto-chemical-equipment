@@ -16,9 +16,9 @@
 }
 
 .img img {
-  max-height: 120px;
-  height: auto;
-  width: auto;
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
   @include respond-to(tablet) {
     max-height: 80px;
   }

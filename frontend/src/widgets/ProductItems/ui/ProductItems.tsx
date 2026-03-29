@@ -17,7 +17,7 @@ type ProductItemsProps = {
   isCatalog?: boolean;
 };
 
-export const ProductItems = ({
+const ProductItems = ({
   onEdit,
   isCatalog = false,
 }: ProductItemsProps) => {
@@ -135,3 +135,5 @@ export const ProductItems = ({
     </section>
   );
 };
+
+export default ProductItems
