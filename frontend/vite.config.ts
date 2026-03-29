@@ -51,17 +51,4 @@ export default defineConfig({
     host: "127.0.0.1",
     port: 5555,
   },
-  build: {
-    rollupOptions: {
-      output: {
-        manualChunks(id) {
-          if (id.includes("node_modules")) {
-            if (id.includes("react")) return "react";
-            if (id.includes("react-router")) return "router";
-            return "vendor";
-          }
-        },
-      },
-    },
-  },
 });
