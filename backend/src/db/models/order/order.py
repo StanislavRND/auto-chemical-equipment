@@ -42,7 +42,6 @@ class OrderModel(Base):
     status: Mapped[str] = mapped_column(
         String(50),
         nullable=False,
-        default="success",
     )
     created_at: Mapped[DateTime] = mapped_column(
         DateTime(timezone=True),

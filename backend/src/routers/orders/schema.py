@@ -41,3 +41,7 @@ class CreateOrderSchema(BaseModel):
     middle_name: str | None = None
     comment: str | None = None
     products: list[OrderProductSchema]
+
+
+class UpdateOrderStatusSchema(BaseModel):
+    status: str

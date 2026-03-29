@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.ext.asyncio import AsyncSession
 from src.db.database import get_db
 from src.db.models.user.user import UserModel
@@ -12,6 +12,7 @@ from src.routers.orders.schema import (
     OrderProductSchema,
     OrderProductsResponseSchema,
     OrderResponseSchema,
+    UpdateOrderStatusSchema,
 )
 
 order_router = APIRouter(tags=["Заказы"])
@@ -19,6 +20,38 @@ order_router = APIRouter(tags=["Заказы"])
 
 async def get_order_repo(db: AsyncSession = Depends(get_db)) -> OrderRepository:
     return OrderRepository(session=db)
+
+
+@order_router.get(
+    "/orders/filter",
+    status_code=200,
+    summary="Получение заказов с фильтрацией и пагинацией",
+)
+async def get_filtered_orders(
+    number_order: str | None = Query(None, description="Номер заказа"),
+    full_name: str | None = Query(None, description="ФИО пользователя"),
+    status: str | None = Query(None, description="Статус заказа"),
+    page: int = Query(1, ge=1, description="Номер страницы"),
+    per_page: int = Query(
+        20, ge=1, le=100, description="Количество заказов на странице"
+    ),
+    repo: OrderRepository = Depends(get_order_repo),
+):
+    try:
+        result = await repo.get_orders(
+            number_order=number_order,
+            full_name=full_name,
+            status=status,
+            page=page,
+            per_page=per_page,
+        )
+
+        return {
+            "items": result["items"],
+            "pagination": result["pagination"],
+        }
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e)) from e
 
 
 @order_router.get(
@@ -33,6 +66,31 @@ async def get_user_orders(
 ):
     try:
         return await repo.get_user_orders(current_user.id)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e)) from e
+
+
+@order_router.patch(
+    "/orders/{order_id}/status",
+    response_model=OrderResponseSchema,
+    status_code=200,
+    summary="Обновление статуса заказа",
+)
+async def update_order_status(
+    order_id: int,
+    data: UpdateOrderStatusSchema,
+    current_user: UserModel = Depends(UserRepository.get_current_user_dependency),
+    repo: OrderRepository = Depends(get_order_repo),
+):
+    try:
+        order = await repo.update_order_status(
+            order_id=order_id,
+            user_id=current_user.id,
+            new_status=data.status,
+        )
+        return order
+    except OrderNotFoundError as e:
+        raise HTTPException(status_code=404, detail=str(e)) from e
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e)) from e
 
