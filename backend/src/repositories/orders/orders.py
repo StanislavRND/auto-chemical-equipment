@@ -88,7 +88,7 @@ class OrderRepository:
             raise RepositoryError(f"Failed to get filtered orders: {e}") from e
 
     async def update_order_status(
-        self, order_id: int, user_id: int, new_status: str
+        self, order_id: int, new_status: str
     ) -> OrderModel:
         try:
             status_enum = OrderStatus(new_status)
@@ -96,10 +96,8 @@ class OrderRepository:
             raise ValueError(f"Недопустимый статус заказа: {new_status}") from None
 
         try:
-            stmt = select(OrderModel).where(
-                OrderModel.id == order_id,
-                OrderModel.user_id == user_id,
-            )
+            stmt = select(OrderModel).where(OrderModel.id == order_id)
+
             result = await self.session.execute(stmt)
             order = result.scalar_one_or_none()
 
@@ -186,7 +184,7 @@ class OrderRepository:
                 products=products,
                 total_products_count=total_products_count,
                 total_price=total_price,
-                status="success",
+                status='pending',
             )
 
             self.session.add(order)
@@ -201,11 +199,11 @@ class OrderRepository:
                 f"Failed to create order for user {user_id}: {e}"
             ) from e
 
-    async def delete_order(self, order_id: int, user_id: int) -> None:
+    async def delete_order(self, order_id: int) -> None:
         try:
             stmt = select(OrderModel).where(
                 OrderModel.id == order_id,
-                OrderModel.user_id == user_id,
+
             )
             result = await self.session.execute(stmt)
             order = result.scalar_one_or_none()
@@ -215,7 +213,7 @@ class OrderRepository:
 
             delete_stmt = delete(OrderModel).where(
                 OrderModel.id == order_id,
-                OrderModel.user_id == user_id,
+  
             )
             await self.session.execute(delete_stmt)
             await self.session.commit()

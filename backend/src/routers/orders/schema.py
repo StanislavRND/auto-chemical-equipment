@@ -45,3 +45,15 @@ class CreateOrderSchema(BaseModel):
 
 class UpdateOrderStatusSchema(BaseModel):
     status: str
+
+
+class PaginationSchema(BaseModel):
+    page: int
+    per_page: int
+    has_next: bool
+    total: int
+
+
+class OrdersFilterResponseSchema(BaseModel):
+    items: list[OrderResponseSchema]
+    pagination: PaginationSchema

@@ -13,6 +13,7 @@ from src.routers.orders.schema import (
     OrderProductsResponseSchema,
     OrderResponseSchema,
     UpdateOrderStatusSchema,
+    OrdersFilterResponseSchema,
 )
 
 order_router = APIRouter(tags=["Заказы"])
@@ -25,6 +26,7 @@ async def get_order_repo(db: AsyncSession = Depends(get_db)) -> OrderRepository:
 @order_router.get(
     "/orders/filter",
     status_code=200,
+    response_model=OrdersFilterResponseSchema,
     summary="Получение заказов с фильтрацией и пагинацией",
 )
 async def get_filtered_orders(
@@ -36,6 +38,7 @@ async def get_filtered_orders(
         20, ge=1, le=100, description="Количество заказов на странице"
     ),
     repo: OrderRepository = Depends(get_order_repo),
+    _: UserModel = Depends(UserRepository.get_admin_user_dependency),
 ):
     try:
         result = await repo.get_orders(
@@ -74,25 +77,24 @@ async def get_user_orders(
     "/orders/{order_id}/status",
     response_model=OrderResponseSchema,
     status_code=200,
-    summary="Обновление статуса заказа",
+    summary="Обновление статуса заказа (только для админа)",
 )
 async def update_order_status(
     order_id: int,
     data: UpdateOrderStatusSchema,
-    current_user: UserModel = Depends(UserRepository.get_current_user_dependency),
+    _: UserModel = Depends(UserRepository.get_admin_user_dependency),
     repo: OrderRepository = Depends(get_order_repo),
 ):
     try:
         order = await repo.update_order_status(
             order_id=order_id,
-            user_id=current_user.id,
             new_status=data.status,
         )
         return order
     except OrderNotFoundError as e:
-        raise HTTPException(status_code=404, detail=str(e)) from e
+        raise HTTPException(status_code=404, detail=str(e))
     except ValueError as e:
-        raise HTTPException(status_code=400, detail=str(e)) from e
+        raise HTTPException(status_code=400, detail=str(e))
 
 
 @order_router.get(
@@ -150,11 +152,11 @@ async def create_order(
 )
 async def delete_order(
     order_id: int,
-    current_user: UserModel = Depends(UserRepository.get_current_user_dependency),
+    _: UserModel = Depends(UserRepository.get_admin_user_dependency),
     repo: OrderRepository = Depends(get_order_repo),
 ):
     try:
-        await repo.delete_order(order_id, current_user.id)
+        await repo.delete_order(order_id)
     except OrderNotFoundError as e:
         raise HTTPException(status_code=404, detail=str(e)) from e
     except ValueError as e:
