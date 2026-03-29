@@ -14,6 +14,9 @@ export const CartOrder = () => {
 
   const hasDiscount = discountPercent > 0;
 
+  const MIN_ORDER_PRICE = 10000;
+  const isMinOrderReached = discountedPrice >= MIN_ORDER_PRICE;
+
   const handleNavigate = () => {
     if (isAuthenticated) {
       navigate("/registration/orders");
@@ -24,17 +27,34 @@ export const CartOrder = () => {
 
   return (
     <section className={styles.order}>
-      <Button onClick={handleNavigate} className={styles.button} size="md">
+      <div className={styles.totalPrice}>
+        <div className={styles.pricesRow}>
+          {hasDiscount && (
+            <span className={styles.oldPrice}>
+              {formatPrice(totalPrice)} ₽
+            </span>
+          )}
+
+          <span className={styles.price}>
+            {formatPrice(discountedPrice)} ₽
+          </span>
+        </div>
+
+        {!isMinOrderReached && (
+          <span className={styles.minOrder}>
+            Минимальный заказ — {formatPrice(MIN_ORDER_PRICE)} ₽
+          </span>
+        )}
+      </div>
+
+      <Button
+        onClick={handleNavigate}
+        className={styles.button}
+        size="md"
+        disabled={!isMinOrderReached}
+      >
         Оформить заказ
       </Button>
-
-      <div className={styles.totalPrice}>
-        {hasDiscount && (
-          <span className={styles.oldPrice}>{formatPrice(totalPrice)} ₽</span>
-        )}
-
-        <span className={styles.price}>{formatPrice(discountedPrice)} ₽</span>
-      </div>
     </section>
   );
 };

@@ -8,6 +8,7 @@ export interface ProductFormValues {
   discount_percent: string;
   category_id: number;
   subcategory_id: number | null;
+  existence: boolean;
 }
 
 export type TouchedFields = { [K in keyof ProductFormValues]: boolean };
@@ -30,4 +31,5 @@ export const emptyTouched: TouchedFields = {
   discount_percent: false,
   category_id: false,
   subcategory_id: false,
+  existence: false,
 };

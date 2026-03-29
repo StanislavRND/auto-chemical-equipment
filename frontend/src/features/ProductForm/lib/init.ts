@@ -17,6 +17,7 @@ export const createEmptyProductForm = (): ProductFormValues => ({
   discount_percent: "",
   category_id: 0,
   subcategory_id: 0,
+  existence: true,
 });
 
 export const mergeInitialValues = (
@@ -40,6 +41,7 @@ export const mergeInitialValues = (
       initialValues?.category_id ?? prev.category_id ?? fallbackCategoryId,
     subcategory_id:
       initialValues?.subcategory_id ?? prev.subcategory_id ?? fallbackSubId,
+    existence: initialValues?.existence ?? true,
   };
 };
 

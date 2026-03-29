@@ -1,3 +1,4 @@
+import { Checkbox } from "@shared/ui/Checkbox/Checkbox";
 import { FilepInput } from "@shared/ui/FormComponents/FileInput/FileInput";
 import { Input } from "@shared/ui/FormComponents/Input/Input";
 import { Select } from "@shared/ui/FormComponents/Select/Select";
@@ -145,6 +146,13 @@ export const ProductForm = ({
         formError.subcategoryError && (
           <div className={styles.error}>{formError.subcategoryError}</div>
         )}
+
+      <Checkbox
+        checked={formData.existence}
+        onChange={(value) => handleChange("existence", value)}
+      >
+        В наличии
+      </Checkbox>
 
       {apiErrorMessage && (
         <div className={styles.errorGn}>{apiErrorMessage}</div>

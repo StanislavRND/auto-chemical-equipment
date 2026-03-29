@@ -49,7 +49,11 @@ const CurrentProductPage = () => {
         <Breadcrumbs items={breadcrumbs} />
         <section className={styles.product}>
           <div className={styles.imgWrapper}>
-            <img loading="lazy" src={productInfo?.image_url} alt="Фото товара" />
+            <img
+              loading="lazy"
+              src={productInfo?.image_url}
+              alt="Фото товара"
+            />
           </div>
           <div className={styles.info}>
             <h3 className={styles.infoTitle}>{productInfo?.name}</h3>
@@ -97,14 +101,16 @@ const CurrentProductPage = () => {
               <>
                 {" "}
                 {!isInCart ? (
-                  <Button
-                    onClick={handleAddToCart}
-                    size={buttonSize}
-                    className={styles.btn}
-                    variant="outline"
-                  >
-                    <PlusIcon className={styles.plus} />В корзину
-                  </Button>
+                  productInfo?.existence ? (
+                    <Button
+                      onClick={handleAddToCart}
+                      size={buttonSize}
+                      className={styles.btn}
+                      variant="outline"
+                    >
+                      <PlusIcon className={styles.plus} />В корзину
+                    </Button>
+                  ) : null
                 ) : (
                   <div className={styles.cartActions}>
                     <Button

@@ -19,7 +19,7 @@
     grid-template-areas:
       "totalPrice"
       "button";
-       margin-top: 20px;
+    margin-top: 20px;
   }
 }
 
@@ -35,6 +35,13 @@
 
 .totalPrice {
   grid-area: totalPrice;
+  display: flex;
+  flex-direction: column; // фикс
+  align-items: center;
+  justify-content: center;
+}
+
+.pricesRow {
   display: flex;
   align-items: baseline;
   justify-content: center;
@@ -64,5 +71,16 @@
 
   @include respond-to(tablet) {
     font-size: 2rem;
+  }
+}
+
+.minOrder {
+  font-size: 0.875rem;
+  color: var(--red-500);
+  text-align: center;
+  margin-top: 5px;
+
+  @include respond-to(tablet) {
+    font-size: 0.75rem;
   }
 }

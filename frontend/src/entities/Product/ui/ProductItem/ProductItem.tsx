@@ -90,14 +90,28 @@ export const ProductItem = ({ product, onEdit }: ProductItemProps) => {
           ) : (
             <>
               {!isInCart ? (
-                <Button
-                  onClick={handleAddToCart}
-                  size={buttonSize}
-                  className={styles.btn}
-                  variant="outline"
-                >
-                  <PlusIcon className={styles.plus} />В корзину
-                </Button>
+                <>
+                  {!product.existence ? (
+                    <div
+                      className={`${styles.enabled} ${
+                        product.existence ? styles.inStock : styles.outOfStock
+                      }`}
+                    >
+                      <span>
+                        {product.existence ? "В наличии" : "Нет в наличии"}
+                      </span>
+                    </div>
+                  ) : (
+                    <Button
+                      onClick={handleAddToCart}
+                      size={buttonSize}
+                      className={styles.btn}
+                      variant="outline"
+                    >
+                      <PlusIcon className={styles.plus} />В корзину
+                    </Button>
+                  )}
+                </>
               ) : (
                 <div className={styles.cartActions} onClick={stop}>
                   <Button

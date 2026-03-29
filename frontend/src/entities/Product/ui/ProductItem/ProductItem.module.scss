@@ -195,6 +195,35 @@
   animation: fadeIn 300ms ease forwards;
 }
 
+.enabled {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  margin-top: auto;
+
+  span {
+    padding: 2px 14px;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    @include respond-to(mobile) {
+      font-size: 0.75rem;
+    }
+  }
+}
+
+.inStock span {
+  background-color: var(--green-50);
+  color: var(--green-500);
+  border: 1px solid var(--green-100);
+}
+
+.outOfStock span {
+  background-color: var(--red-50);
+  color: var(--red-500);
+  border: 1px solid var(--red-100);
+}
+
 @keyframes fadeIn {
   to {
     opacity: 1;

@@ -84,6 +84,7 @@ export const useProductFormState = ({ categories }: Args) => {
       discount_percent: true,
       category_id: true,
       subcategory_id: true,
+      existence: true
     });
   }, []);
 
