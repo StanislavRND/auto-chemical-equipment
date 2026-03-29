@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 from src.routers.subcategories.schema import SubCategoryCreateSchema, SubCategorySchema, SubCategoryUpdateSchema
 
 
@@ -10,8 +10,7 @@ class CategoryBaseSchema(BaseModel):
     image_url: str | None = None
     rating: int | None = None
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class CategoryCreateSchema(BaseModel):

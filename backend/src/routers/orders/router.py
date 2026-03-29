@@ -12,8 +12,8 @@ from src.routers.orders.schema import (
     OrderProductSchema,
     OrderProductsResponseSchema,
     OrderResponseSchema,
-    UpdateOrderStatusSchema,
     OrdersFilterResponseSchema,
+    UpdateOrderStatusSchema,
 )
 
 order_router = APIRouter(tags=["Заказы"])
@@ -77,7 +77,7 @@ async def get_user_orders(
     "/orders/{order_id}/status",
     response_model=OrderResponseSchema,
     status_code=200,
-    summary="Обновление статуса заказа (только для админа)",
+    summary="Обновление статуса заказа",
 )
 async def update_order_status(
     order_id: int,
@@ -92,9 +92,9 @@ async def update_order_status(
         )
         return order
     except OrderNotFoundError as e:
-        raise HTTPException(status_code=404, detail=str(e))
+        raise HTTPException(status_code=404, detail=str(e)) from e
     except ValueError as e:
-        raise HTTPException(status_code=400, detail=str(e))
+        raise HTTPException(status_code=400, detail=str(e)) from e
 
 
 @order_router.get(

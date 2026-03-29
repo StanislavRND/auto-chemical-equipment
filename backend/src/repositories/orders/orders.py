@@ -87,9 +87,7 @@ class OrderRepository:
             logger.error(f"Failed to get filtered orders: {e}")
             raise RepositoryError(f"Failed to get filtered orders: {e}") from e
 
-    async def update_order_status(
-        self, order_id: int, new_status: str
-    ) -> OrderModel:
+    async def update_order_status(self, order_id: int, new_status: str) -> OrderModel:
         try:
             status_enum = OrderStatus(new_status)
         except ValueError:
@@ -184,7 +182,7 @@ class OrderRepository:
                 products=products,
                 total_products_count=total_products_count,
                 total_price=total_price,
-                status='pending',
+                status="pending",
             )
 
             self.session.add(order)
@@ -203,7 +201,6 @@ class OrderRepository:
         try:
             stmt = select(OrderModel).where(
                 OrderModel.id == order_id,
-
             )
             result = await self.session.execute(stmt)
             order = result.scalar_one_or_none()
@@ -213,7 +210,6 @@ class OrderRepository:
 
             delete_stmt = delete(OrderModel).where(
                 OrderModel.id == order_id,
-  
             )
             await self.session.execute(delete_stmt)
             await self.session.commit()
