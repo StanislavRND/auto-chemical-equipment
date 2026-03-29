@@ -1,35 +1,47 @@
-import { useGetOrdersUser } from "@entities/Order/api/order";
 import { OrderItem } from "@entities/Order/ui/OrderItem";
-import {
-  Breadcrumbs,
-  type BreadcrumbItem,
-} from "@shared/ui/BreadCrumb/BreadCrumb";
+import { Breadcrumbs } from "@shared/ui/BreadCrumb/BreadCrumb";
 import { ErrorMessage } from "@shared/ui/ErrorMessage/ErrorMessage";
 import { Loader } from "@shared/ui/Loader/Loader";
-import { UserActions } from "@shared/ui/UserActions/UserActions";
-import { useMemo } from "react";
-import styles from "./UserOrders.module.scss";
 
-export const UserOrders = () => {
-  const { data: orders = [], isLoading, isError } = useGetOrdersUser();
-  const breadcrumbs = useMemo<BreadcrumbItem[]>(
-    () => [{ label: "Главная", to: "/home" }, { label: "Мои заказы" }],
-    [],
-  );
+import { OrdersFilters } from "@features/OrdersFilters/ui/OrdersFilters";
+import { useOrdersItems } from "../model/useOrdersItems";
+import styles from "./OrdersItems.module.scss";
 
+const OrdersItems = () => {
+  const {
+    breadcrumbs,
+    numberOrder,
+    fullName,
+    setFullName,
+    status,
+    setNumberOrder,
+    setStatus,
+    orders,
+    isLoading,
+    isError,
+    loadMoreRef,
+    isFetchingNextPage,
+  } = useOrdersItems();
   return (
     <section className={styles.wrapper}>
       <div className={styles.container}>
         <div className={styles.breadcrumbs}>
           <Breadcrumbs items={breadcrumbs} />
         </div>
-        <UserActions />
+        <OrdersFilters
+          numberOrder={numberOrder}
+          fullName={fullName}
+          status={status}
+          setNumberOrder={setNumberOrder}
+          setFullName={setFullName}
+          setStatus={setStatus}
+        />
         <div className={styles.orders}>
-          {orders.length != 0 && (
+          {orders.length !== 0 && (
             <h3 className={styles.title}>История заказов</h3>
           )}
 
-          {orders.length != 0 && (
+          {orders.length !== 0 && (
             <div className={styles.header}>
               <span>Номер</span>
               <span>ФИО</span>
@@ -54,7 +66,17 @@ export const UserOrders = () => {
             ) : orders.length === 0 ? (
               <div className={styles.empty}>У вас пока нет заказов</div>
             ) : (
-              orders.map((order) => <OrderItem key={order.id} order={order} />)
+              <>
+                {orders.map((order) => (
+                  <OrderItem key={order.id} order={order} />
+                ))}
+                <div ref={loadMoreRef} />
+                {isFetchingNextPage && (
+                  <div className={styles.loader}>
+                    <Loader size={24} text="Загрузка еще заказов..." />
+                  </div>
+                )}
+              </>
             )}
           </div>
         </div>
@@ -62,3 +84,5 @@ export const UserOrders = () => {
     </section>
   );
 };
+
+export default OrdersItems;

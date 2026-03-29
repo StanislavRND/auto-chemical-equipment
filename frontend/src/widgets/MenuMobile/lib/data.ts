@@ -1,11 +1,12 @@
 import {
-  Home,
-  Info,
-  Menu,
-  ShoppingCart,
-  UserRound,
-  type LucideIcon,
-  Settings, 
+    Home,
+    Info,
+    Menu,
+    Package,
+    Settings,
+    ShoppingCart,
+    UserRound,
+    type LucideIcon,
 } from "lucide-react";
 
 export interface MenuItem {
@@ -22,8 +23,14 @@ export const menuItems: MenuItem[] = [
   {
     id: "catalogAdmin",
     icon: Settings,
-    label: "Редактор каталога",
-    path: "/catalog/admin", 
+    label: "Редак. каталога",
+    path: "/catalog/admin",
+  },
+  {
+    id: "ordersAdmin",
+    icon: Package,
+    label: "Заказы",
+    path: "/orders/admin",
   },
 
   { id: "catalog", icon: Menu, label: "Каталог", path: "" },

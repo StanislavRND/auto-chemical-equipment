@@ -33,6 +33,7 @@ export const useActiveMenu = (items: MenuItem[]) => {
       if (item.id === "about" && isAdmin) return false;
 
       if (item.id === "catalogAdmin" && !isAdmin) return false;
+      if (item.id === "ordersAdmin" && !isAdmin) return false;
 
       return true;
     });

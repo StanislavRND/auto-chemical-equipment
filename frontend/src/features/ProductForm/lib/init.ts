@@ -41,7 +41,12 @@ export const mergeInitialValues = (
       initialValues?.category_id ?? prev.category_id ?? fallbackCategoryId,
     subcategory_id:
       initialValues?.subcategory_id ?? prev.subcategory_id ?? fallbackSubId,
-    existence: initialValues?.existence ?? true,
+    existence:
+      initialValues?.existence !== undefined
+        ? initialValues.existence
+        : prev.existence !== undefined
+          ? prev.existence
+          : false,
   };
 };
 

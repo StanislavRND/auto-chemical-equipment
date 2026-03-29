@@ -41,6 +41,7 @@ export const useHomeActions = () => {
       price: String(product.price),
       category_id: product.category_id,
       subcategory_id: product.subcategory_id,
+      existence: product.existence
     });
 
     handleOpenModal();

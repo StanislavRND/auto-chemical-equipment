@@ -1,5 +1,5 @@
 import { axiosInstance } from "@shared/api/instance/instance";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export interface OrderDTO {
   id: number;
@@ -11,11 +11,11 @@ export interface OrderDTO {
   comment: string;
   total_products_count: number;
   total_price: number;
-  status: string;
+  status: "success" | "ready" | "pending";
   created_at: Date;
 }
 
-const mapOrderDTO = (dto: OrderDTO) => ({
+export const mapOrderDTO = (dto: OrderDTO) => ({
   id: dto.id,
   numberOrder: dto.number_order,
   userId: dto.user_id,
@@ -44,7 +44,9 @@ export interface ProductsInOrderResponse {
 }
 export type Order = ReturnType<typeof mapOrderDTO>;
 
-export const useGetOrders = () => {
+export type Status = "success" | "ready" | "pending";
+
+export const useGetOrdersUser = () => {
   return useQuery<Order[]>({
     queryKey: ["order"],
     queryFn: async () => {
@@ -69,5 +71,43 @@ export const useGetProductInOrder = (orderId: number) => {
     staleTime: 10 * 60 * 1000,
     gcTime: 10 * 60 * 1000,
     refetchOnWindowFocus: false,
+  });
+};
+
+export const useUpdateStatusOrder = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation<
+    ProductsInOrderResponse,
+    Error,
+    { status: Status; orderId: number }
+  >({
+    mutationKey: ["update-orders"],
+    mutationFn: async ({ status, orderId }) => {
+      const res = await axiosInstance.patch(`/orders/${orderId}/status`, {
+        status,
+      });
+      return res.data;
+    },
+
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["orders"] });
+    },
+  });
+};
+
+export const useDeleteOrder = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationKey: ["delete-order"],
+    mutationFn: async (orderId: number) => {
+      const res = await axiosInstance.delete(`/orders/${orderId}`);
+      return res.data;
+    },
+
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["orders"] });
+    },
   });
 };

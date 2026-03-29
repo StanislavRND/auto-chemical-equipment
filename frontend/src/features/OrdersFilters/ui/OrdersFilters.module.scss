@@ -1,0 +1,12 @@
+@import "@/shared/styles/mixin";
+
+.filters {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 24px;
+
+  @include respond-to(tablet) {
+    flex-direction: column;
+    gap: 12px;
+  }
+}

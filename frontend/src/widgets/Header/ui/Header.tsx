@@ -42,6 +42,13 @@ export const Header = () => {
                 <Link to="/catalog/admin">Редактор каталога</Link>
               </li>
             )}
+            {role === "admin" && (
+              <li
+                className={`${styles.item} ${activePath === "/orders/admin" ? styles.active : ""}`}
+              >
+                <Link to="/orders/admin">Заказы</Link>
+              </li>
+            )}
           </ul>
         </nav>
         <div className={styles.contacts}>

@@ -10,10 +10,12 @@ export const PATHS = {
   CATALOG_CATEGORY: "/catalog/:categoryId",
   CATALOG_SUBCATEGORY: "/catalog/:categoryId/:subcategoryId",
   ADMIN_CATALOG: "/catalog/admin",
+  ADMIN_ORDERS: "/orders/admin",
   REGISTRATION_ORDERS: "/registration/orders",
   PROFILE_ME: "/profile/me",
   PROFILE_ORDERS: "/profile/orders",
   PROFILE_PRODUCTS_IN_ORDER: "/profile/orders/:orderId",
+
   SEARCH: "/search",
   NOT_FOUND: "*",
   ACCESS_DENIED: "/access-denied",

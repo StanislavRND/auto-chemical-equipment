@@ -17,7 +17,7 @@
 
 .desktop {
   display: grid;
-  grid-template-columns: 1fr 2fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 2fr 1fr 1fr 1fr 2fr 2fr 1fr;
   align-items: center;
 
   span {
@@ -119,30 +119,30 @@
   font-size: 12px;
   font-weight: 500;
   text-align: center;
-}
+  text-wrap: nowrap;
 
-.successWrapper {
-  @include respond-to(laptop) {
-    display: flex;
-    justify-content: center;
+  &.success {
+    background: var(--green-50);
+    color: var(--green-500);
+    border: 1px solid var(--green-100);
   }
-}
 
-.success {
-  width: 80%;
-  background: var(--green-50);
-  color: var(--green-500);
-  border: 1px solid var(--green-100);
-  @include respond-to(tablet) {
-    width: auto;
+  &.pending {
+    background: var(--orange-50);
+    color: var(--orange-500);
+    border: 1px solid var(--orange-100);
+  }
+
+  &.ready {
+    background: var(--blue-50);
+    color: var(--blue-500);
+    border: 1px solid var(--blue-100);
   }
 }
 
 .btnWrapper {
-  @include respond-to(laptop) {
-    display: flex;
-    justify-content: center;
-  }
+  display: flex;
+  justify-content: center;
 }
 
 .btn {
@@ -153,5 +153,27 @@
 
   @include respond-to(tablet) {
     margin-top: 10px;
+  }
+}
+
+.btnDelete {
+  background-color: var(--red-500);
+  width: 36px;
+  height: 36px;
+
+  &:hover {
+    background-color: var(--red-600) !important;
+  }
+
+  @include respond-to(tablet) {
+    width: 100%;
+  }
+}
+
+.select {
+  width: 80%;
+
+  @include respond-to(tablet) {
+    width: 100%;
   }
 }
