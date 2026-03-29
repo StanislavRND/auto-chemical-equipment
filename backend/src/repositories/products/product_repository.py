@@ -81,6 +81,7 @@ class ProductRepository:
         method_of_application: str,
         price: float,
         discount_percent: int,
+        existence: bool, 
         image_url: str,
         category_id: int | None,
         subcategory_id: int | None,
@@ -109,6 +110,7 @@ class ProductRepository:
                 article=article,
                 category_id=category_id,
                 subcategory_id=subcategory_id,
+                existence=existence, 
             )
 
             self.session.add(product)

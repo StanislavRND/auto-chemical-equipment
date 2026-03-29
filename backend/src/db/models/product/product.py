@@ -38,7 +38,7 @@ class ProductModel(Base):
     description: Mapped[str] = mapped_column(Text, nullable=True)
     compound: Mapped[str] = mapped_column(Text, nullable=False)
     method_of_application: Mapped[str] = mapped_column(Text, nullable=False)
-    existence: Mapped[bool] = mapped_column(Boolean, nullable=False, default=True)
+    existence: Mapped[bool] = mapped_column(Boolean, nullable=False)
     price: Mapped[float] = mapped_column(Float, nullable=False)
     discount_percent: Mapped[int | None] = mapped_column(
         Integer, nullable=True, default=None

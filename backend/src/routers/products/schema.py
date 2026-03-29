@@ -13,7 +13,7 @@ class ProductCreateSchema(BaseModel):
     price: float = Field(gt=0)
     discount_percent: int | None = None
     image_url: str = Field(min_length=1)
-
+    existence: bool = False
     category_id: int | None = None
     subcategory_id: int | None = None
 
