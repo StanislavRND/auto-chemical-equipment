@@ -26,19 +26,27 @@ class ProductRepository:
             match sort:
                 case "name":
                     stmt = stmt.order_by(
-                        ProductModel.name.asc(), ProductModel.id.desc()
+                        ProductModel.existence.desc(),  # 👈 сначала в наличии
+                        ProductModel.name.asc(),
+                        ProductModel.id.desc()
                     )
                 case "price_desc":
                     stmt = stmt.order_by(
-                        ProductModel.price.desc(), ProductModel.id.desc()
+                        ProductModel.existence.desc(),
+                        ProductModel.price.desc(),
+                        ProductModel.id.desc()
                     )
                 case "price_asc":
                     stmt = stmt.order_by(
-                        ProductModel.price.asc(), ProductModel.id.desc()
+                        ProductModel.existence.desc(),
+                        ProductModel.price.asc(),
+                        ProductModel.id.desc()
                     )
                 case _:
                     stmt = stmt.order_by(
-                        ProductModel.name.asc(), ProductModel.id.desc()
+                        ProductModel.existence.desc(),
+                        ProductModel.name.asc(),
+                        ProductModel.id.desc()
                     )
 
             stmt = stmt.limit(limit)
