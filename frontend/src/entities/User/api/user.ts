@@ -15,6 +15,7 @@ export interface User {
   user_type: "legal" | "person";
 }
 
+
 export const useGetCurrentUser = () => {
   return useQuery<User>({
     queryKey: ["user"],

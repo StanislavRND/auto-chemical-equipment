@@ -1,6 +1,6 @@
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
-import { defineConfig } from "vite";
+import { defineConfig } from "vitest/config";
 import { ViteImageOptimizer } from "vite-plugin-image-optimizer";
 
 export default defineConfig({
@@ -50,5 +50,10 @@ export default defineConfig({
     },
     host: "127.0.0.1",
     port: 5555,
+  },
+   test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: './src/shared/lib/config/setup.ts',
   },
 });

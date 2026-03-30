@@ -71,11 +71,16 @@ export const ProductItem = ({ product, onEdit }: ProductItemProps) => {
 
           {isAdmin ? (
             <div className={styles.actions}>
-              <Button onClick={handleEdit} className={styles.btnEdit}>
+              <Button
+                aria-label="Изменить товар"
+                onClick={handleEdit}
+                className={styles.btnEdit}
+              >
                 <Pencil size={18} />
               </Button>
 
               <Button
+                aria-label="Удалить товар"
                 disabled={isDeleting}
                 loading={isDeleting}
                 onClick={(e) => {

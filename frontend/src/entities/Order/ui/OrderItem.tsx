@@ -81,7 +81,7 @@ export const OrderItem = ({ order }: OrderItemProps) => {
               <Button
                 onClick={() => setIsModalOpen(true)}
                 className={styles.btnDelete}
-                size="sm"
+                size="sm"   aria-label="Удаление заказа"
               >
                 <Trash size={20} />
               </Button>
@@ -89,9 +89,9 @@ export const OrderItem = ({ order }: OrderItemProps) => {
               <Button
                 onClick={() => handleOpenProducts(order.id)}
                 className={styles.btn}
-                size="sm"
+                size="sm"   aria-label="Просмотр заказа"
               >
-                <EyeIcon />
+                <EyeIcon /> 
               </Button>
             )}
           </div>
@@ -177,7 +177,7 @@ export const OrderItem = ({ order }: OrderItemProps) => {
             <Button
               onClick={() => handleOpenProducts(order.id)}
               className={styles.btn}
-              size="sm"
+              size="sm" aria-label="Просмотр заказа"
             >
               Детали
             </Button>

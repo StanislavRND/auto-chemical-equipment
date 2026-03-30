@@ -51,6 +51,7 @@ export const CartItem = ({ item }: CartItemProps) => {
           variant="outline"
           className={styles.actionsBtn}
           onClick={() => decQty(item.productId)}
+          data-testid="dec-btn"
         >
           <Minus className={styles.icon} size={20} color="var(--blue-500)" />
         </Button>
@@ -62,6 +63,7 @@ export const CartItem = ({ item }: CartItemProps) => {
           variant="outline"
           className={styles.actionsBtn}
           onClick={() => incQty(item.productId)}
+          data-testid="inc-btn"
         >
           <Plus className={styles.icon} size={20} color="var(--blue-500)" />
         </Button>
@@ -81,6 +83,7 @@ export const CartItem = ({ item }: CartItemProps) => {
           variant="outline"
           className={styles.priceBtn}
           onClick={() => removeFromCart(item.productId)}
+          data-testid="remove-btn"
         >
           <Trash className={styles.icon} size={20} color="var(--red-500)" />
         </Button>
