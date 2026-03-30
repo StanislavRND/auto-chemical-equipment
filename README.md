@@ -51,7 +51,7 @@
 │   │   ├── app/                # Корень приложения, routers, layouts, providers
 │   │   ├── entities/           # Бизнес-объекты с логикой и UI
 │   │   ├── features/           # Функциональные фичи
-│   │   ├── pages/              # Страница приложения
+│   │   ├── pages/              # Страницы приложения
 │   │   ├── shared/             # Общие утилиты, компоненты
 │   │   ├── widgets/            # Переиспользуемые, составные UI-компоненты
 │   │   └── main.tsx            # Точка входа приложения React
@@ -219,7 +219,7 @@ docker compose up -d --build
 docker compose ps
 ```
 ## API Документация
-Swagger UI доступен по адресу: http://127.0.0.1:8000/api/doc
+Swagger UI доступен по адресу: http://127.0.0.1:8000/api/docs
 
 ### Тестирование
 ```bash
