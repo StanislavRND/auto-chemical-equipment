@@ -41,11 +41,11 @@ jobs:
           python-version: "3.11"
 
       - name: Create .env file from Secrets
+        working-directory: ./backend
         run: |
-          cat <<EOF > ./backend/.env
+          cat <<EOF > .env
           ${{ secrets.BACKEND_ENV }}
           EOF
-        working-directory: ./backend
 
       - name: Install backend deps
         run: |
