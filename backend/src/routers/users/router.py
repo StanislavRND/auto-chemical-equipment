@@ -5,7 +5,7 @@ from src.db.database import get_db
 from src.db.models.user.user import UserModel
 from src.repositories.users.users_repository import UserRepository
 
-from .schema import UserResponse
+from .schema import PasswordChangeRequest, UserResponse
 
 user_router = APIRouter(tags=["Пользователи"])
 
@@ -32,19 +32,17 @@ async def get_current_user_info(
 
 @user_router.post("/users/change-password", summary="Смена пароля")
 async def change_password(
-    old_password: str,
-    new_password: str,
-    confirm_password: str,
+    password_data: PasswordChangeRequest,
     current_user: UserModel = Depends(UserRepository.get_current_user_dependency),
     repo: UserRepository = Depends(get_user_repo),
 ):
-    if new_password != confirm_password:
+    if password_data.new_password != password_data.confirm_password:
         raise HTTPException(status_code=400, detail="Пароли не совпадают")
 
-    if not verify_password(old_password, current_user.hashed_password):
+    if not verify_password(password_data.old_password, current_user.hashed_password):
         raise HTTPException(status_code=400, detail="Неверный старый пароль")
 
-    current_user.hashed_password = get_password_hash(new_password)
+    current_user.hashed_password = get_password_hash(password_data.new_password)
 
     try:
         repo.session.add(current_user)
