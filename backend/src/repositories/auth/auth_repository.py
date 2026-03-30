@@ -17,7 +17,12 @@ from src.core.security import (
     verify_token,
 )
 from src.db.models.user.user import UserModel
-from src.routers.auth.schema import RegisterResponse, UserBaseSchema, UserLegalSchema, UserPersonSchema
+from src.routers.auth.schema import (
+    RegisterResponse,
+    UserBaseSchema,
+    UserLegalSchema,
+    UserPersonSchema,
+)
 from src.services.email_verification.verification import VerificationService
 
 
@@ -30,7 +35,9 @@ class AuthRepository:
     def verification_service(self) -> VerificationService:
         return VerificationService(session=self.session)
 
-    async def register_user(self, user_data: Union[UserPersonSchema, UserLegalSchema]) -> UserModel:
+    async def register_user(
+        self, user_data: Union[UserPersonSchema, UserLegalSchema]
+    ) -> UserModel:
         if await self.session.scalar(
             select(UserModel).where(UserModel.email == user_data.email)
         ):
