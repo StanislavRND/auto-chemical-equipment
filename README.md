@@ -229,7 +229,7 @@ pytest
 
 # Frontend
 cd ../frontend
-npm run test
+npm vitest run
 ```
 
 ### Миграции
