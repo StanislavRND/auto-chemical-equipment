@@ -93,10 +93,13 @@
   .btnWrapper {
     display: flex;
     justify-content: end;
+    gap: 30px;
     margin-top: 20px;
     @include respond-to(tablet) {
-      justify-content: center;
+      align-items: center;
+      flex-direction: column;
       margin-top: 30px;
+      gap: 15px;
     }
   }
 
@@ -104,6 +107,13 @@
     max-width: 200px;
     @include respond-to(laptop) {
       max-width: 140px;
+      height: 40px;
+    }
+  }
+
+  .btnPass {
+    @include respond-to(laptop) {
+      max-width: 170px;
       height: 40px;
     }
   }

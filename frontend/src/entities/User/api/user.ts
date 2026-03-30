@@ -16,6 +16,7 @@ export interface User {
 }
 
 
+
 export const useGetCurrentUser = () => {
   return useQuery<User>({
     queryKey: ["user"],
@@ -40,6 +41,26 @@ export const useLogout = () => {
       await axiosInstance.post("/logout");
       queryClient.removeQueries({ queryKey: ["user"] });
       window.location.href = "/home";
+    } catch (err) {
+      console.error("Logout error:", err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return { logout, isLoading };
+};
+
+export const useLogoutChangePassword = () => {
+  const queryClient = useQueryClient();
+  const [isLoading, setIsLoading] = useState(false);
+
+  const logout = async () => {
+    setIsLoading(true);
+
+    try {
+      await axiosInstance.post("/logout");
+      queryClient.removeQueries({ queryKey: ["user"] });
     } catch (err) {
       console.error("Logout error:", err);
     } finally {
