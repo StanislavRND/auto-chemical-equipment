@@ -71,6 +71,6 @@ jobs:
           key: ${{ secrets.SERVER_SSH_KEY }}
           port: 22
           script: |
-            cd /auto-chemical-equipment
+            cd ~/auto-chemical-equipment
             git pull origin master
             docker compose up -d --build
