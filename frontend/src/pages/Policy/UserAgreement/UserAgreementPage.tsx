@@ -153,8 +153,7 @@ const UserAgreementPage = () => {
           <article className={styles.block}>
             <h2 className={styles.subtitle}>8. Контакты</h2>
             <ul className={styles.list}>
-              <li>8.1. Email: test@gmail.com</li>
-              <li>8.2. Телефон: +7 (800) 535-77-77</li>
+              <li>8.1. Email: optovikautohim@mail.ru</li>
               <li>
                 8.3. Индивидуальный предприниматель Холоднов Павел Львович, ИНН
                 610205663700, ОГРНИП 318619600146272

@@ -60,7 +60,7 @@ export const OrderItem = ({ order }: OrderItemProps) => {
           <div className={styles.successWrapper}>
             {role === "admin" ? (
               <Select
-              className={styles.select}
+                className={styles.select}
                 placeholder="Статус"
                 options={statusOptions}
                 value={status}
@@ -77,21 +77,23 @@ export const OrderItem = ({ order }: OrderItemProps) => {
           <span className={styles.date}>{comment ?? "—"}</span>
 
           <div className={styles.btnWrapper}>
-            {role === "admin" ? (
+            <Button
+              onClick={() => handleOpenProducts(order.id)}
+              className={styles.btn}
+              size="sm"
+              aria-label="Просмотр заказа"
+            >
+              <EyeIcon size={20} />
+            </Button>
+
+            {role === "admin" && (
               <Button
                 onClick={() => setIsModalOpen(true)}
                 className={styles.btnDelete}
-                size="sm"   aria-label="Удаление заказа"
+                size="sm"
+                aria-label="Удаление заказа"
               >
                 <Trash size={20} />
-              </Button>
-            ) : (
-              <Button
-                onClick={() => handleOpenProducts(order.id)}
-                className={styles.btn}
-                size="sm"   aria-label="Просмотр заказа"
-              >
-                <EyeIcon /> 
               </Button>
             )}
           </div>
@@ -142,7 +144,7 @@ export const OrderItem = ({ order }: OrderItemProps) => {
             <div className={styles.value}>
               {role === "admin" ? (
                 <Select
-                 className={styles.select}
+                  className={styles.select}
                   placeholder="Статус"
                   options={statusOptions}
                   value={status}
@@ -165,23 +167,27 @@ export const OrderItem = ({ order }: OrderItemProps) => {
             </span>
           </div>
 
-          {role === "admin" ? (
-            <Button
-              onClick={() => setIsModalOpen(true)}
-              className={styles.btnDelete}
-              size="sm"
-            >
-              <Trash size={20} />
-            </Button>
-          ) : (
+          <div className={styles.btnWrapper}>
             <Button
               onClick={() => handleOpenProducts(order.id)}
               className={styles.btn}
-              size="sm" aria-label="Просмотр заказа"
+              size="sm"
+              aria-label="Просмотр заказа"
             >
               Детали
             </Button>
-          )}
+
+            {role === "admin" && (
+              <Button
+                onClick={() => setIsModalOpen(true)}
+                className={styles.btnDelete}
+                size="sm"
+                aria-label="Удаление заказа"
+              >
+                <Trash size={20} />
+              </Button>
+            )}
+          </div>
         </div>
       </div>
     </>

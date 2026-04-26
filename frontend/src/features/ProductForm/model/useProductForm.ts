@@ -86,7 +86,7 @@ export const useProductForm = ({
       image_url: formData.image_url.trim(),
       category_id: formData.category_id,
       subcategory_id: hasSubcategories ? formData.subcategory_id : null,
-      existense: formData.existence,
+      existence: formData.existence,
     }),
     [formData, hasSubcategories],
   );

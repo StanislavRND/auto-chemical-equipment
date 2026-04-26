@@ -3,6 +3,7 @@ import { Breadcrumbs } from "@shared/ui/BreadCrumb/BreadCrumb";
 import { ErrorMessage } from "@shared/ui/ErrorMessage/ErrorMessage";
 import { Loader } from "@shared/ui/Loader/Loader";
 
+import { useAuth } from "@entities/User/model/useAuth";
 import { OrdersFilters } from "@features/OrdersFilters/ui/OrdersFilters";
 import { useOrdersItems } from "../model/useOrdersItems";
 import styles from "./OrdersItems.module.scss";
@@ -22,6 +23,7 @@ const OrdersItems = () => {
     loadMoreRef,
     isFetchingNextPage,
   } = useOrdersItems();
+  const { role } = useAuth();
   return (
     <section className={styles.wrapper}>
       <div className={styles.container}>
@@ -50,7 +52,7 @@ const OrdersItems = () => {
               <span>Кол-во товаров</span>
               <span>Статус</span>
               <span>Комментарий</span>
-              <span>Товары</span>
+              <span>{role === "admin" ? "Действия" : "Товары"}</span>
             </div>
           )}
 

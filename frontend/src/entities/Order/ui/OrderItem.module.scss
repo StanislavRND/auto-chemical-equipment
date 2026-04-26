@@ -143,6 +143,11 @@
 .btnWrapper {
   display: flex;
   justify-content: center;
+  gap: 10px;
+
+  @include respond-to(tablet) {
+    margin-top: 10px;
+  }
 }
 
 .btn {
@@ -150,16 +155,16 @@
   @include respond-to(tablet) {
     width: 100%;
   }
-
-  @include respond-to(tablet) {
-    margin-top: 10px;
-  }
 }
 
 .btnDelete {
   background-color: var(--red-500);
   width: 36px;
+  min-width: 36px;
+  max-width: 36px;
   height: 36px;
+  min-height: 36px;
+  max-height: 36px;
 
   &:hover {
     background-color: var(--red-600) !important;
