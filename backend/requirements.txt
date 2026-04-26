@@ -14,4 +14,3 @@ boto3==1.42.50
 aiosmtplib==5.1.0
 pytz==2025.2
 pytest==9.0.2
-httpx==0.28.1

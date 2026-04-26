@@ -26,7 +26,7 @@ class ProductRepository:
             match sort:
                 case "name":
                     stmt = stmt.order_by(
-                        ProductModel.existence.desc(),  # 👈 сначала в наличии
+                        ProductModel.existence.desc(),
                         ProductModel.name.asc(),
                         ProductModel.id.desc()
                     )

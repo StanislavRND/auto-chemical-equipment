@@ -19,8 +19,10 @@ class CartModel(Base):
         ForeignKey("users.id"), nullable=False, index=True
     )
     product_id: Mapped[int] = mapped_column(
-        ForeignKey("products.id"), nullable=False, index=True
-    )
+    ForeignKey("products.id", ondelete="CASCADE"),
+    nullable=False,
+    index=True,
+)
     category_id: Mapped[int] = mapped_column(
         ForeignKey("categories.id"), nullable=False
     )

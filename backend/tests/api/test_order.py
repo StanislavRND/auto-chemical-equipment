@@ -13,7 +13,6 @@ from src.routers.orders.router import get_order_repo
 def client():
     mock_repo = AsyncMock()
 
-    # Мок заказа
     order_mock = {
         "id": 1,
         "number_order": "ORD-001",

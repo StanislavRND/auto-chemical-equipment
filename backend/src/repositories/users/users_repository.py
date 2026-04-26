@@ -20,7 +20,7 @@ from src.routers.users.schema import UserResponse
 class UserRepository:
     session: AsyncSession
 
-    async def get_user_by_id(self, email: str) -> UserModel | None:
+    async def get_user_by_email(self, email: str) -> UserModel | None:
         try:
             stmt = select(UserModel).where(UserModel.email == email)
             result = await self.session.execute(stmt)
@@ -78,7 +78,7 @@ class UserRepository:
             raise credentials_exception from e
 
         repo = cls(session=db)
-        user = await repo.get_user_by_id(email)
+        user = await repo.get_user_by_email(email)
 
         if user is None:
             raise credentials_exception
