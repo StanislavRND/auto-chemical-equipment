@@ -105,11 +105,10 @@ async def update_order_status(
 )
 async def get_order_products(
     order_id: int,
-    current_user: UserModel = Depends(UserRepository.get_current_user_dependency),
     repo: OrderRepository = Depends(get_order_repo),
 ):
     try:
-        products = await repo.get_order_products_by_id(order_id, current_user.id)
+        products = await repo.get_order_products_by_id(order_id)
         return OrderProductsResponseSchema(
             products=[
                 OrderProductSchema.model_validate(product) for product in products

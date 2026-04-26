@@ -131,12 +131,12 @@ class OrderRepository:
                 f"Failed to get orders for user {user_id}: {e}"
             ) from e
 
-    async def get_order_products_by_id(self, order_id: int, user_id: int) -> list[dict]:
+    async def get_order_products_by_id(
+        self,
+        order_id: int,
+    ) -> list[dict]:
         try:
-            stmt = select(OrderModel).where(
-                OrderModel.id == order_id,
-                OrderModel.user_id == user_id,
-            )
+            stmt = select(OrderModel).where(OrderModel.id == order_id)
             result = await self.session.execute(stmt)
             order = result.scalar_one_or_none()
 
