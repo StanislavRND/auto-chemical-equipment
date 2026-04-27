@@ -24,20 +24,21 @@ class CategoryAlreadyExistsError(Exception):
 class CategoriesRepository:
     session: AsyncSession
 
-    async def get_categories_with_subcategories(self) -> list[CategoryModel] | None:
+    async def get_categories_with_subcategories(self) -> list[CategoryModel]:
         try:
             stmt = (
                 select(CategoryModel)
                 .options(selectinload(CategoryModel.subcategories))
                 .order_by(CategoryModel.name)
             )
+
             result = await self.session.execute(stmt)
-            categories = result.scalars().all()
+            categories = list(result.scalars().all())
 
-            category_list = list(categories) if categories else []
+            logger.info(f"Found {len(categories)} categories")
 
-            logger.info(f"Found {len(category_list)} categories")
-            return category_list or None
+            return categories
+
         except SQLAlchemyError as e:
             logger.critical(f"Failed to retrieve categories: {e}")
             raise RepositoryError(f"Failed to retrieve categories: {e}") from e
