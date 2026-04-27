@@ -14,7 +14,7 @@ export type ProductFormErrors = {
 
 const REQUIRED = "Обязательное поле";
 
-const MIN_LEN = 30;
+const MIN_LEN = 5;
 const MIN_LEN_MSG = `Минимум ${MIN_LEN} символов`;
 
 export const validateProductForm = (
