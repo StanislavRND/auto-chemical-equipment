@@ -16,5 +16,5 @@ class SubCategoryCreateSchema(BaseModel):
 
 
 class SubCategoryUpdateSchema(BaseModel):
-    id: int
+    id: int | None = None
     name: str
