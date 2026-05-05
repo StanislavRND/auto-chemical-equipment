@@ -99,7 +99,7 @@ const AdminCatalogPage = () => {
               variant="outline"
             >
               <PlusIcon className={styles.plus} />
-              Добавить каталог
+              Добавить категорию
             </Button>
           </div>
           {isErrorDeleteCatalog && (
