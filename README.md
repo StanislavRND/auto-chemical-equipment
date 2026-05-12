@@ -46,7 +46,7 @@
 │   ├── requirements.txt        # Зависимости
 │   └── ruff.toml               # Настройка линтера
 ├── frontend/                   # Frontend приложение
-├── public/                     # Frontend приложение
+├── public/                     # Статические файлы
 │   ├── src/
 │   │   ├── app/                # Корень приложения, routers, layouts, providers
 │   │   ├── entities/           # Бизнес-объекты с логикой и UI
@@ -55,8 +55,8 @@
 │   │   ├── shared/             # Общие утилиты, компоненты
 │   │   ├── widgets/            # Переиспользуемые, составные UI-компоненты
 │   │   └── main.tsx            # Точка входа приложения React
-│   ├── .env.development/       # Тестовые переменные окружения
-│   ├── .gitignore/             # Файл игнора для GIT
+│   ├── .env.development       # Тестовые переменные окружения
+│   ├── .gitignore             # Файл игнора для GIT
 │   ├── Dockerfile              # Docker конфигурация
 │   ├── eslint.config.js        # Конфигурация ESLint для проверки кода на ошибки и стиль
 │   ├── index.html              # Основной HTML-файл проекта
@@ -65,8 +65,8 @@
 │   ├── tsconfig.app.json       # Конфигурации TypeScript
 │   ├── tsconfig.json           # Конфигурации TypeScript
 │   ├── tsconfig.node.json      # Конфигурации TypeScript
-│   ├── vite.config.ts          # Зависимости    
-└── README.md                   # Конфигурация Vite
+│   ├── vite.config.ts          # Конфигурация Vite    
+└── README.md                   # Описание проекта
 ```
 
 ## Основные функции

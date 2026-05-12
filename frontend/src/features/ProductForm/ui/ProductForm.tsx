@@ -84,7 +84,7 @@ export const ProductForm = ({
       )}
 
       <Textarea
-        placeholder="Способ применение товара "
+        placeholder="Способ применения товара "
         value={formData.method_of_application}
         onChange={(value) => handleChange("method_of_application", value)}
         onBlur={() => handleBlur("method_of_application")}
