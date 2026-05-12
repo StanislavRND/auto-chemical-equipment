@@ -2,8 +2,11 @@ import { useAppDispatch, useAppSelector } from "@app/store/hooks";
 import { updateField } from "@features/ConfirmCodeForm/model/registrationSlice";
 import { isValidEmail } from "@shared/lib/validation/email";
 import { AxiosError } from "axios";
-import { useCallback, useState } from "react";
-import { useRegisterRequest, type RegisterRequestData } from "../api/useRegisterRequest";
+import { useCallback, useState, type FormEvent } from "react";
+import {
+  useRegisterRequest,
+  type RegisterRequestData,
+} from "../api/useRegisterRequest";
 
 export const useRegisterForm = (typeRegister: "person" | "legal") => {
   const {
@@ -16,6 +19,7 @@ export const useRegisterForm = (typeRegister: "person" | "legal") => {
 
   const dispatch = useAppDispatch();
   const formData = useAppSelector((state) => state.registration);
+
   const [checked, setChecked] = useState(false);
 
   const [touched, setTouched] = useState({
@@ -46,8 +50,9 @@ export const useRegisterForm = (typeRegister: "person" | "legal") => {
       ? "Должен содержать 9 символов"
       : "";
 
-  const legalAddressError = !formData.legal_address ? "Обязательное поле" : "";
   const legalNameError = !formData.legal_name ? "Обязательное поле" : "";
+
+  const legalAddressError = !formData.legal_address ? "Обязательное поле" : "";
 
   const fullNameError = !formData.full_name ? "Обязательное поле" : "";
 
@@ -75,19 +80,35 @@ export const useRegisterForm = (typeRegister: "person" | "legal") => {
       ? "Пароли не совпадают"
       : "";
 
-  const isFormValid = isLegal
-    ? !innError && !kppError && !legalAddressError && !legalNameError
-    : !fullNameError && !phoneError;
+  const activeErrors = isLegal
+    ? [
+        innError,
+        kppError,
+        legalNameError,
+        legalAddressError,
+        emailError,
+        passwordError,
+        confirmPasswordError,
+      ]
+    : [
+        fullNameError,
+        phoneError,
+        emailError,
+        passwordError,
+        confirmPasswordError,
+      ];
 
-  const finalValid =
-    isFormValid && !emailError && !passwordError && !confirmPasswordError;
+  const finalValid = activeErrors.every((error) => !error);
 
   const handleCheck = () => {
-    setChecked(!checked);
+    setChecked((prev) => !prev);
   };
 
   const handleBlur = useCallback((field: keyof typeof formData) => {
-    setTouched((prev) => ({ ...prev, [field]: true }));
+    setTouched((prev) => ({
+      ...prev,
+      [field]: true,
+    }));
   }, []);
 
   const handleChange = useCallback(
@@ -97,23 +118,31 @@ export const useRegisterForm = (typeRegister: "person" | "legal") => {
     [dispatch],
   );
 
-
   const handleSubmit = useCallback(
-    (e: React.FormEvent) => {
+    (e: FormEvent) => {
       e.preventDefault();
 
       setTouched((prev) => ({
         ...prev,
-        inn: true,
-        kpp: true,
-        legal_address: true,
-        legal_name: true,
-        full_name: true,
-        phone: true,
+
+        ...(isLegal
+          ? {
+              inn: true,
+              kpp: true,
+              legal_name: true,
+              legal_address: true,
+            }
+          : {
+              full_name: true,
+              phone: true,
+            }),
+
         email: true,
         password: true,
         password_confirm: true,
       }));
+
+      if (!finalValid) return;
 
       const base = {
         email: formData.email.trim(),
@@ -121,38 +150,34 @@ export const useRegisterForm = (typeRegister: "person" | "legal") => {
         password_confirm: formData.password_confirm.trim(),
       };
 
-      let requestData: RegisterRequestData;
+      const requestData: RegisterRequestData = isLegal
+        ? {
+            ...base,
+            user_type: "legal",
+            inn: formData.inn.trim(),
+            kpp: formData.kpp.trim(),
+            legal_name: formData.legal_name.trim(),
+            legal_address: formData.legal_address.trim(),
+          }
+        : {
+            ...base,
+            user_type: "person",
+            full_name: formData.full_name.trim(),
+            phone: formData.phone.trim(),
+          };
 
-      if (isLegal) {
-        requestData = {
-          ...base,
-          user_type: "legal",
-          inn: formData.inn.trim(),
-          kpp: formData.kpp.trim(),
-          legal_name: formData.legal_name.trim(),
-          legal_address: formData.legal_address.trim(),
-        };
-      } else {
-        requestData = {
-          ...base,
-          user_type: "person",
-          full_name: formData.full_name.trim(),
-          phone: formData.phone.trim(),
-        };
-      }
-
-      if (finalValid) {
-        registerRequest(requestData);
-      }
+      registerRequest(requestData);
     },
     [formData, finalValid, registerRequest, isLegal],
   );
 
   const getApiErrorMessage = (): string | null => {
     if (!isError) return null;
+
     if (error instanceof AxiosError && error.response?.data?.detail) {
       return error.response.data.detail;
     }
+
     return "Ошибка при регистрации. Попробуйте позже.";
   };
 
@@ -170,6 +195,7 @@ export const useRegisterForm = (typeRegister: "person" | "legal") => {
     passwordError,
     confirmPasswordError,
 
+    finalValid,
     checked,
     isSuccess,
     isPending,

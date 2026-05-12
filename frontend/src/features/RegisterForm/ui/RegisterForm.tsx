@@ -23,16 +23,22 @@ export const RegisterForm = ({
     formData,
     touched,
     checked,
+
     innError,
     kppError,
     legalAddressError,
     legalNameError,
+    fullNameError,
+    phoneError,
     emailError,
     passwordError,
     confirmPasswordError,
+
+    finalValid,
     isPending,
     isSuccess,
     apiErrorMessage,
+
     handleBlur,
     handleChange,
     handleSubmit,
@@ -47,13 +53,8 @@ export const RegisterForm = ({
     }
   }, [isSuccess, onSuccess]);
 
-  const handleFormSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    handleSubmit(e);
-  };
-
   return (
-    <form onSubmit={handleFormSubmit} className={styles.form}>
+    <form onSubmit={handleSubmit} className={styles.form}>
       {isLegal && (
         <>
           <Input
@@ -63,6 +64,7 @@ export const RegisterForm = ({
             type="text"
             value={formData.inn}
             onChange={(value) => handleChange("inn", value)}
+            onBlur={() => handleBlur("inn")}
           />
           {touched.inn && innError && (
             <div className={styles.error}>{innError}</div>
@@ -83,7 +85,7 @@ export const RegisterForm = ({
 
           <Input
             placeholder="Юридическое наименование"
-            id="register-address"
+            id="register-legal-name"
             aria-label="Юридическое наименование"
             type="text"
             value={formData.legal_name}
@@ -96,8 +98,8 @@ export const RegisterForm = ({
 
           <Input
             placeholder="Юридический адрес"
-            id="register-address"
-            aria-label="Юридическое адрес"
+            id="register-legal-address"
+            aria-label="Юридический адрес"
             type="text"
             value={formData.legal_address}
             onChange={(value) => handleChange("legal_address", value)}
@@ -118,7 +120,11 @@ export const RegisterForm = ({
             type="text"
             value={formData.full_name}
             onChange={(value) => handleChange("full_name", value)}
+            onBlur={() => handleBlur("full_name")}
           />
+          {touched.full_name && fullNameError && (
+            <div className={styles.error}>{fullNameError}</div>
+          )}
 
           <Input
             placeholder="Телефон"
@@ -127,7 +133,11 @@ export const RegisterForm = ({
             type="text"
             value={formData.phone}
             onChange={(value) => handleChange("phone", value)}
+            onBlur={() => handleBlur("phone")}
           />
+          {touched.phone && phoneError && (
+            <div className={styles.error}>{phoneError}</div>
+          )}
         </>
       )}
 
@@ -140,7 +150,6 @@ export const RegisterForm = ({
         onChange={(value) => handleChange("email", value)}
         onBlur={() => handleBlur("email")}
       />
-
       {touched.email && emailError && (
         <div className={styles.error}>{emailError}</div>
       )}
@@ -154,7 +163,6 @@ export const RegisterForm = ({
         onChange={(value) => handleChange("password", value)}
         onBlur={() => handleBlur("password")}
       />
-
       {touched.password && passwordError && (
         <div className={styles.error}>{passwordError}</div>
       )}
@@ -168,26 +176,19 @@ export const RegisterForm = ({
         onChange={(value) => handleChange("password_confirm", value)}
         onBlur={() => handleBlur("password_confirm")}
       />
-
       {touched.password_confirm && confirmPasswordError && (
         <div className={styles.error}>{confirmPasswordError}</div>
       )}
 
       <Checkbox checked={checked} onChange={handleCheck}>
         Я подтверждаю, что ознакомлен(а) и принимаю
-        <Link to={"/user-agreement"}> Пользовательское соглашение</Link> и{" "}
-        <Link to={"/privacy-policy"}> Политику конфиденциальности</Link>
+        <Link to="/user-agreement"> Пользовательское соглашение</Link> и{" "}
+        <Link to="/privacy-policy"> Политику конфиденциальности</Link>
       </Checkbox>
 
-      {apiErrorMessage &&
-        !emailError &&
-        !passwordError &&
-        !innError &&
-        !kppError &&
-        !legalAddressError &&
-        !confirmPasswordError && (
-          <div className={styles.errorGn}>{apiErrorMessage}</div>
-        )}
+      {apiErrorMessage && finalValid && (
+        <div className={styles.errorGn}>{apiErrorMessage}</div>
+      )}
 
       <Button
         disabled={!checked || isPending}
