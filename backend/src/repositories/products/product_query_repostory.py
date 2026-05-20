@@ -72,9 +72,9 @@ class ProductQueryRepository:
             stmt = stmt.where(ProductModel.existence.is_(False))
 
         if with_discount is True:
-            stmt = stmt.where(ProductModel.discount_percent.is_not(None))
+            stmt = stmt.where(ProductModel.discount_percent > 0)
         elif with_discount is False:
-            stmt = stmt.where(ProductModel.discount_percent.is_(None))
+            stmt = stmt.where(ProductModel.discount_percent == 0)
 
         return stmt
 
