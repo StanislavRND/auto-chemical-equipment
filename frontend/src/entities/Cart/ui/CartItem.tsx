@@ -1,6 +1,8 @@
+import { useAppSelector } from "@app/store/hooks";
 import { Button } from "@shared/ui/Button/Button";
 import { Minus, Plus, Trash } from "lucide-react";
 import { formatRub, parsePrice } from "../lib/formating";
+import { selectCartItemById } from "../model/store/cartSelectors";
 import type { CartItem as CartItemType } from "../model/types";
 import { useCartActions } from "../model/useCartActions";
 import styles from "./CartItem.module.scss";
@@ -11,6 +13,9 @@ interface CartItemProps {
 
 export const CartItem = ({ item }: CartItemProps) => {
   const { incQty, decQty, removeFromCart } = useCartActions();
+  const cartItem = useAppSelector((state) =>
+    selectCartItemById(state, item.productId),
+  );
 
   const unitPrice = parsePrice(item.price);
   const discountPercent = Number(item.discount_percent) || 0;
@@ -22,6 +27,8 @@ export const CartItem = ({ item }: CartItemProps) => {
 
   const total = discountedUnitPrice * item.qty;
   const oldTotal = unitPrice * item.qty;
+
+  const currentQty = cartItem?.qty ?? 0;
 
   return (
     <div className={styles.item}>
@@ -64,6 +71,7 @@ export const CartItem = ({ item }: CartItemProps) => {
           className={styles.actionsBtn}
           onClick={() => incQty(item.productId)}
           data-testid="inc-btn"
+          disabled={currentQty >= 99}
         >
           <Plus className={styles.icon} size={20} color="var(--blue-500)" />
         </Button>

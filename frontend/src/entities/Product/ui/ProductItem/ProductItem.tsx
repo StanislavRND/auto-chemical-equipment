@@ -135,6 +135,7 @@ export const ProductItem = ({ product, onEdit }: ProductItemProps) => {
                     variant="outline"
                     className={styles.actionsBtn}
                     onClick={handleInc}
+                    disabled={cartQty >= 99}
                   >
                     <Plus className={styles.cartIcon} size={24} />
                   </Button>
